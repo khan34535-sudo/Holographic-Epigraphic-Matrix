@@ -338,11 +338,11 @@
             50% { opacity: 1; }
         }
 
-        /* ===== 3D VIEWER OVERLAY ===== */
+        /* ===== 3D VIEWER OVERLAY - BRIGHT BACKGROUND ===== */
         .viewer-overlay {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(10, 20, 35, 0.95);
+            background: rgba(15, 25, 40, 0.92);
             z-index: 200;
             display: none;
             justify-content: center;
@@ -352,7 +352,7 @@
         }
         .viewer-overlay.active { display: flex; }
         .viewer-content {
-            background: rgba(20, 40, 60, 0.92);
+            background: rgba(25, 45, 65, 0.92);
             border: 1px solid rgba(124, 58, 237, 0.4);
             border-radius: 20px;
             max-width: 1000px;
@@ -397,7 +397,7 @@
         .viewer-3d-container {
             width: 100%;
             height: 68vh;
-            background: #1a2a3a;
+            background: #2a3a4a;
             border-radius: 12px;
             border: 1px solid rgba(124,58,237,0.15);
             overflow: hidden;
@@ -1216,14 +1216,13 @@
 
     <script>
         // ============================================================
-        // AUDIO SYSTEM - FIXED for GitHub Pages
+        // AUDIO SYSTEM
         // ============================================================
         let welcomeAudioPlayed = false;
         let isSpeaking = false;
 
         function speakText(text, callback) {
             try {
-                // Cancel any ongoing speech
                 window.speechSynthesis.cancel();
                 
                 const utterance = new SpeechSynthesisUtterance(text);
@@ -1231,9 +1230,7 @@
                 utterance.rate = 0.9;
                 utterance.pitch = 1.0;
                 utterance.volume = 1.0;
-                utterance.onstart = () => {
-                    isSpeaking = true;
-                };
+                utterance.onstart = () => { isSpeaking = true; };
                 utterance.onend = () => {
                     isSpeaking = false;
                     if (callback) callback();
@@ -1259,7 +1256,6 @@
         }
 
         function playInscriptionName(name, callback) {
-            // Cancel any ongoing speech to prevent overlapping
             window.speechSynthesis.cancel();
             
             const toast = document.getElementById('audioToast');
@@ -1275,21 +1271,19 @@
             });
         }
 
-        // Welcome overlay control
         function startExperience() {
             const overlay = document.getElementById('welcomeOverlay');
             overlay.classList.add('hidden');
             setTimeout(() => {
                 overlay.style.display = 'none';
             }, 800);
-            // Play welcome audio ONLY ONCE when user clicks Begin
             setTimeout(() => {
                 playWelcomeAudio();
             }, 400);
         }
 
         // ============================================================
-        // 6 INSCRIPTIONS DATA - REMOVED AL-JUHFAT NODE (ID 6)
+        // 6 INSCRIPTIONS DATA
         // ============================================================
         const timelineData = [
             {
@@ -1775,7 +1769,7 @@
             }
         });
 
-        // ---- 3D VIEWER ----
+        // ---- 3D VIEWER - BRIGHT & CLEAR ----
         let viewerScene, viewerCamera, viewerRenderer, viewerControls, viewerTexture;
         let viewerInitialized = false;
         let viewerAnimId = null;
@@ -1787,7 +1781,7 @@
             const container = document.getElementById('viewer3dContainer');
             
             viewerScene = new THREE.Scene();
-            viewerScene.background = new THREE.Color(0x1a2a3a);
+            viewerScene.background = new THREE.Color(0x2a3a4a); // BRIGHTER BACKGROUND
             
             viewerCamera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
             viewerCamera.position.set(0, 0, 3.5);
@@ -1795,7 +1789,7 @@
             viewerRenderer = new THREE.WebGLRenderer({ antialias: true });
             viewerRenderer.setSize(container.clientWidth, container.clientHeight);
             viewerRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            viewerRenderer.setClearColor(0x1a2a3a, 1);
+            viewerRenderer.setClearColor(0x2a3a4a, 1); // BRIGHTER CLEAR COLOR
             container.appendChild(viewerRenderer.domElement);
             
             viewerControls = new THREE.OrbitControls(viewerCamera, viewerRenderer.domElement);
@@ -1806,28 +1800,30 @@
             viewerControls.autoRotate = false;
             viewerControls.target.set(0, 0, 0);
             
-            const viewerGrid = new THREE.GridHelper(4, 8, 0x2dd4bf, 0x1a6a6a);
+            // Subtle grid for depth
+            const viewerGrid = new THREE.GridHelper(4, 8, 0x5a7a8a, 0x3a5a6a);
             viewerGrid.position.z = -1.5;
             viewerGrid.material.transparent = true;
-            viewerGrid.material.opacity = 0.1;
+            viewerGrid.material.opacity = 0.2;
             viewerScene.add(viewerGrid);
             
-            const ambient = new THREE.AmbientLight(0xffffff, 1.8);
+            // ===== VERY BRIGHT LIGHTING FOR CLEAR IMAGES =====
+            const ambient = new THREE.AmbientLight(0xffffff, 2.5);
             viewerScene.add(ambient);
             
-            const dirLight = new THREE.DirectionalLight(0xffffff, 2.0);
+            const dirLight = new THREE.DirectionalLight(0xffffff, 3.0);
             dirLight.position.set(3, 5, 5);
             viewerScene.add(dirLight);
             
-            const fillLight = new THREE.DirectionalLight(0x4488ff, 1.2);
+            const fillLight = new THREE.DirectionalLight(0x88ccff, 2.0);
             fillLight.position.set(-3, 2, 3);
             viewerScene.add(fillLight);
             
-            const rimLightV = new THREE.DirectionalLight(0x2dd4bf, 0.8);
+            const rimLightV = new THREE.DirectionalLight(0x2dd4bf, 1.2);
             rimLightV.position.set(0, -2, -4);
             viewerScene.add(rimLightV);
             
-            const backLight = new THREE.DirectionalLight(0x88aaff, 0.6);
+            const backLight = new THREE.DirectionalLight(0x88aaff, 1.0);
             backLight.position.set(0, 1, -5);
             viewerScene.add(backLight);
             
@@ -1862,16 +1858,17 @@
                 roughness: 0.2,
                 metalness: 0.02,
                 side: THREE.DoubleSide,
-                emissive: 0x222244,
-                emissiveIntensity: 0.15,
+                emissive: 0x446688,
+                emissiveIntensity: 0.3, // INCREASED EMISSIVE to brighten
                 transparent: true
             });
             viewerTexture = new THREE.Mesh(geometry, material);
             viewerTexture.position.set(0, 0, 0);
             viewerScene.add(viewerTexture);
             
+            // Add a subtle glowing border
             const borderGeo = new THREE.EdgesGeometry(new THREE.PlaneGeometry(2.3, 2.3));
-            const borderMat = new THREE.LineBasicMaterial({ color: 0x7c3aed, transparent: true, opacity: 0.2 });
+            const borderMat = new THREE.LineBasicMaterial({ color: 0x7c3aed, transparent: true, opacity: 0.25 });
             const border = new THREE.LineSegments(borderGeo, borderMat);
             viewerTexture.add(border);
             
@@ -2081,6 +2078,7 @@
         console.log('🔊 Click audio button or any marker to hear inscription name');
         console.log('📚 Click "APA References" button for universal academic sources');
         console.log('🎵 Welcome audio plays only once when you click "Begin Exploration"');
+        console.log('💡 3D viewer uses BRIGHT background for clear inscription visibility');
 
         // Auto-play welcome audio after a short delay only if overlay is visible
         setTimeout(() => {
