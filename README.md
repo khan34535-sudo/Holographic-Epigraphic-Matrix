@@ -42,9 +42,3 @@ The **Holographic Epigraphic Matrix** is an immersive 3D web application that vi
 
 ---
 
-## 🚀 Quick Start
-
-### Clone the repository
-```bash
-git clone https://github.com/yourusername/Holographic-Epigraphic-Matrix.git
-cd Holographic-Epigraphic-Matrix
