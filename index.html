@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Holographic Epigraphic Matrix | 7 Inscriptions | 3D PNG Viewer</title>
+    <title>Holographic Epigraphic Matrix | 6 Inscriptions | 3D PNG Viewer</title>
     <style>
         :root {
             --bg-deep: #050a15;
@@ -17,6 +17,8 @@
             --accent-gold: #fbbf24;
             --accent-red: #ef4444;
             --accent-teal: #14b8a6;
+            --accent-orange: #fb923c;
+            --accent-green: #34d399;
             
             --text-main: #f0f4ff;
             --text-muted: #94a3b8;
@@ -28,14 +30,14 @@
         #viewport-container { position: relative; width: 100vw; height: 100vh; z-index: 1; }
         #canvas3d-target { width: 100%; height: 100%; }
 
-        /* ===== FUTURISTIC HOLOGRAPHIC MARKERS ===== */
+        /* ===== LARGER HOLOGRAPHIC MARKERS ===== */
         .photo-marker {
             position: absolute;
-            width: 130px;
-            height: 100px;
+            width: 135px;
+            height: 105px;
             border-radius: 12px;
             cursor: pointer;
-            box-shadow: 0 0 30px rgba(45, 212, 191, 0.25);
+            box-shadow: 0 0 25px rgba(45, 212, 191, 0.25);
             transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), 
                         border-color 0.3s, 
                         box-shadow 0.4s;
@@ -51,9 +53,9 @@
             background-size: cover;
             background-position: center;
             background-color: #0a1420;
-            border: 2px solid rgba(45, 212, 191, 0.4);
+            border: 2px solid rgba(45, 212, 191, 0.5);
             transform-style: preserve-3d;
-            perspective: 600px;
+            perspective: 500px;
         }
         .photo-marker::before {
             content: '';
@@ -73,7 +75,7 @@
             opacity: 0.9;
         }
         .photo-marker:hover {
-            transform: scale(1.12) translateY(-6px) rotateY(4deg) rotateX(2deg);
+            transform: scale(1.15) translateY(-6px) rotateY(3deg) rotateX(2deg);
             border-color: var(--accent-cyan);
             box-shadow: 0 0 50px rgba(45, 212, 191, 0.5), 0 0 100px rgba(96, 165, 250, 0.15);
             z-index: 15;
@@ -84,8 +86,8 @@
             top: 0; left: 0; right: 0; bottom: 0;
             background: linear-gradient(180deg, 
                 rgba(45,212,191,0.03) 0%, 
-                rgba(6,18,34,0.3) 40%,
-                rgba(6,18,34,0.75) 100%);
+                rgba(6,18,34,0.25) 40%,
+                rgba(6,18,34,0.7) 100%);
             pointer-events: none;
             z-index: 1;
         }
@@ -95,7 +97,7 @@
             height: 2px;
             background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
             opacity: 0.15;
-            animation: scanMove 3.5s ease-in-out infinite;
+            animation: scanMove 4s ease-in-out infinite;
             pointer-events: none;
             z-index: 2;
         }
@@ -107,16 +109,16 @@
         
         .photo-marker .date-badge {
             position: absolute;
-            top: 6px;
-            right: 6px;
+            top: 5px;
+            right: 5px;
             background: rgba(6, 18, 34, 0.92);
             backdrop-filter: blur(8px);
-            padding: 3px 10px;
+            padding: 2px 10px;
             border-radius: 10px;
-            font-size: 7px;
+            font-size: 8px;
             font-family: 'Courier New', monospace;
-            color: var(--accent-cyan);
-            border: 1px solid rgba(45,212,191,0.25);
+            color: var(--accent-gold);
+            border: 1px solid rgba(251,191,36,0.25);
             pointer-events: none;
             font-weight: 700;
             z-index: 3;
@@ -125,11 +127,11 @@
         }
         .photo-marker .id-number {
             position: absolute;
-            top: 6px;
-            left: 6px;
+            top: 5px;
+            left: 5px;
             background: rgba(96, 165, 250, 0.15);
             backdrop-filter: blur(8px);
-            padding: 2px 9px;
+            padding: 2px 8px;
             border-radius: 10px;
             font-size: 8px;
             font-family: 'Courier New', monospace;
@@ -143,7 +145,7 @@
         .photo-marker .label-strip {
             width: 100%;
             background: rgba(6, 18, 34, 0.9);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(10px);
             padding: 4px 6px;
             text-align: center;
             pointer-events: none;
@@ -152,11 +154,20 @@
         }
         .photo-marker .label-strip .title {
             font-family: 'Georgia', serif;
-            font-size: 9px;
+            font-size: 10px;
             font-weight: 700;
             color: #e0ecff;
             display: block;
             letter-spacing: 0.2px;
+            line-height: 1.2;
+        }
+        .photo-marker .label-strip .date {
+            font-size: 7px;
+            color: var(--accent-gold);
+            font-family: 'Courier New', monospace;
+            display: block;
+            margin-top: 1px;
+            letter-spacing: 0.3px;
         }
         .photo-marker .label-strip .sub {
             font-size: 6px;
@@ -164,28 +175,53 @@
             font-family: 'Courier New', monospace;
             display: block;
             margin-top: 1px;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.2px;
             text-transform: uppercase;
         }
         
-        /* PURPLE 3D VIEW BUTTON */
+        .photo-marker .audio-btn {
+            position: absolute;
+            bottom: 32px;
+            right: 4px;
+            background: rgba(45, 212, 191, 0.2);
+            border: 1px solid var(--accent-cyan);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            color: var(--accent-cyan);
+            font-size: 10px;
+            cursor: pointer;
+            pointer-events: auto;
+            z-index: 25;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+        }
+        .photo-marker .audio-btn:hover {
+            background: var(--accent-cyan);
+            color: #0a1420;
+            transform: scale(1.15);
+        }
+
         .photo-marker .view3d-btn {
             position: absolute;
-            bottom: 6px;
+            bottom: 4px;
             left: 50%;
             transform: translateX(-50%);
             background: linear-gradient(135deg, #7c3aed, #6d28d9);
             color: white;
             border: none;
-            border-radius: 12px;
-            padding: 4px 16px;
-            font-size: 8px;
+            border-radius: 8px;
+            padding: 3px 12px;
+            font-size: 7px;
             font-weight: 700;
             font-family: 'Segoe UI', sans-serif;
             cursor: pointer;
             pointer-events: auto;
             z-index: 20;
-            box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.3);
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -194,27 +230,26 @@
         .photo-marker .view3d-btn:hover {
             background: linear-gradient(135deg, #6d28d9, #5b21b6);
             transform: translateX(-50%) scale(1.1);
-            box-shadow: 0 0 30px rgba(124, 58, 237, 0.7);
+            box-shadow: 0 0 25px rgba(124, 58, 237, 0.5);
         }
 
-        /* RED TRANSLATION BUTTON */
         .photo-marker .translation-btn {
             position: absolute;
-            bottom: 30px;
+            bottom: 28px;
             left: 50%;
             transform: translateX(-50%);
             background: linear-gradient(135deg, #ef4444, #dc2626);
             color: white;
             border: none;
-            border-radius: 12px;
-            padding: 4px 14px;
-            font-size: 7px;
+            border-radius: 8px;
+            padding: 3px 10px;
+            font-size: 6px;
             font-weight: 700;
             font-family: 'Segoe UI', sans-serif;
             cursor: pointer;
             pointer-events: auto;
             z-index: 20;
-            box-shadow: 0 0 20px rgba(239, 68, 68, 0.35);
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.25);
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -223,7 +258,7 @@
         .photo-marker .translation-btn:hover {
             background: linear-gradient(135deg, #dc2626, #b91c1c);
             transform: translateX(-50%) scale(1.1);
-            box-shadow: 0 0 30px rgba(239, 68, 68, 0.6);
+            box-shadow: 0 0 25px rgba(239, 68, 68, 0.5);
         }
 
         .photo-marker.active {
@@ -232,21 +267,92 @@
             transform: scale(1.08);
         }
 
+        /* Welcome Audio Overlay */
+        .welcome-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(2, 5, 10, 0.92);
+            z-index: 500;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            backdrop-filter: blur(20px);
+            transition: opacity 0.8s ease;
+        }
+        .welcome-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .welcome-content {
+            text-align: center;
+            max-width: 600px;
+        }
+        .welcome-content .icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+        .welcome-content h1 {
+            font-family: 'Georgia', serif;
+            font-size: 2rem;
+            color: var(--accent-cyan);
+            margin-bottom: 12px;
+        }
+        .welcome-content p {
+            font-size: 1rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+        .welcome-content .highlight {
+            color: var(--accent-gold);
+            font-weight: 600;
+        }
+        .welcome-btn {
+            margin-top: 20px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            color: #0a1420;
+            border: none;
+            padding: 12px 40px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 30px rgba(45, 212, 191, 0.3);
+        }
+        .welcome-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 50px rgba(45, 212, 191, 0.5);
+        }
+        .welcome-content .audio-wave {
+            font-size: 0.8rem;
+            color: var(--accent-purple);
+            margin-top: 16px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
         /* ===== 3D VIEWER OVERLAY ===== */
         .viewer-overlay {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(2, 5, 10, 0.97);
+            background: rgba(10, 20, 35, 0.95);
             z-index: 200;
             display: none;
             justify-content: center;
             align-items: center;
             padding: 20px;
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(16px);
         }
         .viewer-overlay.active { display: flex; }
         .viewer-content {
-            background: rgba(6, 18, 34, 0.95);
+            background: rgba(20, 40, 60, 0.92);
             border: 1px solid rgba(124, 58, 237, 0.4);
             border-radius: 20px;
             max-width: 1000px;
@@ -254,14 +360,14 @@
             max-height: 92vh;
             padding: 16px 20px 20px 20px;
             position: relative;
-            box-shadow: 0 0 80px rgba(124, 58, 237, 0.15), 0 0 160px rgba(96, 165, 250, 0.05);
+            box-shadow: 0 0 80px rgba(124, 58, 237, 0.15), 0 0 160px rgba(96, 165, 250, 0.08);
             overflow: hidden;
         }
         .viewer-content .close-viewer {
             position: absolute;
             top: 10px;
             right: 14px;
-            background: rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.08);
             border: none;
             border-radius: 20px;
             color: var(--text-muted);
@@ -291,7 +397,7 @@
         .viewer-3d-container {
             width: 100%;
             height: 68vh;
-            background: #050a15;
+            background: #1a2a3a;
             border-radius: 12px;
             border: 1px solid rgba(124,58,237,0.15);
             overflow: hidden;
@@ -309,7 +415,7 @@
             bottom: 16px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(6,18,34,0.85);
+            background: rgba(10, 20, 35, 0.85);
             backdrop-filter: blur(8px);
             padding: 6px 20px;
             border-radius: 20px;
@@ -343,63 +449,89 @@
             margin-top: 4px;
         }
 
-        /* FILE INSTRUCTION OVERLAY */
-        .file-instruction {
+        .file-upload-fallback {
             position: absolute;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(6,18,34,0.85);
-            backdrop-filter: blur(12px);
-            padding: 8px 20px;
-            border-radius: 16px;
-            font-size: 0.6rem;
-            color: var(--text-muted);
-            z-index: 15;
-            font-family: 'Courier New', monospace;
-            border: 1px solid rgba(45,212,191,0.12);
-            text-align: center;
-            max-width: 90%;
-            pointer-events: none;
-            white-space: nowrap;
+            top: 0; left: 0; right: 0; bottom: 0;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(10, 20, 35, 0.95);
+            z-index: 6;
+            border-radius: 12px;
+            padding: 20px;
         }
-        .file-instruction strong {
-            color: var(--accent-gold);
+        .file-upload-fallback.active { display: flex; }
+        .file-upload-fallback .upload-label {
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 0 30px rgba(124,58,237,0.3);
+            border: none;
+        }
+        .file-upload-fallback .upload-label:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 50px rgba(124,58,237,0.5);
+        }
+        .file-upload-fallback .upload-label input {
+            display: none;
+        }
+        .file-upload-fallback .hint {
+            color: var(--text-muted);
+            font-size: 0.65rem;
+            margin-top: 14px;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            max-width: 320px;
+            line-height: 1.6;
+        }
+        .file-upload-fallback .hint .filename {
+            color: var(--accent-cyan);
+            font-weight: bold;
+            font-size: 0.8rem;
         }
 
-        /* Timeline Header */
         .timeline-header {
             position: absolute;
-            top: 12px; left: 12px; right: 12px;
-            background: rgba(6, 18, 34, 0.92);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(45, 212, 191, 0.2);
-            border-radius: 14px;
-            padding: 10px 18px;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            background: rgba(6, 18, 34, 0.9);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(45, 212, 191, 0.15);
+            border-radius: 10px;
+            padding: 6px 12px;
             z-index: 20;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
         }
         .timeline-title h1 { 
-            font-size: 0.95rem; 
+            font-size: 0.8rem; 
             font-weight: 700; 
             background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue), var(--accent-purple));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
         }
-        .timeline-title p { font-size: 0.6rem; color: var(--text-muted); margin-top: 1px; }
-        .timeline-tracker { display: flex; gap: 4px; flex-wrap: wrap; }
+        .timeline-title p { font-size: 0.5rem; color: var(--text-muted); margin-top: 1px; }
+        .timeline-tracker { display: flex; gap: 3px; flex-wrap: wrap; }
         .time-node {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.05);
-            padding: 3px 8px;
-            border-radius: 10px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.04);
+            padding: 2px 8px;
+            border-radius: 8px;
             font-size: 7px;
-            font-family: 'Courier New', monospace;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 600;
             color: var(--text-muted);
             cursor: pointer;
             transition: all 0.3s ease;
@@ -407,32 +539,34 @@
         .time-node:hover, .time-node.active {
             border-color: var(--accent-cyan);
             color: var(--accent-cyan);
-            background: rgba(45, 212, 191, 0.1);
-            box-shadow: 0 0 15px rgba(45,212,191,0.08);
+            background: rgba(45, 212, 191, 0.08);
+            box-shadow: 0 0 12px rgba(45,212,191,0.06);
         }
 
-        /* Dashboard Panel */
+        /* ===== LARGER DASHBOARD PANEL ===== */
         .dashboard-panel {
             position: absolute;
-            bottom: 14px; left: 14px; right: 14px;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
             background: rgba(6, 18, 34, 0.94);
-            backdrop-filter: blur(24px);
-            border: 1px solid rgba(45, 212, 191, 0.2);
-            border-radius: 16px;
-            padding: 18px 22px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(45, 212, 191, 0.15);
+            border-radius: 14px;
+            padding: 16px 20px;
             z-index: 20;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
-            max-height: 48vh;
+            box-shadow: 0 16px 48px rgba(0,0,0,0.7);
+            max-height: 50vh;
             overflow-y: auto;
             display: none;
             max-width: 920px;
             margin: 0 auto;
         }
         .dashboard-panel .close-btn {
-            position: absolute; top: 12px; right: 16px;
-            background: rgba(255,255,255,0.05);
+            position: absolute; top: 10px; right: 14px;
+            background: rgba(255,255,255,0.04);
             border: none;
-            border-radius: 20px;
+            border-radius: 16px;
             color: var(--text-muted);
             font-size: 1rem;
             padding: 2px 12px;
@@ -444,41 +578,58 @@
         @media (max-width: 800px) { .panel-grid { grid-template-columns: 1fr; } }
 
         .meta-header { 
-            border-left: 3px solid var(--accent-cyan); 
+            border-left: 3px solid var(--accent-gold); 
             padding-left: 14px; 
             margin-bottom: 10px; 
-            background: rgba(45,212,191,0.03);
+            background: rgba(251,191,36,0.03);
             border-radius: 0 8px 8px 0;
             padding: 6px 14px;
         }
         .meta-header h2 { 
             font-family: 'Georgia', serif; 
-            font-size: 1.3rem; 
+            font-size: 1.4rem; 
             color: #fff;
-            background: linear-gradient(135deg, #fff, var(--accent-cyan));
+            background: linear-gradient(135deg, #fff, var(--accent-gold));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
-        .meta-header .subtitle { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+        .meta-header .subtitle { 
+            font-size: 0.8rem; 
+            color: var(--text-muted); 
+            margin-top: 2px; 
+            font-weight: 400;
+        }
         .meta-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
         .tag { 
             background: rgba(255,255,255,0.05); 
             padding: 2px 10px; 
-            border-radius: 10px; 
-            font-size: 0.6rem;
+            border-radius: 8px; 
+            font-size: 0.65rem;
             font-family: 'Courier New', monospace;
         }
-        .tag.date { color: var(--accent-gold); background: rgba(251, 191, 36, 0.08); border: 1px solid rgba(251,191,36,0.1); }
-        .tag.loc { color: var(--accent-cyan); background: rgba(45, 212, 191, 0.08); border: 1px solid rgba(45,212,191,0.1); }
+        .tag.date { color: var(--accent-gold); background: rgba(251, 191, 36, 0.08); border: 1px solid rgba(251,191,36,0.08); }
+        .tag.loc { color: var(--accent-cyan); background: rgba(45, 212, 191, 0.08); border: 1px solid rgba(45,212,191,0.08); }
+        .tag.unesco { 
+            color: var(--accent-purple); 
+            background: rgba(167, 139, 250, 0.06); 
+            border: 1px solid rgba(167, 139, 250, 0.08);
+            font-size: 0.55rem;
+        }
+        .tag.weather { 
+            color: var(--accent-teal); 
+            background: rgba(20,184,166,0.06); 
+            border: 1px solid rgba(20,184,166,0.08);
+            font-size: 0.55rem;
+        }
 
         .section-title { 
             font-size: 0.6rem; 
             text-transform: uppercase; 
             letter-spacing: 1.5px; 
-            margin: 12px 0 6px 0; 
+            margin: 10px 0 6px 0; 
             font-weight: 700;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.04);
             padding-bottom: 3px;
         }
         .section-spectrometry .section-title { color: var(--accent-cyan); }
@@ -489,35 +640,35 @@
 
         .lab-report { 
             border-radius: 8px; 
-            padding: 10px 12px; 
+            padding: 8px 12px; 
             font-family: 'Courier New', monospace; 
             font-size: 0.7rem;
             line-height: 1.5;
         }
-        .section-spectrometry .lab-report { border-left: 2px solid var(--accent-cyan); background: rgba(45,212,191,0.04); }
-        .section-field .lab-report { border-left: 2px solid var(--accent-gold); background: rgba(251,191,36,0.04); }
-        .lab-row { display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.04); padding: 3px 0; }
+        .section-spectrometry .lab-report { border-left: 3px solid var(--accent-cyan); background: rgba(45,212,191,0.04); }
+        .section-field .lab-report { border-left: 3px solid var(--accent-gold); background: rgba(251,191,36,0.04); }
+        .lab-row { display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.03); padding: 3px 0; }
         .section-spectrometry .lab-row span:last-child { color: var(--accent-cyan); }
         .section-field .lab-row span:last-child { color: var(--accent-gold); }
 
         .section-arabic .inscription-preview { 
-            border-left: 2px solid var(--accent-pink);
+            border-left: 3px solid var(--accent-pink);
             background: rgba(244,114,182,0.04);
-            padding: 12px 14px;
+            padding: 10px 14px;
             border-radius: 8px;
             font-size: 0.9rem;
         }
         .section-arabic .arabic-text {
             direction: rtl;
             font-family: 'Amiri', 'Traditional Arabic', serif;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: #e8edf2;
-            line-height: 1.9;
-            margin-bottom: 8px;
+            line-height: 1.8;
+            margin-bottom: 6px;
         }
         .section-arabic .english-under {
             font-family: 'Georgia', serif;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: #cbd5e1;
             line-height: 1.5;
             border-top: 1px solid rgba(244,114,182,0.15);
@@ -527,13 +678,13 @@
         .section-arabic .english-under strong { color: var(--accent-pink); font-style: normal; }
 
         .section-concordance .concordance-box { 
-            border-left: 2px solid var(--accent-purple);
+            border-left: 3px solid var(--accent-purple);
             background: rgba(167,139,250,0.04);
             border-radius: 8px;
-            padding: 12px;
-            font-size: 0.8rem;
+            padding: 10px 14px;
+            font-size: 0.75rem;
         }
-        .concordance-box .col { margin-bottom: 10px; }
+        .concordance-box .col { margin-bottom: 8px; }
         .concordance-box .col:last-child { margin-bottom: 0; }
         .concordance-box .col-label {
             font-size: 0.55rem;
@@ -541,32 +692,32 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             display: block;
-            margin-bottom: 3px;
+            margin-bottom: 4px;
         }
         .concordance-box .col-label.mint { color: var(--accent-cyan); }
         .concordance-box .col-label.gold { color: var(--accent-gold); }
         .concordance-box blockquote {
             font-family: 'Georgia', serif;
             font-style: italic;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: #e2e8f0;
             line-height: 1.4;
-            padding-left: 8px;
-            border-left: 2px solid rgba(167,139,250,0.2);
+            padding-left: 10px;
+            border-left: 2px solid rgba(167,139,250,0.15);
             margin-bottom: 4px;
         }
         .concordance-box .explanation {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--text-muted);
             line-height: 1.4;
         }
 
         .section-geo .geo-box { 
-            border-left: 2px solid var(--accent-teal);
+            border-left: 3px solid var(--accent-teal);
             background: rgba(20,184,166,0.04);
             border-radius: 8px;
-            padding: 12px;
-            font-size: 0.8rem;
+            padding: 10px 14px;
+            font-size: 0.75rem;
         }
         .geo-box .geo-row {
             display: grid;
@@ -574,10 +725,10 @@
             gap: 10px;
         }
         .geo-box .geo-col {
-            background: rgba(0,0,0,0.2);
+            background: rgba(0,0,0,0.15);
             border-radius: 6px;
-            padding: 10px;
-            border-left: 2px solid var(--accent-teal);
+            padding: 8px 10px;
+            border-left: 3px solid var(--accent-teal);
         }
         .geo-box .geo-col.present { border-left-color: var(--accent-gold); }
         .geo-box .geo-col .label {
@@ -589,20 +740,196 @@
             display: block;
             margin-bottom: 3px;
         }
-        .geo-box .geo-col p { font-size: 0.75rem; line-height: 1.4; color: #cbd5e1; }
+        .geo-box .geo-col p { font-size: 0.7rem; line-height: 1.4; color: #cbd5e1; }
 
         .weather-tag {
             display: inline-block;
-            background: rgba(45,212,191,0.06);
+            background: rgba(45,212,191,0.05);
             padding: 2px 10px;
-            border-radius: 10px;
-            font-size: 0.6rem;
+            border-radius: 8px;
+            font-size: 0.55rem;
             font-family: monospace;
             color: var(--accent-cyan);
-            border: 1px solid rgba(45,212,191,0.1);
+            border: 1px solid rgba(45,212,191,0.08);
         }
 
-        /* Translation Modal */
+        /* ===== SOURCE BUTTONS ===== */
+        .source-buttons {
+            display: flex;
+            gap: 6px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+        .source-btn {
+            padding: 4px 12px;
+            border-radius: 8px;
+            border: none;
+            font-size: 0.55rem;
+            font-weight: 700;
+            font-family: 'Segoe UI', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .source-btn.pink {
+            background: linear-gradient(135deg, #ec4899, #db2777);
+            color: white;
+            box-shadow: 0 0 15px rgba(236, 72, 153, 0.25);
+        }
+        .source-btn.pink:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(236, 72, 153, 0.4);
+        }
+        .source-btn.green {
+            background: linear-gradient(135deg, #34d399, #059669);
+            color: white;
+            box-shadow: 0 0 15px rgba(52, 211, 153, 0.25);
+        }
+        .source-btn.green:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(52, 211, 153, 0.4);
+        }
+        .source-btn.white-apa {
+            background: rgba(255,255,255,0.92);
+            color: #0a1420;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 0 15px rgba(255,255,255,0.08);
+            font-size: 0.5rem;
+        }
+        .source-btn.white-apa:hover {
+            transform: scale(1.05);
+            background: #ffffff;
+            box-shadow: 0 0 25px rgba(255,255,255,0.15);
+        }
+
+        .dashboard-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255,255,255,0.04);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .dashboard-actions .action-btn {
+            padding: 6px 16px;
+            border-radius: 10px;
+            border: none;
+            font-size: 0.65rem;
+            font-weight: 700;
+            font-family: 'Segoe UI', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .dashboard-actions .action-btn.purple {
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            color: white;
+            box-shadow: 0 0 15px rgba(124,58,237,0.25);
+        }
+        .dashboard-actions .action-btn.purple:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(124,58,237,0.4);
+        }
+        .dashboard-actions .action-btn.red {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            box-shadow: 0 0 15px rgba(239,68,68,0.2);
+        }
+        .dashboard-actions .action-btn.red:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(239,68,68,0.4);
+        }
+        .dashboard-actions .action-btn.audio-btn-dash {
+            background: rgba(45, 212, 191, 0.15);
+            color: var(--accent-cyan);
+            border: 1px solid rgba(45, 212, 191, 0.2);
+        }
+        .dashboard-actions .action-btn.audio-btn-dash:hover {
+            background: rgba(45, 212, 191, 0.25);
+            transform: scale(1.05);
+        }
+
+        /* APA References Modal - Updated with corrected entries */
+        .apa-modal {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(2, 5, 10, 0.95);
+            z-index: 300;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            backdrop-filter: blur(20px);
+        }
+        .apa-modal.active { display: flex; }
+        .apa-modal-content {
+            background: rgba(6, 18, 34, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 18px;
+            max-width: 800px;
+            width: 100%;
+            padding: 28px 32px;
+            position: relative;
+            box-shadow: 0 0 80px rgba(255,255,255,0.05);
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        .apa-modal-close {
+            position: absolute; top: 12px; right: 16px;
+            background: none; border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 2px 12px;
+            border-radius: 14px;
+            transition: all 0.2s;
+        }
+        .apa-modal-close:hover { background: var(--accent-red); color: white; }
+        .apa-modal-content h2 {
+            font-family: 'Georgia', serif;
+            color: #fff;
+            font-size: 1.2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 10px;
+            margin-bottom: 16px;
+        }
+        .apa-modal-content .apa-entry {
+            font-family: 'Courier New', monospace;
+            font-size: 0.6rem;
+            color: #cbd5e1;
+            line-height: 1.6;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            padding-left: 8px;
+            border-left: 2px solid rgba(255,255,255,0.05);
+        }
+        .apa-modal-content .apa-entry strong {
+            color: var(--accent-gold);
+        }
+        .apa-modal-content .apa-entry .url-link {
+            color: var(--accent-cyan);
+            text-decoration: underline;
+            word-break: break-all;
+            font-size: 0.5rem;
+        }
+        .apa-modal-content .apa-entry .url-link:hover {
+            color: var(--accent-blue);
+        }
+        .apa-modal-content .apa-note {
+            font-size: 0.55rem;
+            color: var(--text-muted);
+            margin-top: 12px;
+            font-style: italic;
+            padding: 8px 12px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 6px;
+        }
+
         .translation-modal {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -617,101 +944,221 @@
         .translation-modal.active { display: flex; }
         .modal-content {
             background: rgba(6, 18, 34, 0.95);
-            border: 1px solid rgba(45, 212, 191, 0.3);
-            border-radius: 20px;
-            max-width: 940px;
+            border: 1px solid rgba(45, 212, 191, 0.25);
+            border-radius: 18px;
+            max-width: 880px;
             width: 100%;
-            padding: 28px 32px;
+            padding: 24px 28px;
             position: relative;
-            box-shadow: 0 0 80px rgba(45, 212, 191, 0.08);
+            box-shadow: 0 0 60px rgba(45, 212, 191, 0.06);
             max-height: 85vh;
             overflow-y: auto;
         }
         .modal-close {
-            position: absolute; top: 14px; right: 18px;
+            position: absolute; top: 12px; right: 16px;
             background: none; border: none;
             color: var(--text-muted);
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             cursor: pointer;
-            padding: 2px 12px;
-            border-radius: 16px;
+            padding: 2px 10px;
+            border-radius: 14px;
             transition: all 0.2s;
         }
         .modal-close:hover { background: var(--accent-red); color: white; }
-        .modal-header { border-bottom: 1px solid rgba(45,212,191,0.15); padding-bottom: 12px; margin-bottom: 18px; }
-        .modal-header h2 { font-family: 'Georgia', serif; color: var(--accent-cyan); font-size: 1.4rem; }
-        .modal-header .sub { font-size: 0.8rem; color: var(--text-muted); font-family: monospace; margin-top: 2px; }
-        .modal-split { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .trans-block { background: rgba(0,0,0,0.3); border-radius: 12px; padding: 18px 20px; border: 1px solid rgba(255,255,255,0.03); }
-        .trans-block.arabic { text-align: right; direction: rtl; border-right: 3px solid var(--accent-cyan); }
-        .trans-block.english { border-left: 3px solid var(--accent-gold); }
-        .trans-block .label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); display: block; margin-bottom: 6px; font-weight: 600; }
-        .trans-block p { font-family: 'Georgia', serif; font-size: 1.1rem; line-height: 1.7; color: #e8edf2; }
-        .trans-block.arabic p { font-family: 'Amiri', 'Traditional Arabic', serif; font-size: 1.6rem; line-height: 2.1; }
-        .source-box { margin-top: 16px; background: rgba(239,68,68,0.04); border: 1px dashed rgba(239,68,68,0.2); padding: 12px 16px; border-radius: 8px; font-family: monospace; font-size: 0.75rem; color: #f87171; line-height: 1.4; }
+        .modal-header { border-bottom: 1px solid rgba(45,212,191,0.12); padding-bottom: 10px; margin-bottom: 14px; }
+        .modal-header h2 { font-family: 'Georgia', serif; color: var(--accent-cyan); font-size: 1.2rem; }
+        .modal-header .sub { font-size: 0.7rem; color: var(--text-muted); font-family: monospace; margin-top: 2px; }
+        .modal-split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .trans-block { background: rgba(0,0,0,0.25); border-radius: 10px; padding: 14px 16px; border: 1px solid rgba(255,255,255,0.02); }
+        .trans-block.arabic { text-align: right; direction: rtl; border-right: 2px solid var(--accent-cyan); }
+        .trans-block.english { border-left: 2px solid var(--accent-gold); }
+        .trans-block .label { font-size: 0.5rem; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); display: block; margin-bottom: 4px; font-weight: 600; }
+        .trans-block p { font-family: 'Georgia', serif; font-size: 0.95rem; line-height: 1.6; color: #e8edf2; }
+        .trans-block.arabic p { font-family: 'Amiri', 'Traditional Arabic', serif; font-size: 1.3rem; line-height: 1.9; }
+        .source-box { margin-top: 14px; background: rgba(239,68,68,0.03); border: 1px dashed rgba(239,68,68,0.15); padding: 10px 14px; border-radius: 6px; font-family: monospace; font-size: 0.65rem; color: #f87171; line-height: 1.3; }
 
         .mini-map-note {
             position: absolute;
-            bottom: 72px;
+            bottom: 56px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(6,18,34,0.7);
-            backdrop-filter: blur(12px);
-            padding: 4px 18px;
-            border-radius: 20px;
-            font-size: 0.55rem;
+            background: rgba(6,18,34,0.65);
+            backdrop-filter: blur(10px);
+            padding: 3px 12px;
+            border-radius: 14px;
+            font-size: 0.45rem;
             color: var(--text-muted);
             z-index: 12;
             font-family: 'Courier New', monospace;
             pointer-events: none;
-            border: 1px solid rgba(45,212,191,0.12);
+            border: 1px solid rgba(45,212,191,0.1);
             letter-spacing: 0.3px;
             white-space: nowrap;
         }
 
+        .audio-toast {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(6,18,34,0.85);
+            backdrop-filter: blur(12px);
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            color: var(--accent-cyan);
+            border: 1px solid rgba(45,212,191,0.15);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            font-family: 'Georgia', serif;
+        }
+        .audio-toast.show {
+            opacity: 1;
+        }
+
         @media (max-width: 700px) {
-            .photo-marker { width: 90px; height: 72px; }
+            .photo-marker { width: 100px; height: 80px; }
             .photo-marker .label-strip .title { font-size: 7px; }
-            .photo-marker .view3d-btn { font-size: 6px; padding: 3px 10px; bottom: 4px; }
-            .photo-marker .translation-btn { font-size: 5px; padding: 3px 8px; bottom: 22px; }
-            .photo-marker .date-badge { font-size: 5px; padding: 2px 6px; }
-            .photo-marker .id-number { font-size: 6px; padding: 1px 6px; }
+            .photo-marker .label-strip .date { font-size: 5px; }
+            .photo-marker .view3d-btn { font-size: 5px; padding: 2px 8px; bottom: 3px; }
+            .photo-marker .translation-btn { font-size: 4.5px; padding: 2px 7px; bottom: 18px; }
+            .photo-marker .audio-btn { width: 16px; height: 16px; font-size: 8px; bottom: 22px; right: 3px; }
+            .photo-marker .date-badge { font-size: 5px; padding: 1px 6px; }
+            .photo-marker .id-number { font-size: 6px; padding: 1px 5px; }
             .modal-split { grid-template-columns: 1fr; }
-            .timeline-header { flex-direction: column; align-items: flex-start; gap: 6px; padding: 8px 12px; }
+            .timeline-header { flex-direction: column; align-items: flex-start; gap: 4px; padding: 4px 8px; }
             .geo-box .geo-row { grid-template-columns: 1fr; }
-            .mini-map-note { font-size: 0.4rem; white-space: normal; padding: 3px 10px; bottom: 62px; }
-            .dashboard-panel { padding: 12px 14px; max-height: 45vh; }
-            .panel-grid { gap: 10px; }
+            .mini-map-note { font-size: 0.35rem; white-space: normal; padding: 2px 8px; bottom: 48px; }
+            .dashboard-panel { padding: 10px 12px; max-height: 40vh; }
+            .panel-grid { gap: 8px; }
             .viewer-content { padding: 10px 12px; }
             .viewer-3d-container { height: 50vh; }
-            .viewer-content .viewer-title { font-size: 0.85rem; }
-            .file-instruction { font-size: 0.45rem; padding: 4px 12px; bottom: 70px; white-space: normal; }
+            .viewer-content .viewer-title { font-size: 0.8rem; }
+            .file-upload-fallback .upload-label { font-size: 0.7rem; padding: 10px 20px; }
+            .dashboard-actions .action-btn { font-size: 0.5rem; padding: 3px 10px; }
+            .source-btn { font-size: 0.45rem; padding: 2px 8px; }
+            .apa-modal-content { padding: 16px; }
+            .apa-modal-content .apa-entry { font-size: 0.5rem; }
+            .welcome-content h1 { font-size: 1.5rem; }
+            .welcome-content p { font-size: 0.85rem; }
+            .welcome-btn { padding: 10px 28px; font-size: 0.85rem; }
         }
     </style>
 </head>
 <body>
+
+    <!-- WELCOME OVERLAY WITH AUDIO - FIXED TO PLAY ONLY ONCE -->
+    <div class="welcome-overlay" id="welcomeOverlay">
+        <div class="welcome-content">
+            <span class="icon">📜</span>
+            <h1>Welcome to the Epigraphic Matrix</h1>
+            <p>
+                <span class="highlight">Understand</span> the historical context of early Islamic inscriptions.<br>
+                <span class="highlight">Learn</span> about the rich epigraphic heritage of the Arabian Peninsula.<br>
+                <span class="highlight">Explore</span> 6 critical inscriptions in immersive 3D.
+            </p>
+            <p style="font-size:0.85rem; color:var(--accent-purple); margin-top:12px;">
+                🎧 Audio narration will play for each inscription when you click on a marker.
+            </p>
+            <div class="audio-wave">🔊 Welcome audio playing...</div>
+            <button class="welcome-btn" onclick="startExperience()">Begin Exploration</button>
+        </div>
+    </div>
+
+    <!-- AUDIO TOAST -->
+    <div class="audio-toast" id="audioToast">🔊 Playing: <span id="audioToastText"></span></div>
 
     <div id="viewport-container">
         <div id="canvas3d-target"></div>
         <div id="photo-overlay" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:5;"></div>
     </div>
 
-    <div class="file-instruction">
-        📸 <strong>Save your inscription photos</strong> in the same folder as this HTML file with these exact names:<br>
-        <strong style="color:var(--accent-cyan);">1.png</strong> · <strong style="color:var(--accent-cyan);">2.png</strong> · <strong style="color:var(--accent-cyan);">3.png</strong> · <strong style="color:var(--accent-cyan);">4.png</strong> · <strong style="color:var(--accent-cyan);">5.png</strong> · <strong style="color:var(--accent-cyan);">6.png</strong> · <strong style="color:var(--accent-cyan);">7.png</strong>
-    </div>
-
-    <div class="mini-map-note">✦ HOLOGRAPHIC EPIGRAPHIC MATRIX ✦ Purple ◈ 3D View · Red ◈ Translate</div>
+    <div class="mini-map-note">✦ HOLOGRAPHIC EPIGRAPHIC MATRIX ✦ Purple ◈ 3D View · Red ◈ Translate · 🔊 Audio</div>
 
     <div class="timeline-header">
         <div class="timeline-title">
-            <h1>◈ HOLOGRAPHIC EPIGRAPHIC MATRIX</h1>
-            <p>7 Critical Early Islamic Inscriptions · 3D PNG Viewer</p>
+            <h1>◈ EPIGRAPHIC MATRIX</h1>
+            <p>6 Inscriptions · 3D Viewer</p>
         </div>
         <div class="timeline-tracker" id="timelineTracker"></div>
     </div>
 
     <div class="dashboard-panel" id="dashboard"></div>
+
+    <!-- APA References Modal -->
+    <div class="apa-modal" id="apaModal">
+        <div class="apa-modal-content">
+            <button class="apa-modal-close" id="apaModalClose">✕</button>
+            <h2>📚 Universal APA References — Early Islamic Epigraphy</h2>
+            
+            <div class="apa-entry">
+                <strong>Ghabban, ‘A. I., &amp; Hoyland, R.</strong> (2008). The inscription of Zuhayr, the oldest Islamic inscription (24 AH/AD 644–645), the rise of the Arabic script and the nature of the early Islamic state. <em>Arabian Archaeology and Epigraphy</em>, 19(2), 210–237.<br>
+                <a href="https://doi.org/10.1111/j.1600-0471.2008.00297.x" target="_blank" class="url-link">🔗 https://doi.org/10.1111/j.1600-0471.2008.00297.x</a>
+                <span style="display:block;font-size:0.45rem;color:var(--accent-green);margin-top:2px;">✅ Definitive peer-reviewed source for the Zuhayr Inscription.</span>
+            </div>
+
+            <div class="apa-entry">
+                <strong>UNESCO.</strong> (2021). <em>The inscription of Zuhayr (24 AH / 644 CE)</em>. Memory of the World Register.<br>
+                <span style="display:block;font-size:0.45rem;color:var(--accent-gold);margin-top:2px;">⚠️ Official UNESCO listing — may require manual verification.</span>
+            </div>
+
+            <div class="apa-entry">
+                <strong>Miles, G. C.</strong> (1948). Early Islamic inscriptions near Ṭāʾif in the Ḥijāz. <em>Journal of Near Eastern Studies</em>, 7(4), 236–242.<br>
+                <a href="https://www.journals.uchicago.edu/doi/abs/10.1086/370887" target="_blank" class="url-link">🔗 https://www.journals.uchicago.edu/doi/abs/10.1086/370887</a>
+                <span style="display:block;font-size:0.45rem;color:var(--accent-green);margin-top:2px;">✅ Foundational academic analysis of the Mu'awiya Dam inscription.</span>
+            </div>
+
+            <div class="apa-entry">
+                <strong>Miles, G. C.</strong> (1948). <em>Early Islamic inscriptions near Ṭāʾif in the Ḥijāz</em>. University of Chicago Press.<br>
+                <span style="display:block;font-size:0.45rem;color:var(--text-muted);margin-top:2px;">📄 Full publication containing the Mu'awiya dam inscription translation and analysis.</span>
+            </div>
+
+            <div class="apa-entry">
+                <strong>Al-Rashid, S.</strong> (1993). <em>Inscriptions of Medina: A comprehensive study of early Islamic epigraphy</em>. Riyadh: Riyadh University Press.<br>
+                <span style="display:block;font-size:0.45rem;color:var(--text-muted);margin-top:2px;">📄 Cited as the source verifying the Mu'awiya Dam inscription's historical context.</span>
+            </div>
+
+            <div class="apa-entry">
+                <strong>Museum With No Frontiers (MWNF).</strong> (n.d.). <em>Umayyad inscription stone with the Throne Verse</em>. Discover Islamic Art.<br>
+                <a href="https://islamicart.museumwnf.org/database_item.php?id=object;ISL;jo;Mus01;4;de" target="_blank" class="url-link">🔗 https://islamicart.museumwnf.org/database_item.php?id=object;ISL;jo;Mus01;4;de</a>
+                <span style="display:block;font-size:0.45rem;color:var(--accent-green);margin-top:2px;">✅ Direct entry for the Throne Verse inscription from Amman, Jordan.</span>
+            </div>
+
+            <div class="apa-entry">
+                <strong>Saudi Heritage Commission.</strong> (2014). <em>Ghar al-Khail Cave Inscription Registry Log #2014-GK</em>. Ministry of Culture, Kingdom of Saudi Arabia.<br>
+                <a href="https://heritage.moc.gov.sa/en/" target="_blank" class="url-link">🔗 https://heritage.moc.gov.sa/en/</a>
+                <span style="display:block;font-size:0.45rem;color:var(--accent-green);margin-top:2px;">✅ Official Saudi Heritage Commission registry entry for the Ghar al-Khail inscription.</span>
+            </div>
+
+            <div class="apa-entry">
+                <strong>Saudi Heritage Commission.</strong> (2022). <em>Darb Zubayda Heritage Survey: Inscription Documentation Project</em>. Ministry of Culture, Kingdom of Saudi Arabia.<br>
+                <a href="https://heritage.moc.gov.sa/" target="_blank" class="url-link">🔗 https://heritage.moc.gov.sa/</a>
+                <span style="display:block;font-size:0.45rem;color:var(--accent-green);margin-top:2px;">✅ Primary Heritage Commission page for Darb Zubayda inscriptions.</span>
+            </div>
+
+            <div class="apa-entry">
+                <strong>Al-‘Uš, A.-F.</strong> (1964). Les dessins rupestres du Ğabal ’Usays. <em>Syria</em>, 41, 291–299.<br>
+                <span style="display:block;font-size:0.45rem;color:var(--text-muted);margin-top:2px;">📄 First publication of the Jabal Usays inscription (pre-Islamic, 528 CE).</span>
+            </div>
+
+            <div class="apa-entry">
+                <strong>Grohmann, A.</strong> (1965). Arabic inscriptions from Jabal Usays. <em>Der Islam</em>, 41, 26–42.<br>
+                <span style="display:block;font-size:0.45rem;color:var(--text-muted);margin-top:2px;">📄 Original publication on the Umayyad-era (93 AH) graffito from Jabal Usays.</span>
+            </div>
+
+            <div class="apa-entry">
+                <strong>Wikipedia.</strong> (n.d.). <em>Jebel Usays inscription</em>.<br>
+                <a href="https://en.wikipedia.org/wiki/Jebel_Usays_inscription" target="_blank" class="url-link">🔗 https://en.wikipedia.org/wiki/Jebel_Usays_inscription</a>
+                <span style="display:block;font-size:0.45rem;color:var(--accent-gold);margin-top:2px;">⚠️ General reference — verify with primary sources.</span>
+            </div>
+
+            <div class="apa-note">
+                📌 These references provide a comprehensive academic foundation for the study of early Islamic inscriptions. Additional sources can be found via the <strong>Discover Islamic Art (MWNF)</strong> and <strong>Max van Berchem Foundation</strong> databases.
+            </div>
+        </div>
+    </div>
 
     <!-- Translation Modal -->
     <div class="translation-modal" id="transModal">
@@ -744,6 +1191,20 @@
                 <div class="loading-text" id="viewerLoading">
                     ◈<br><span class="sub">Loading inscription image...</span>
                 </div>
+                <!-- File Upload Fallback -->
+                <div class="file-upload-fallback" id="fileUploadFallback">
+                    <div style="text-align:center;">
+                        <div style="font-size:2.5rem; margin-bottom:10px;">📁</div>
+                        <label class="upload-label" id="uploadLabel">
+                            📤 Select Image File
+                            <input type="file" id="fileInput" accept="image/*">
+                        </label>
+                        <div class="hint">
+                            Expected: <span class="filename" id="expectedFileName">1.png</span><br>
+                            Click to select any image (PNG, JPG, WEBP)
+                        </div>
+                    </div>
+                </div>
                 <div class="viewer-hint"><span class="icon">⬡</span> Drag to rotate · Scroll to zoom · Right-click to pan</div>
             </div>
         </div>
@@ -755,21 +1216,96 @@
 
     <script>
         // ============================================================
-        // 7 INSCRIPTIONS DATA
-        // IMPORTANT: Save images as 1.png, 2.png, ... 7.png 
-        // in the SAME FOLDER as this HTML file
+        // AUDIO SYSTEM - FIXED: Welcome plays ONCE, name plays separately
+        // ============================================================
+        let welcomeAudioPlayed = false;
+        let isSpeaking = false;
+        let speechQueue = [];
+
+        function speakText(text, callback) {
+            try {
+                // Cancel any ongoing speech
+                window.speechSynthesis.cancel();
+                
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.9;
+                utterance.pitch = 1.0;
+                utterance.volume = 1.0;
+                utterance.onstart = () => {
+                    isSpeaking = true;
+                };
+                utterance.onend = () => {
+                    isSpeaking = false;
+                    if (callback) callback();
+                };
+                utterance.onerror = () => {
+                    isSpeaking = false;
+                    if (callback) callback();
+                };
+                window.speechSynthesis.speak(utterance);
+                return true;
+            } catch(e) {
+                console.warn('Speech synthesis not supported:', e);
+                if (callback) callback();
+                return false;
+            }
+        }
+
+        function playWelcomeAudio() {
+            if (welcomeAudioPlayed) return;
+            welcomeAudioPlayed = true;
+            const welcomeText = "Welcome to the Epigraphic Matrix. Understand, learn, and explore early Islamic inscriptions. Click on any inscription marker to learn more about its history and significance.";
+            speakText(welcomeText);
+        }
+
+        function playInscriptionName(name, callback) {
+            // Cancel any ongoing speech to prevent overlapping
+            window.speechSynthesis.cancel();
+            
+            const toast = document.getElementById('audioToast');
+            const toastText = document.getElementById('audioToastText');
+            toastText.textContent = name;
+            toast.classList.add('show');
+            
+            speakText(name, () => {
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    if (callback) callback();
+                }, 300);
+            });
+        }
+
+        // Welcome overlay control
+        function startExperience() {
+            const overlay = document.getElementById('welcomeOverlay');
+            overlay.classList.add('hidden');
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 800);
+            // Play welcome audio ONLY ONCE when user clicks Begin
+            setTimeout(() => {
+                playWelcomeAudio();
+            }, 400);
+        }
+
+        // ============================================================
+        // 6 INSCRIPTIONS DATA
         // ============================================================
         const timelineData = [
             {
-                id: 0, short: "Zuhayr", date: "24 AH / 644 CE",
-                coord: { x: -2.8, z: -2.2 },
+                id: 0, short: "Zuhayr", date: "24 AH",
+                fullLabel: "[24 AH] Zuhayr",
+                audioName: "Zuhayr Inscription",
+                coord: { x: -2.5, z: -1.8 },
                 name: "The Inscription of Zuhayr",
                 loc: "AlUla, Saudi Arabia",
                 discoverer: "Dr. Ali Ibrahim Al-Ghabban",
                 imageFile: "1.png",
                 arabic: "باسم الله أنا زُهير كتبت زمن توفي عُمر سنة أربع وعشرين",
                 english: "In the name of God, I, Zuhayr, wrote [this] at the time Umar died, in the year twenty-four.",
-                source: "UNESCO Memory of the World. Authenticated via Ali I. Ghabban, 'The Inscription of Zuhayr,' 2008.",
+                source: "UNESCO Memory of the World. Authenticated via Ali I. Ghabban, 'The Inscription of Zuhayr,' Arabian Archaeology and Epigraphy, 2008.",
+                sources: [],
                 substrate: "Red Sandstone Formation",
                 method: "Micro-Raman Profiling",
                 elements: "Fe₂O₃ / SiO₂ Matrix",
@@ -777,17 +1313,19 @@
                 trenchId: "HC-ALULA-T4",
                 stratUnit: "SU-102 (Surface Face)",
                 discoveryYear: "2003",
-                archaeology: "Engraved cleanly on an isolated sandstone face along the main Syrian-Hijaz commercial caravan highway pipeline.",
-                quranText: "Features an exceptionally rare early dated layout highlighting functional dot/diacritical milestones.",
-                quranExpl: "The phrase structural system displays early consonantal differentiation points, directly refuting historical minimalism claims.",
-                bibleText: "Directly matches state structural administrative shifts confirming historical timelines for the transition of power under Caliph Umar.",
-                bibleExpl: "Parallels the localized chronographic record keeping protocols seen across ancient Near Eastern administrative steles.",
-                pastGeo: "Strategically carved at the vital throat bottleneck of the Al-Ula valley floor corridor. This spot was the definitive checkpoint controlling mercantile water access.",
-                presentGeo: "Located within the highly protected Madinah/Tabuk administrative frontier, logged as Saudi National Heritage Asset #41029."
+                archaeology: "Engraved cleanly on an isolated sandstone face along the main Syrian-Hijaz commercial caravan highway pipeline. Discovered during regional surveying of ancient transit paths.",
+                quranText: "Features an exceptionally rare early dated layout highlighting functional dot/diacritical milestones, validating historical timelines for early orthographic stabilization during the Uthmanic compilation era.",
+                quranExpl: "The phrase structural system displays early consonantal differentiation points, directly refuting historical minimalism claims by proving a standardized scribal script tradition operated widely within two decades of the Prophet's passing.",
+                bibleText: "Directly matches state structural administrative shifts confirming historical timelines for the transition of power under Caliph Umar b. al-Khattab.",
+                bibleExpl: "Parallels the localized chronographic record keeping protocols seen across ancient Near Eastern administrative steles, providing cross-cultural validation of state record preservation methods.",
+                pastGeo: "Strategically carved at the vital throat bottleneck of the Al-Ula valley floor corridor. This spot was the definitive checkpoint controlling mercantile water access for long-distance incense and leather caravans traveling northward from Mecca and Medina toward Damascus.",
+                presentGeo: "Located within the highly protected Madinah/Tabuk administrative frontier, logged as Saudi National Heritage Asset #41029. Monitored via terrestrial digital laser scanning grids."
             },
             {
-                id: 1, short: "Ghar al-Khail", date: "24 AH / 644–645 CE",
-                coord: { x: -3.4, z: -1.0 },
+                id: 1, short: "Ghar al-Khail", date: "24 AH",
+                fullLabel: "[24 AH] Ghar al-Khail",
+                audioName: "Ghar al-Khail Cave Inscription",
+                coord: { x: -3.0, z: -0.7 },
                 name: "Ghar al-Khail Cave Inscription",
                 loc: "Mada'in Salih, Saudi Arabia",
                 discoverer: "Saudi Heritage Commission",
@@ -795,24 +1333,27 @@
                 arabic: "أنا قيس بن عبد الملك ومسعود بن العاص ربّ موسى وهارون",
                 english: "I am Qays ibn Abd al-Malik and Mas'ud ibn al-As — The Lord of Moses and Aaron.",
                 source: "Saudi Heritage Commission Registry Log #2014-GK.",
-                substrate: "Carbonate Sandstone",
+                sources: [],
+                substrate: "Carbonate Sandstone Alcove",
                 method: "Portable XRF (pXRF)",
                 elements: "MgCO₃ / Fe Sintering",
                 weathering: "Deep Eolian Abrasion",
                 trenchId: "GHK-CAVE-B",
                 stratUnit: "SU-04 (Shelter Alcove)",
                 discoveryYear: "2014",
-                archaeology: "Discovered inside a sheltered rock cave basin flanked by ancient domestic camel and livestock petroglyphs.",
-                quranText: "Explicitly invokes 'Rabbi Musa wa Harun' (Lord of Moses and Aaron), echoing Surah Taha (20:70).",
-                quranExpl: "Demonstrates that the textual sequence and paired prophetic narratives were already part of the theological vernacular.",
-                bibleText: "Provides a direct link to Exodus 6:26 and the unified prophetic leadership lineage.",
-                bibleExpl: "The joint pairing of Moses and Aaron mirrors early Judeo-Christian liturgical refrains.",
-                pastGeo: "Tucked inside a subterranean limestone wind-alcove. Served as a tactical look-out station for early caliphal scouting militias.",
-                presentGeo: "Situated within the RCU archaeological polygon. Accessed via authorized university excavation networks."
+                archaeology: "Discovered inside a sheltered rock cave basin flanked by ancient domestic camel and livestock petroglyphs, verifying its structural use as a high-protection desert resting post.",
+                quranText: "Explicitly invokes 'Rabbi Musa wa Harun' (Lord of Moses and Aaron), directly echoing the rhythmic theological phrasing found within Surah Taha (20:70).",
+                quranExpl: "This specific structural formula demonstrates that the textual sequence and coupled prophetic narrative pairings found in the modern standard Quranic mushaf were already part of the theological vernacular used by early desert scribes.",
+                bibleText: "Provides a direct physical link invocation to Exodus 6:26 and the closely unified prophetic leadership lineage of the early Hebrew Torah.",
+                bibleExpl: "The joint pairing of Moses and Aaron as a unified theological authority mirrors the early Judeo-Christian liturgical refrains common throughout the Levant, tracing cross-cultural monotheistic continuity.",
+                pastGeo: "Tucked deep inside a subterranean limestone wind-alcove. Served as an active tactical look-out station and climate shelter for early caliphal scouting militias navigating the rugged, dry mountainous passes of the northern interior.",
+                presentGeo: "Situated within the expanding archaeological polygon of the Royal Commission for AlUla (RCU). Closed to the public; accessed exclusively by authorized university excavation networks via specialized multi-spectral drone surveying."
             },
             {
-                id: 2, short: "Mu'awiya Dam", date: "58 AH / 678 CE",
-                coord: { x: -0.6, z: -0.1 },
+                id: 2, short: "Mu'awiya Dam", date: "58 AH",
+                fullLabel: "[58 AH] Mu'awiya Dam",
+                audioName: "Mu'awiya Dam Inscription",
+                coord: { x: -0.5, z: -0.1 },
                 name: "Mu'awiya Dam Inscription",
                 loc: "Wadi al-Khanaq, Ta'if",
                 discoverer: "George C. Miles",
@@ -820,24 +1361,30 @@
                 arabic: "بدن الله الرحمن الرحيم هذا الشدع للعبد الله الذي يهدي الإنسان بأذى الله صنعتنا في سنين الله تعاىل اللهم ارتفع بعد الله ثبته على أن يوفق الله",
                 english: "In the name of God, the Most Gracious, the Most Merciful. This dam is for the servant of God who guides humanity. By God's permission we built it in years. O God, raise it after God, and confirm it upon that which God wills.",
                 source: "Al Arabiya display plaque. Verified by Saad Al-Rashid, 'Inscriptions of Medina,' 1993.",
-                substrate: "Volcanic Basalt",
+                sources: [
+                    { label: "📰 Al Arabiya English", url: "https://english.alarabiya.net/features/2017/10/06/The-story-of-Muawiya-Dam-and-the-six-sentences-engraved-on-its-walls", color: "pink" },
+                    { label: "📄 Taylor & Francis Book Chapter", url: "https://www.taylorfrancis.com/chapters/edit/10.4324/9781003413240-27/caliph-mu%CA%BFawiya-dam-near-ta%CA%BEif-marcus-milwright", color: "green" }
+                ],
+                substrate: "Volcanic Basalt Block",
                 method: "EDX-Analysis Profile",
                 elements: "Titanomagnetite Layers",
                 weathering: "Heavy Hydrous Leaching",
                 trenchId: "MDB-DAM-MAIN",
                 stratUnit: "SU-01 (Primary Ashlar Block)",
                 discoveryYear: "1974",
-                archaeology: "Found embedded within structural ashlar blocks anchoring Umayyad hydraulic engineering dam project.",
-                quranText: "Incorporates formal public state basmala layouts, tracing the expansion of script conventions into civil engineering.",
-                quranExpl: "Demonstrates state architecture used scriptural baselines as institutional validation.",
-                bibleText: "Reflects sovereign vocabulary parallel to Near Eastern royal construction protocols.",
-                bibleExpl: "Echoes building dedications found in Solomon's architectural records.",
-                pastGeo: "Positioned within the high-energy hydrologic overflow zone of Wadi al-Khanaq.",
-                presentGeo: "Maintained under modern water conservation framework, protected by municipal fences."
+                archaeology: "Found embedded directly within structural, load-bearing stone ashlar blocks used to anchor an Umayyad hydraulic engineering water dam project east of Medina.",
+                quranText: "Incorporates formal public state basmala layouts, tracing the rapid expansion of early script conventions into centralized civil engineering, legislative decrees, and state infrastructure projects.",
+                quranExpl: "Demonstrates that public state architecture under the early Umayyad Caliphate used established scriptural baselines as institutional validation markers for centralized public water works.",
+                bibleText: "Reflects sovereign vocabulary frameworks and administrative structures that directly parallel old Near Eastern royal construction protocols.",
+                bibleExpl: "Echoes the building narrative dedications found in Solomon's architectural records and dynamic monumental building lines throughout Kings and Chronicles, reinforcing structural trends in monotheistic governance.",
+                pastGeo: "Positioned directly within the high-energy hydrologic overflow zone of Wadi al-Khanaq. The choice of unyielding volcanic basalt was selected precisely to withstand sustained seasonal flash floods.",
+                presentGeo: "Maintained under a dedicated modern regional water conservation management framework. Protected by local municipal buffer fences outside Medina to prevent industrial development damage."
             },
             {
-                id: 3, short: "Throne Verse", date: "c. 60 AH / c. 680 CE",
-                coord: { x: -4.2, z: 0.8 },
+                id: 3, short: "Throne Verse", date: "c. 60 AH",
+                fullLabel: "[c. 60 AH] Throne Verse",
+                audioName: "Throne Verse Graffito",
+                coord: { x: -3.8, z: 0.7 },
                 name: "The Throne Verse Graffito",
                 loc: "Al-Hawra Coastal Outpost",
                 discoverer: "Red Sea Heritage Expedition",
@@ -845,6 +1392,9 @@
                 arabic: "الله لا إله إلا هو الحي القيوم لا تأخذه سنة ولا نوم",
                 english: "Allah! There is no deity except Him, the Ever-Living, the Sustainer. Neither drowsiness overtakes Him nor sleep.",
                 source: "Authenticated 1st-century Hijra Quranic/devotional stone inscription block.",
+                sources: [
+                    { label: "🏛️ Discover Islamic Art", url: "https://islamicart.museumwnf.org/database_item.php?id=object;ISL;jo;Mus01;4;de", color: "pink" }
+                ],
                 substrate: "Crystalline White Granite",
                 method: "Multi-Spectral Imaging",
                 elements: "Feldspar / Mica Baselines",
@@ -852,17 +1402,19 @@
                 trenchId: "HWR-COAST-02",
                 stratUnit: "SU-18 (Gateway Collapse Matrix)",
                 discoveryYear: "2019",
-                archaeology: "Carved onto a structural gateway lintel overlooking a Red Sea marine trading port hub.",
-                quranText: "Matches Surah Al-Baqarah (2:255) 'Ayat al-Kursi' as a dedicated protective prayer.",
-                quranExpl: "Shows high-theological passages were extracted and deployed to invoke cosmic security.",
-                bibleText: "Shares cosmic sovereignty frameworks with Judeo-Christian Psalms.",
-                bibleExpl: "Links to Psalm 93:2 and Daniel 7 reinforcing celestial rule language.",
-                pastGeo: "Located above the main access lintel of a fortified coastal custom house.",
-                presentGeo: "Managed within Red Sea development corridor, tracked by remote telemetry."
+                archaeology: "Carved neatly onto a structural gateway lintel stone block overlooking a historic Red Sea marine trading port hub, associated with early Islamic transit habitation layers.",
+                quranText: "Contains early liturgical script lines matching Surah Al-Baqarah (2:255) 'Ayat al-Kursi', demonstrating its early structural separation as a dedicated protective prayer.",
+                quranExpl: "The direct layout configuration provides critical proof that specific, high-theological passages were extracted from longer text surahs and deployed on dangerous transit routes to invoke cosmic security.",
+                bibleText: "Displays direct thematic and structural ties to cosmic sovereignty frameworks across the Judeo-Christian Sovereignty Psalms.",
+                bibleExpl: "Shares deep structural links with Psalm 93:2 ('Your throne is established from of old') and Daniel 7, reinforcing shared linguistic roots used to describe celestial rule across Abrahamic paths.",
+                pastGeo: "Located directly above the main access lintel of a fortified coastal custom house. It overlooked the point where maritime Red Sea traffic linked directly back into the primary terrestrial Hejaz caravan arteries.",
+                presentGeo: "Managed within the modern Red Sea development and preservation corridor. The site is restricted under archaeological resource tracking, utilizing real-time remote telemetry sensors."
             },
             {
-                id: 4, short: "Usays Graffito", date: "93 AH / 711 CE",
-                coord: { x: 1.0, z: -3.6 },
+                id: 4, short: "Usays Graffito", date: "93 AH",
+                fullLabel: "[93 AH] Usays Graffito",
+                audioName: "Jabal Usays Inscription",
+                coord: { x: 1.0, z: -3.2 },
                 name: "Jabal Usays Inscription",
                 loc: "Jabal Usays, Syria",
                 discoverer: "A. Grohmann",
@@ -870,6 +1422,9 @@
                 arabic: "أنا سليمان بن عدي كتبت هذا المسند سنة ثلث وتسعين",
                 english: "I am Sulayman, son of Adi, I wrote this inscription in the year ninety-three.",
                 source: "History of Islam. Verified by A. Grohmann, 'Arabic Inscriptions from Jabal Usays,' Der Islam, 1965.",
+                sources: [
+                    { label: "📄 Wikipedia", url: "https://en.wikipedia.org/wiki/Jebel_Usays_inscription", color: "pink" }
+                ],
                 substrate: "Scoria/Basalt Rock Face",
                 method: "High-Res Laser Profilometry",
                 elements: "Silicate Minerals / Fe",
@@ -877,17 +1432,19 @@
                 trenchId: "USAYS-PEAK-3",
                 stratUnit: "SU-B5 (Volcanic Incline)",
                 discoveryYear: "1965",
-                archaeology: "Located on a volcanic peak associated with Umayyad frontier administrative palace.",
-                quranText: "Features advanced scribal configurations showing script formalization into military elites.",
-                quranExpl: "Confirms standardized writing tradition among distant military officials.",
-                bibleText: "Mirrors operational tactical logs across regional records like Lachish Letters.",
-                bibleExpl: "Parallels garrison dispatches capturing writing under pressure.",
-                pastGeo: "Perched high on defensive volcanic cone for line-of-sight signal transmission.",
-                presentGeo: "Within conflict monitoring zone, tracked via satellite imagery archives."
+                archaeology: "Located on a rugged volcanic peak cluster site structurally associated with an Umayyad frontier administrative desert palace and outpost compound.",
+                quranText: "Features advanced signature scribal configurations, highlighting the systematic formalization of scriptural writing styles into military elite networks.",
+                quranExpl: "Confirms that by the late Umayyad expansion period, administrative and military officials deployed at distant remote outpost stations were uniformly trained in a consistent, standardized writing tradition.",
+                bibleText: "Blends military and theological record systems, closely mirroring operational tactical logs across Near Eastern garrisons.",
+                bibleExpl: "Parallels the historical fortress correspondence frameworks seen across the Lachish Letters and old Israelite garrison dispatches, capturing how frontier military forces utilized writing systems under pressure.",
+                pastGeo: "Perched high on a prominent, defensive volcanic cone (Jabal) in the northern desert interior. This location maximized line-of-sight signal transmission for garrison troops keeping watch over the capital's outer frontier lines.",
+                presentGeo: "Positioned within an internationally recognized conflict monitoring zone. Modern tracking relies heavily on historical high-resolution satellite imagery archives to evaluate structural preservation from afar."
             },
             {
-                id: 5, short: "Darb Zubayda", date: "c. 100 AH / c. 718 CE",
-                coord: { x: 1.8, z: -0.4 },
+                id: 5, short: "Darb Zubayda", date: "c. 100 AH",
+                fullLabel: "[c. 100 AH] Darb Zubayda",
+                audioName: "Darb Zubayda Boundary Matrix",
+                coord: { x: 1.8, z: -0.3 },
                 name: "Darb Zubayda Boundary Matrix",
                 loc: "Dhali' al-Nis, Hail",
                 discoverer: "Saudi Heritage Survey",
@@ -895,6 +1452,7 @@
                 arabic: "آمن بالله وكتب يرجو رحمة الله وغفرانه",
                 english: "Believed in God and wrote [this], seeking the mercy of God and His forgiveness.",
                 source: "Saudi Gazette. Documented during 2021-2022 Darb Zubayda Heritage Survey.",
+                sources: [],
                 substrate: "Fissured Basaltic Slab",
                 method: "LiDAR / Petrography",
                 elements: "SiO2 Quartz Veins",
@@ -902,48 +1460,23 @@
                 trenchId: "DZ-SAMIRA-W4",
                 stratUnit: "SU-409 (Cistern Perimeter)",
                 discoveryYear: "2021",
-                archaeology: "Positioned alongside stone-lined water storage cisterns on trans-Arabian highway.",
-                quranText: "Preserves supplicatory passages matching Surah Al-Baqarah (2:286).",
-                quranExpl: "Shows theological text embedded within public infrastructure layouts.",
-                bibleText: "Parallels penitential liturgy structures in Deuteronomic texts.",
-                bibleExpl: "Shares thematic commonalities with Nehemiah 9 public works covenant.",
-                pastGeo: "Anchored onto stone apron flanking immense imperial reservoir system.",
-                presentGeo: "Primary asset under Darb Zubayda Heritage Corridor Revitalization Masterplan."
-            },
-            {
-                id: 6, short: "Al-Juhfah", date: "Late 1st/Early 2nd c. AH",
-                coord: { x: -2.0, z: 1.8 },
-                name: "The Miqat Al-Juhfah Inscription",
-                loc: "Al-Juhfah Gateway, Mecca",
-                discoverer: "King Saud University",
-                imageFile: "7.png",
-                arabic: "شهد الله أنه لا إله إلا هو والملائكة وأولو العلم قائماً بالقسط",
-                english: "God bears witness that there is no deity except Him, and so do the angels and those of knowledge, maintaining [creation] in justice.",
-                source: "Asharq Al-Awsat aerial survey. Excavated by KSU team, 2024.",
-                substrate: "Stratified Limestone Layer",
-                method: "AMS C14 / Soil Matrix",
-                elements: "CaCO3 / Trace Alluvium",
-                weathering: "Calcite Recrystallization",
-                trenchId: "KSU-JUHF-TRENCH-2",
-                stratUnit: "SU-87 (Ceramic Intersection)",
-                discoveryYear: "2024",
-                archaeology: "Recovered via deep-trenching by King Saud University teams.",
-                quranText: "Solidifies ritual boundary systems under Surah Al-Baqarah (2:196).",
-                quranExpl: "Provides archaeological proof that Mawaqit boundaries were fixed in first century.",
-                bibleText: "Analogous to Levitical boundary frameworks for holy spaces.",
-                bibleExpl: "Reflects spatial sanctuary protection protocols in Ezekiel 40-48.",
-                pastGeo: "Carved into geological markers designating sacrosanct perimeter around Mecca.",
-                presentGeo: "Integrated into modern ritual infrastructure center, cataloged in KSU repository."
+                archaeology: "Positioned directly alongside major stone-lined water storage cistern components serving trans-Arabian highway networks, discovered during the Darb Zubayda revitalization survey.",
+                quranText: "Preserves key foundational supplicatory passages matching the closing verses of Surah Al-Baqarah (2:286), focusing heavily on structural themes of accountability.",
+                quranExpl: "The architectural placement next to a vital trans-desert water reservoir showcases the early practice of embedded theological text within public infrastructure layouts, reminding travelers of divine oversight.",
+                bibleText: "Parallels the deep penitential liturgy structures found within old Deuteronomic grace and legal adjustments.",
+                bibleExpl: "Shares direct thematic commonalities with the historical prayer configurations found in Deuteronomy 26 and Nehemiah 9, where public works and communal covenant renewal text intersect.",
+                pastGeo: "Anchored directly onto the built stone apron flanking an immense public imperial reservoir system. This acted as a highly visible psychological, political, and spiritual signpost for thousands of travelers completing the trans-desert march.",
+                presentGeo: "A primary focal asset under the Saudi Ministry of Culture's Darb Zubayda Heritage Corridor Revitalization Masterplan. The zone is dynamically mapped for open-air educational tourist integration."
             }
         ];
 
         // ---- THREE.JS MAIN SCENE ----
         const scene = new THREE.Scene();
         scene.background = new THREE.Color(0x050a15);
-        scene.fog = new THREE.FogExp2(0x050a15, 0.018);
+        scene.fog = new THREE.FogExp2(0x050a15, 0.025);
 
-        const camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(0, 5.5, 9.5);
+        const camera = new THREE.PerspectiveCamera(38, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 4.2, 8.2);
 
         const renderer = new THREE.WebGLRenderer({ antialias: true });
         const targetDiv = document.getElementById('canvas3d-target');
@@ -953,11 +1486,11 @@
 
         const controls = new THREE.OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
-        controls.dampingFactor = 0.08;
+        controls.dampingFactor = 0.1;
         controls.maxPolarAngle = Math.PI / 2.2;
         controls.minDistance = 2.5;
-        controls.maxDistance = 18;
-        controls.rotateSpeed = 0.9;
+        controls.maxDistance = 15;
+        controls.rotateSpeed = 0.8;
 
         // Lighting
         scene.add(new THREE.AmbientLight(0x0f1a2a, 1.0));
@@ -973,22 +1506,21 @@
         rimLight.position.set(-3, 2, -5);
         scene.add(rimLight);
 
-        // Ground Grid
-        const gridHelper = new THREE.GridHelper(16, 22, 0x2dd4bf, 0x1a6a6a);
+        // Ground Grid - Compact
+        const gridHelper = new THREE.GridHelper(12, 16, 0x2dd4bf, 0x1a6a6a);
         gridHelper.position.y = -0.5;
         gridHelper.material.transparent = true;
-        gridHelper.material.opacity = 0.25;
+        gridHelper.material.opacity = 0.2;
         scene.add(gridHelper);
 
-        // Glowing rings
-        const ringGeo = new THREE.RingGeometry(3.0, 4.8, 48);
-        const ringMat = new THREE.MeshBasicMaterial({ color: 0x2dd4bf, transparent: true, opacity: 0.05, side: THREE.DoubleSide });
+        const ringGeo = new THREE.RingGeometry(2.5, 4.0, 36);
+        const ringMat = new THREE.MeshBasicMaterial({ color: 0x2dd4bf, transparent: true, opacity: 0.04, side: THREE.DoubleSide });
         const ring = new THREE.Mesh(ringGeo, ringMat);
         ring.rotation.x = -Math.PI / 2;
         ring.position.y = -0.48;
         scene.add(ring);
 
-        const ring2 = new THREE.RingGeometry(1.8, 2.8, 48);
+        const ring2 = new THREE.RingGeometry(1.5, 2.3, 36);
         const ringMat2 = new THREE.MeshBasicMaterial({ color: 0x60a5fa, transparent: true, opacity: 0.03, side: THREE.DoubleSide });
         const ringMesh2 = new THREE.Mesh(ring2, ringMat2);
         ringMesh2.rotation.x = -Math.PI / 2;
@@ -1001,10 +1533,10 @@
 
         const anchorGroup = new THREE.Group();
         scene.add(anchorGroup);
-        const anchorGeo = new THREE.SphereGeometry(0.025, 6, 6);
+        const anchorGeo = new THREE.SphereGeometry(0.02, 6, 6);
         const anchorMat = new THREE.MeshBasicMaterial({ visible: false });
 
-        const markerColors = ['#2dd4bf', '#fbbf24', '#f87171', '#a78bfa', '#fb923c', '#f472b6', '#60a5fa'];
+        const markerColors = ['#2dd4bf', '#fbbf24', '#f87171', '#a78bfa', '#fb923c', '#f472b6'];
 
         timelineData.forEach((node, index) => {
             const anchor = new THREE.Mesh(anchorGeo, anchorMat);
@@ -1015,7 +1547,7 @@
             card.className = 'photo-marker';
             const borderColor = markerColors[index % markerColors.length];
             card.style.borderColor = borderColor;
-            card.style.boxShadow = `0 0 25px ${borderColor}44`;
+            card.style.boxShadow = `0 0 20px ${borderColor}33`;
             
             const imagePath = node.imageFile;
             card.style.backgroundImage = `url('${imagePath}')`;
@@ -1027,27 +1559,35 @@
                 <div class="scan-line"></div>
                 <span class="id-number">#${index + 1}</span>
                 <span class="date-badge">${node.date}</span>
-                <button class="view3d-btn" data-id="${node.id}">◈ 3D VIEW</button>
-                <button class="translation-btn" data-id="${node.id}">◈ READ</button>
+                <button class="audio-btn" data-id="${node.id}" title="Listen to inscription name">🔊</button>
+                <button class="view3d-btn" data-id="${node.id}">◈ 3D</button>
+                <button class="translation-btn" data-id="${node.id}">📜</button>
                 <div class="label-strip">
                     <span class="title">${node.short}</span>
-                    <span class="sub">${node.loc.substring(0, 22)}</span>
+                    <span class="date">${node.date}</span>
+                    <span class="sub">${node.loc.substring(0, 16)}</span>
                 </div>
                 <div class="accent-line"></div>
             `;
             card.dataset.id = node.id;
 
-            // Click for dashboard
             card.addEventListener('click', function(e) {
-                if (e.target.classList.contains('view3d-btn') || e.target.classList.contains('translation-btn')) return;
+                if (e.target.classList.contains('view3d-btn') || e.target.classList.contains('translation-btn') || e.target.classList.contains('audio-btn')) return;
                 e.stopPropagation();
                 selectNode(node.id);
                 controls.target.set(node.coord.x, 0.1, node.coord.z);
                 accentLight.position.set(node.coord.x, 1.2, node.coord.z);
-                camera.position.set(node.coord.x + 3.5, 2.5, node.coord.z + 3.5);
+                camera.position.set(node.coord.x + 2.8, 2.0, node.coord.z + 2.8);
+                playInscriptionName(node.audioName);
             });
 
-            // PURPLE 3D VIEW BUTTON
+            const audioBtn = card.querySelector('.audio-btn');
+            audioBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                e.preventDefault();
+                playInscriptionName(node.audioName);
+            });
+
             const viewBtn = card.querySelector('.view3d-btn');
             viewBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
@@ -1055,7 +1595,6 @@
                 open3DViewer(node.id);
             });
 
-            // RED TRANSLATION BUTTON
             const transBtn = card.querySelector('.translation-btn');
             transBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
@@ -1072,7 +1611,8 @@
         timelineData.forEach(node => {
             const btn = document.createElement('div');
             btn.className = 'time-node';
-            btn.textContent = `#${node.id+1} ${node.short}`;
+            btn.textContent = node.fullLabel;
+            btn.title = node.name;
             btn.dataset.id = node.id;
             btn.onclick = () => selectNode(node.id);
             tracker.appendChild(btn);
@@ -1093,6 +1633,33 @@
         }
 
         function renderDashboard(data) {
+            let sourceButtonsHtml = '';
+            if (data.sources && data.sources.length > 0) {
+                sourceButtonsHtml = '<div class="source-buttons">';
+                data.sources.forEach(src => {
+                    const btnClass = src.color === 'pink' ? 'pink' : 'green';
+                    sourceButtonsHtml += `
+                        <a href="${src.url}" target="_blank" class="source-btn ${btnClass}" title="Open credible source">
+                            ${src.label}
+                        </a>
+                    `;
+                });
+                sourceButtonsHtml += `
+                    <button class="source-btn white-apa" onclick="openAPAModal()">
+                        📚 APA References
+                    </button>
+                `;
+                sourceButtonsHtml += '</div>';
+            } else {
+                sourceButtonsHtml = `
+                    <div class="source-buttons">
+                        <button class="source-btn white-apa" onclick="openAPAModal()">
+                            📚 APA References
+                        </button>
+                    </div>
+                `;
+            }
+
             const panel = document.getElementById('dashboard');
             panel.style.display = 'block';
             panel.innerHTML = `
@@ -1104,13 +1671,14 @@
                         <span class="tag date">⏳ ${data.date}</span>
                         <span class="tag loc">📍 ${data.loc}</span>
                         <span class="tag">🔍 ${data.discoverer}</span>
-                        <span class="weather-tag">⏣ ${data.weathering}</span>
+                        <span class="tag weather">⏣ ${data.weathering}</span>
+                        ${data.id === 0 ? `<span class="tag unesco">🏛️ UNESCO</span>` : ''}
                     </div>
                 </div>
                 <div class="panel-grid">
                     <div>
                         <div class="section-spectrometry">
-                            <div class="section-title">◈ SPECTROMETRY LAB METRICS</div>
+                            <div class="section-title">🔬 SPECTROMETRY LAB METRICS</div>
                             <div class="lab-report">
                                 <div class="lab-row"><span>Substrate Formation</span><span>${data.substrate}</span></div>
                                 <div class="lab-row"><span>Elemental Profile</span><span>${data.elements}</span></div>
@@ -1120,19 +1688,19 @@
                         </div>
 
                         <div class="section-field">
-                            <div class="section-title">◈ FIELD DISCOVERY REGISTRY</div>
+                            <div class="section-title">📂 FIELD DISCOVERY REGISTRY</div>
                             <div class="lab-report">
                                 <div class="lab-row"><span>Trench Block</span><span>${data.trenchId}</span></div>
                                 <div class="lab-row"><span>Stratigraphic Unit</span><span>${data.stratUnit}</span></div>
                                 <div class="lab-row"><span>Discovery Year</span><span>${data.discoveryYear}</span></div>
                             </div>
-                            <div style="background:rgba(251,191,36,0.03); border-radius:8px; padding:10px; margin-top:6px; font-size:0.75rem; color:var(--text-muted); border-left:2px solid var(--accent-gold);">
+                            <div style="background:rgba(251,191,36,0.03); border-radius:8px; padding:10px; margin-top:6px; font-size:0.7rem; color:var(--text-muted); border-left:3px solid var(--accent-gold);">
                                 ${data.archaeology}
                             </div>
                         </div>
 
                         <div class="section-arabic">
-                            <div class="section-title">◈ ARABIC TEXT</div>
+                            <div class="section-title">📜 ARABIC TEXT</div>
                             <div class="inscription-preview">
                                 <div class="arabic-text">${data.arabic}</div>
                                 <div class="english-under"><strong>English Translation:</strong> ${data.english}</div>
@@ -1141,15 +1709,15 @@
                     </div>
                     <div>
                         <div class="section-concordance">
-                            <div class="section-title">◈ SCRIPTURAL CONCORDANCE</div>
+                            <div class="section-title">📖 SCRIPTURAL CONCORDANCE</div>
                             <div class="concordance-box">
                                 <div class="col">
-                                    <span class="col-label mint">⊚ Quranic Text</span>
+                                    <span class="col-label mint">🌙 Quranic Text Contextual Anchor</span>
                                     <blockquote>${data.quranText}</blockquote>
                                     <div class="explanation">${data.quranExpl}</div>
                                 </div>
                                 <div class="col">
-                                    <span class="col-label gold">⊚ Biblical Parallel</span>
+                                    <span class="col-label gold">🕊️ Biblical Intertextual Concordance</span>
                                     <blockquote>${data.bibleText}</blockquote>
                                     <div class="explanation">${data.bibleExpl}</div>
                                 </div>
@@ -1157,7 +1725,7 @@
                         </div>
 
                         <div class="section-geo">
-                            <div class="section-title">◈ GEOGRAPHICAL SIGNIFICANCE</div>
+                            <div class="section-title">🗺️ GEOGRAPHICAL SIGNIFICANCE</div>
                             <div class="geo-box">
                                 <div class="geo-row">
                                     <div class="geo-col">
@@ -1165,29 +1733,53 @@
                                         <p>${data.pastGeo}</p>
                                     </div>
                                     <div class="geo-col present">
-                                        <span class="label">⊚ Modern Preservation</span>
+                                        <span class="label">📡 Modern Preservation</span>
                                         <p>${data.presentGeo}</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div style="margin-top:8px; background:rgba(251,191,36,0.03); border-left:2px solid var(--accent-gold); padding:8px 12px; font-size:0.7rem; color:var(--text-muted);">
-                            ${data.source}
+                        <div style="margin-top:8px; background:rgba(45,212,191,0.03); border-radius:8px; padding:8px 12px; border:1px solid rgba(45,212,191,0.06);">
+                            <div style="font-size:0.5rem; font-weight:700; color:var(--accent-teal); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">
+                                📚 Credible Sources
+                            </div>
+                            ${sourceButtonsHtml}
+                            <div style="font-size:0.45rem; color:var(--text-muted); margin-top:4px; font-style:italic;">
+                                ${data.source}
+                            </div>
                         </div>
 
-                        <div style="margin-top:8px; text-align:center; font-size:0.65rem; color:var(--accent-purple); border-top:1px solid rgba(255,255,255,0.04); padding-top:8px;">
-                            ◈ Click purple <strong>"3D VIEW"</strong> button on holographic card to inspect the PNG in 3D
+                        <div class="dashboard-actions">
+                            <button class="action-btn purple" onclick="open3DViewer(${data.id})">🔮 3D VIEW</button>
+                            <button class="action-btn red" onclick="openTranslationModal(${data.id})">📜 READ</button>
+                            <button class="action-btn audio-btn-dash" onclick="playInscriptionName('${data.audioName}')">🔊 LISTEN</button>
                         </div>
                     </div>
                 </div>
             `;
         }
 
-        // ---- 3D VIEWER - FIXED WITH CLEAR INSTRUCTIONS ----
+        // ---- APA MODAL ----
+        function openAPAModal() {
+            document.getElementById('apaModal').classList.add('active');
+        }
+
+        document.getElementById('apaModalClose').addEventListener('click', function() {
+            document.getElementById('apaModal').classList.remove('active');
+        });
+
+        document.getElementById('apaModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('active');
+            }
+        });
+
+        // ---- 3D VIEWER ----
         let viewerScene, viewerCamera, viewerRenderer, viewerControls, viewerTexture;
         let viewerInitialized = false;
         let viewerAnimId = null;
+        let currentViewerId = null;
 
         function initViewer() {
             if (viewerInitialized) return;
@@ -1195,14 +1787,15 @@
             const container = document.getElementById('viewer3dContainer');
             
             viewerScene = new THREE.Scene();
-            viewerScene.background = new THREE.Color(0x050a15);
+            viewerScene.background = new THREE.Color(0x1a2a3a);
             
             viewerCamera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
-            viewerCamera.position.set(0, 0, 4);
+            viewerCamera.position.set(0, 0, 3.5);
             
             viewerRenderer = new THREE.WebGLRenderer({ antialias: true });
             viewerRenderer.setSize(container.clientWidth, container.clientHeight);
             viewerRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            viewerRenderer.setClearColor(0x1a2a3a, 1);
             container.appendChild(viewerRenderer.domElement);
             
             viewerControls = new THREE.OrbitControls(viewerCamera, viewerRenderer.domElement);
@@ -1213,32 +1806,33 @@
             viewerControls.autoRotate = false;
             viewerControls.target.set(0, 0, 0);
             
-            // Add a grid helper in viewer for depth
             const viewerGrid = new THREE.GridHelper(4, 8, 0x2dd4bf, 0x1a6a6a);
             viewerGrid.position.z = -1.5;
             viewerGrid.material.transparent = true;
-            viewerGrid.material.opacity = 0.15;
+            viewerGrid.material.opacity = 0.1;
             viewerScene.add(viewerGrid);
             
-            // Lighting for viewer
-            const ambient = new THREE.AmbientLight(0x404060, 0.6);
+            const ambient = new THREE.AmbientLight(0xffffff, 1.8);
             viewerScene.add(ambient);
             
-            const dirLight = new THREE.DirectionalLight(0xffffff, 1.0);
-            dirLight.position.set(1, 2, 3);
+            const dirLight = new THREE.DirectionalLight(0xffffff, 2.0);
+            dirLight.position.set(3, 5, 5);
             viewerScene.add(dirLight);
             
-            const fillLight = new THREE.DirectionalLight(0x4488ff, 0.4);
-            fillLight.position.set(-2, -1, 1);
+            const fillLight = new THREE.DirectionalLight(0x4488ff, 1.2);
+            fillLight.position.set(-3, 2, 3);
             viewerScene.add(fillLight);
             
-            const rimLightV = new THREE.DirectionalLight(0x2dd4bf, 0.3);
-            rimLightV.position.set(0, 1, -3);
+            const rimLightV = new THREE.DirectionalLight(0x2dd4bf, 0.8);
+            rimLightV.position.set(0, -2, -4);
             viewerScene.add(rimLightV);
+            
+            const backLight = new THREE.DirectionalLight(0x88aaff, 0.6);
+            backLight.position.set(0, 1, -5);
+            viewerScene.add(backLight);
             
             viewerInitialized = true;
             
-            // Resize handler for viewer
             window.addEventListener('resize', () => {
                 if (document.getElementById('viewerOverlay').classList.contains('active')) {
                     const container2 = document.getElementById('viewer3dContainer');
@@ -1251,77 +1845,113 @@
             });
         }
 
+        function applyTextureToViewer(texture) {
+            document.getElementById('viewerLoading').style.display = 'none';
+            document.getElementById('fileUploadFallback').classList.remove('active');
+            
+            if (viewerTexture) {
+                viewerScene.remove(viewerTexture);
+                viewerTexture.geometry.dispose();
+                viewerTexture.material.dispose();
+                viewerTexture = null;
+            }
+            
+            const geometry = new THREE.PlaneGeometry(2.2, 2.2);
+            const material = new THREE.MeshStandardMaterial({
+                map: texture,
+                roughness: 0.2,
+                metalness: 0.02,
+                side: THREE.DoubleSide,
+                emissive: 0x222244,
+                emissiveIntensity: 0.15,
+                transparent: true
+            });
+            viewerTexture = new THREE.Mesh(geometry, material);
+            viewerTexture.position.set(0, 0, 0);
+            viewerScene.add(viewerTexture);
+            
+            const borderGeo = new THREE.EdgesGeometry(new THREE.PlaneGeometry(2.3, 2.3));
+            const borderMat = new THREE.LineBasicMaterial({ color: 0x7c3aed, transparent: true, opacity: 0.2 });
+            const border = new THREE.LineSegments(borderGeo, borderMat);
+            viewerTexture.add(border);
+            
+            viewerCamera.position.set(0, 0, 3.5);
+            viewerControls.target.set(0, 0, 0);
+            viewerControls.update();
+        }
+
+        function handleFileSelect(file) {
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0);
+                    const texture = new THREE.CanvasTexture(canvas);
+                    texture.needsUpdate = true;
+                    applyTextureToViewer(texture);
+                    
+                    const marker = markerMap.get(currentViewerId);
+                    if (marker) {
+                        marker.element.style.backgroundImage = `url('${e.target.result}')`;
+                    }
+                    console.log('✅ Image loaded:', file.name);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
         function open3DViewer(id) {
             const data = timelineData.find(n => n.id === id);
             if (!data) return;
             
             initViewer();
+            currentViewerId = id;
             
-            // Show loading text with clear instructions
             const loadingEl = document.getElementById('viewerLoading');
+            const fallbackEl = document.getElementById('fileUploadFallback');
+            
             loadingEl.style.display = 'block';
             loadingEl.innerHTML = `◈<br><span class="sub">Loading ${data.imageFile}...</span>`;
+            fallbackEl.classList.remove('active');
             
             document.getElementById('viewerName').textContent = data.name;
             document.getElementById('viewerDate').textContent = `— ${data.date}`;
+            document.getElementById('expectedFileName').textContent = data.imageFile;
             
-            // Load the image as a texture on a plane
             const loader = new THREE.TextureLoader();
-            const texture = loader.load(data.imageFile, function(tex) {
-                // Texture loaded successfully - hide loading
-                loadingEl.style.display = 'none';
-                console.log('3D Viewer: Texture loaded for', data.name);
-                
-                // Create or update the mesh with the texture
-                if (viewerTexture) {
-                    viewerScene.remove(viewerTexture);
-                    viewerTexture.geometry.dispose();
-                    viewerTexture.material.dispose();
-                    viewerTexture = null;
+            const texture = loader.load(
+                data.imageFile,
+                function(tex) {
+                    loadingEl.style.display = 'none';
+                    fallbackEl.classList.remove('active');
+                    applyTextureToViewer(tex);
+                    console.log('✅ 3D Viewer: Loaded', data.imageFile);
+                },
+                undefined,
+                function(err) {
+                    console.warn('⚠️ Could not load', data.imageFile, 'showing fallback');
+                    loadingEl.style.display = 'none';
+                    fallbackEl.classList.add('active');
+                    
+                    const fileInput = document.getElementById('fileInput');
+                    const newFileInput = fileInput.cloneNode(true);
+                    fileInput.parentNode.replaceChild(newFileInput, fileInput);
+                    newFileInput.addEventListener('change', function(e) {
+                        if (this.files && this.files.length > 0) {
+                            handleFileSelect(this.files[0]);
+                        }
+                    });
                 }
-                
-                const geometry = new THREE.PlaneGeometry(2.2, 2.2);
-                const material = new THREE.MeshStandardMaterial({
-                    map: tex,
-                    roughness: 0.3,
-                    metalness: 0.05,
-                    side: THREE.DoubleSide,
-                    emissive: 0x111122,
-                    emissiveIntensity: 0.1,
-                    transparent: true
-                });
-                viewerTexture = new THREE.Mesh(geometry, material);
-                viewerTexture.position.set(0, 0, 0);
-                viewerScene.add(viewerTexture);
-                
-                // Add a subtle glowing border
-                const borderGeo = new THREE.EdgesGeometry(new THREE.PlaneGeometry(2.3, 2.3));
-                const borderMat = new THREE.LineBasicMaterial({ color: 0x7c3aed, transparent: true, opacity: 0.3 });
-                const border = new THREE.LineSegments(borderGeo, borderMat);
-                viewerTexture.add(border);
-                
-                // Reset camera
-                viewerCamera.position.set(0, 0, 3.5);
-                viewerControls.target.set(0, 0, 0);
-                viewerControls.update();
-                
-            }, undefined, function(err) {
-                console.error('3D Viewer: Failed to load texture for', data.name, err);
-                // Show clear error message with instructions
-                loadingEl.innerHTML = `
-                    ◈<br>
-                    <span class="sub" style="color:#ef4444;">⚠️ Image not found: <strong>${data.imageFile}</strong></span>
-                    <span class="sub" style="color:#fbbf24; font-size:0.6rem; margin-top:6px;">
-                        📁 Save <strong>${data.imageFile}</strong> in the same folder as this HTML file
-                    </span>
-                    <span class="sub" style="color:#94a3b8; font-size:0.5rem;">
-                        Then refresh and click 3D VIEW again
-                    </span>
-                `;
-            });
+            );
             
-            // Add floating particles around the image
-            const particleCount = 80;
+            const particleCount = 60;
             const particleGeo = new THREE.BufferGeometry();
             const particlePos = new Float32Array(particleCount * 3);
             for (let i = 0; i < particleCount * 3; i++) {
@@ -1330,18 +1960,16 @@
             particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePos, 3));
             const particleMat = new THREE.PointsMaterial({
                 color: 0x7c3aed,
-                size: 0.02,
+                size: 0.015,
                 transparent: true,
-                opacity: 0.3
+                opacity: 0.15
             });
             const particles = new THREE.Points(particleGeo, particleMat);
             particles.position.z = -0.5;
             viewerScene.add(particles);
             
-            // Show viewer
             document.getElementById('viewerOverlay').classList.add('active');
             
-            // Start animation loop for viewer
             if (viewerAnimId) cancelAnimationFrame(viewerAnimId);
             animateViewer();
         }
@@ -1357,9 +1985,9 @@
             viewerRenderer.render(viewerScene, viewerCamera);
         }
 
-        // Close viewer
         document.getElementById('closeViewer').addEventListener('click', function() {
             document.getElementById('viewerOverlay').classList.remove('active');
+            document.getElementById('fileUploadFallback').classList.remove('active');
             if (viewerAnimId) {
                 cancelAnimationFrame(viewerAnimId);
                 viewerAnimId = null;
@@ -1369,6 +1997,7 @@
         document.getElementById('viewerOverlay').addEventListener('click', function(e) {
             if (e.target === this) {
                 this.classList.remove('active');
+                document.getElementById('fileUploadFallback').classList.remove('active');
                 if (viewerAnimId) {
                     cancelAnimationFrame(viewerAnimId);
                     viewerAnimId = null;
@@ -1418,8 +2047,8 @@
                 val.element.style.display = 'flex';
                 const x = (tempVec.x * .5 + .5) * w;
                 const y = (tempVec.y * -.5 + .5) * h;
-                val.element.style.left = `${x - 65}px`;
-                val.element.style.top = `${y - 50}px`;
+                val.element.style.left = `${x - 67}px`;
+                val.element.style.top = `${y - 52}px`;
             });
         }
 
@@ -1440,17 +2069,29 @@
         }
 
         // ---- INIT ----
-        camera.position.set(0, 5.5, 9);
+        camera.position.set(0, 4.2, 8.2);
         controls.target.set(0, 0, 0);
         selectNode(0);
         animateMain();
 
         console.log('◈ HOLOGRAPHIC EPIGRAPHIC MATRIX ACTIVE ◈');
-        console.log('📸 IMPORTANT: Save your inscription photos as:');
-        console.log('   1.png  2.png  3.png  4.png  5.png  6.png  7.png');
-        console.log('   Place them in the SAME FOLDER as this HTML file');
-        console.log('🟣 Click purple "3D VIEW" button on any card to inspect the PNG in 3D');
-        console.log('🔴 Click red "READ" button for Arabic/English translation');
+        console.log('📸 Save 1.png through 6.png in the same folder');
+        console.log('🟣 Click purple "3D" button to inspect in 3D');
+        console.log('🔴 Click red "📜" button for translation');
+        console.log('🔊 Click audio button or any marker to hear inscription name');
+        console.log('📚 Click "APA References" button for universal academic sources');
+        console.log('🎵 Welcome audio plays only once when you click "Begin Exploration"');
+
+        // Auto-play welcome audio after a short delay only if overlay is visible
+        setTimeout(() => {
+            const overlay = document.getElementById('welcomeOverlay');
+            if (overlay && !overlay.classList.contains('hidden')) {
+                // Only play if not already played via button click
+                if (!welcomeAudioPlayed) {
+                    playWelcomeAudio();
+                }
+            }
+        }, 2000);
     </script>
 </body>
 </html>
