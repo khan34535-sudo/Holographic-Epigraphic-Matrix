@@ -219,7 +219,7 @@
     <p>
         The <strong>Holographic Epigraphic Matrix</strong> is an immersive 3D web application that visualizes six of the 
         most critical early Islamic inscriptions. Each inscription is represented as a holographic marker on an interactive 
-         map, allowing users to explore epigraphic data, Arabic/English translations, spectrometry metrics, 
+        map, allowing users to explore epigraphic data, Arabic/English translations, spectrometry metrics, 
         geographical significance, and credible APA references in a futuristic academic interface.
     </p>
 
