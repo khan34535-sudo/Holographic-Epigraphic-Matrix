@@ -833,7 +833,7 @@
                             📤 Select Image File
                             <input type="file" id="fileInput" accept="image/*">
                         </label>
-                        <div class="hint">Expected: <span class="filename" id="expectedFileName">1.png</span></div>
+                        <div class="hint">Expected: <span class="filename" id="expectedFileName">1.1.png</span></div>
                     </div>
                 </div>
                 <div class="viewer-hint">⬡ Drag · Scroll · Right-click pan</div>
@@ -848,13 +848,118 @@
 
     <script>
         // ===================== DATA =====================
+        // Each inscription has:
+        // - imageFile: used for the marker thumbnail (e.g., "1.png")
+        // - viewerFile: used for the 3D viewer (e.g., "1.1.png") - TRY THESE NAMES!
         const timelineData = [
-            { id:0, short:"Zuhayr", date:"24 AH", fullLabel:"[24 AH] Zuhayr", audioName:"Zuhayr Inscription", coord:{x:-2.5,z:-1.8}, name:"The Inscription of Zuhayr", loc:"AlUla, Saudi Arabia", discoverer:"Dr. Ali Ibrahim Al-Ghabban", imageFile:"1.png", arabic:"باسم الله أنا زُهير كتبت زمن توفي عُمر سنة أربع وعشرين", english:"In the name of God, I, Zuhayr, wrote [this] at the time Umar died, in the year twenty-four.", source:"UNESCO Memory of the World. Authenticated via Ali I. Ghabban, 'The Inscription of Zuhayr,' Arabian Archaeology and Epigraphy, 2008.", substrate:"Red Sandstone Formation", method:"Micro-Raman Profiling", elements:"Fe₂O₃ / SiO₂ Matrix", weathering:"High Quartz Patina", trenchId:"HC-ALULA-T4", stratUnit:"SU-102 (Surface Face)", discoveryYear:"2003", archaeology:"Engraved cleanly on an isolated sandstone face along the main Syrian-Hijaz commercial caravan highway pipeline.", quranText:"Features an exceptionally rare early dated layout highlighting functional dot/diacritical milestones.", quranExpl:"The phrase structural system displays early consonantal differentiation points, directly refuting historical minimalism claims.", bibleText:"Directly matches state structural administrative shifts confirming historical timelines for the transition of power under Caliph Umar.", bibleExpl:"Parallels the localized chronographic record keeping protocols seen across ancient Near Eastern administrative steles.", pastGeo:"Strategically carved at the vital throat bottleneck of the Al-Ula valley floor corridor.", presentGeo:"Located within the highly protected Madinah/Tabuk administrative frontier, logged as Saudi National Heritage Asset #41029." },
-            { id:1, short:"Ghar al-Khail", date:"24 AH", fullLabel:"[24 AH] Ghar al-Khail", audioName:"Ghar al-Khail Cave Inscription", coord:{x:-3.0,z:-0.7}, name:"Ghar al-Khail Cave Inscription", loc:"Mada'in Salih, Saudi Arabia", discoverer:"Saudi Heritage Commission", imageFile:"2.png", arabic:"أنا قيس بن عبد الملك ومسعود بن العاص ربّ موسى وهارون", english:"I am Qays ibn Abd al-Malik and Mas'ud ibn al-As — The Lord of Moses and Aaron.", source:"Saudi Heritage Commission Registry Log #2014-GK.", substrate:"Carbonate Sandstone Alcove", method:"Portable XRF (pXRF)", elements:"MgCO₃ / Fe Sintering", weathering:"Deep Eolian Abrasion", trenchId:"GHK-CAVE-B", stratUnit:"SU-04 (Shelter Alcove)", discoveryYear:"2014", archaeology:"Discovered inside a sheltered rock cave basin flanked by ancient domestic camel and livestock petroglyphs.", quranText:"Explicitly invokes 'Rabbi Musa wa Harun' (Lord of Moses and Aaron), directly echoing Surah Taha (20:70).", quranExpl:"This specific structural formula demonstrates that the textual sequence was already part of the theological vernacular.", bibleText:"Provides a direct physical link invocation to Exodus 6:26 and the closely unified prophetic leadership lineage.", bibleExpl:"The joint pairing of Moses and Aaron mirrors early Judeo-Christian liturgical refrains.", pastGeo:"Tucked deep inside a subterranean limestone wind-alcove.", presentGeo:"Situated within the expanding archaeological polygon of the Royal Commission for AlUla (RCU)." },
-            { id:2, short:"Mu'awiya Dam", date:"58 AH", fullLabel:"[58 AH] Mu'awiya Dam", audioName:"Mu'awiya Dam Inscription", coord:{x:-0.5,z:-0.1}, name:"Mu'awiya Dam Inscription", loc:"Wadi al-Khanaq, Ta'if", discoverer:"George C. Miles", imageFile:"3.png", arabic:"بدن الله الرحمن الرحيم هذا الشدع للعبد الله الذي يهدي الإنسان بأذى الله صنعتنا في سنين الله تعاىل اللهم ارتفع بعد الله ثبته على أن يوفق الله", english:"In the name of God, the Most Gracious, the Most Merciful. This dam is for the servant of God who guides humanity.", source:"Al Arabiya display plaque. Verified by Saad Al-Rashid, 'Inscriptions of Medina,' 1993.", substrate:"Volcanic Basalt Block", method:"EDX-Analysis Profile", elements:"Titanomagnetite Layers", weathering:"Heavy Hydrous Leaching", trenchId:"MDB-DAM-MAIN", stratUnit:"SU-01 (Primary Ashlar Block)", discoveryYear:"1974", archaeology:"Found embedded directly within structural, load-bearing stone ashlar blocks used to anchor an Umayyad hydraulic engineering water dam project.", quranText:"Incorporates formal public state basmala layouts, tracing the rapid expansion of early script conventions into centralized civil engineering.", quranExpl:"Demonstrates that public state architecture under the early Umayyad Caliphate used established scriptural baselines.", bibleText:"Reflects sovereign vocabulary frameworks and administrative structures that directly parallel old Near Eastern royal construction protocols.", bibleExpl:"Echoes the building narrative dedications found in Solomon's architectural records.", pastGeo:"Positioned directly within the high-energy hydrologic overflow zone of Wadi al-Khanaq.", presentGeo:"Maintained under a dedicated modern regional water conservation management framework." },
-            { id:3, short:"Throne Verse", date:"c. 60 AH", fullLabel:"[c. 60 AH] Throne Verse", audioName:"Throne Verse Graffito", coord:{x:-3.8,z:0.7}, name:"The Throne Verse Graffito", loc:"Al-Hawra Coastal Outpost", discoverer:"Red Sea Heritage Expedition", imageFile:"4.png", arabic:"الله لا إله إلا هو الحي القيوم لا تأخذه سنة ولا نوم", english:"Allah! There is no deity except Him, the Ever-Living, the Sustainer. Neither drowsiness overtakes Him nor sleep.", source:"Authenticated 1st-century Hijra Quranic/devotional stone inscription block.", substrate:"Crystalline White Granite", method:"Multi-Spectral Imaging", elements:"Feldspar / Mica Baselines", weathering:"Desert Varnish Coating", trenchId:"HWR-COAST-02", stratUnit:"SU-18 (Gateway Collapse Matrix)", discoveryYear:"2019", archaeology:"Carved neatly onto a structural gateway lintel stone block overlooking a historic Red Sea marine trading port hub.", quranText:"Contains early liturgical script lines matching Surah Al-Baqarah (2:255) 'Ayat al-Kursi'.", quranExpl:"The direct layout configuration provides critical proof that specific, high-theological passages were extracted.", bibleText:"Displays direct thematic and structural ties to cosmic sovereignty frameworks across the Judeo-Christian Sovereignty Psalms.", bibleExpl:"Shares deep structural links with Psalm 93:2 ('Your throne is established from of old').", pastGeo:"Located directly above the main access lintel of a fortified coastal custom house.", presentGeo:"Managed within the modern Red Sea development and preservation corridor." },
-            { id:4, short:"Usays Graffito", date:"93 AH", fullLabel:"[93 AH] Usays Graffito", audioName:"Jabal Usays Inscription", coord:{x:1.0,z:-3.2}, name:"Jabal Usays Inscription", loc:"Jabal Usays, Syria", discoverer:"A. Grohmann", imageFile:"5.png", arabic:"أنا سليمان بن عدي كتبت هذا المسند سنة ثلث وتسعين", english:"I am Sulayman, son of Adi, I wrote this inscription in the year ninety-three.", source:"History of Islam. Verified by A. Grohmann, 'Arabic Inscriptions from Jabal Usays,' Der Islam, 1965.", substrate:"Scoria/Basalt Rock Face", method:"High-Res Laser Profilometry", elements:"Silicate Minerals / Fe", weathering:"Extreme Thermal Spalling", trenchId:"USAYS-PEAK-3", stratUnit:"SU-B5 (Volcanic Incline)", discoveryYear:"1965", archaeology:"Located on a rugged volcanic peak cluster site structurally associated with an Umayyad frontier administrative desert palace.", quranText:"Features advanced signature scribal configurations, highlighting the systematic formalization of scriptural writing styles.", quranExpl:"Confirms that by the late Umayyad expansion period, administrative and military officials deployed at remote outposts were uniformly trained.", bibleText:"Blends military and theological record systems, closely mirroring operational tactical logs across Near Eastern garrisons.", bibleExpl:"Parallels the historical fortress correspondence frameworks seen across the Lachish Letters.", pastGeo:"Perched high on a prominent, defensive volcanic cone (Jabal) in the northern desert interior.", presentGeo:"Positioned within an internationally recognized conflict monitoring zone." },
-            { id:5, short:"Darb Zubayda", date:"c. 100 AH", fullLabel:"[c. 100 AH] Darb Zubayda", audioName:"Darb Zubayda Boundary Matrix", coord:{x:1.8,z:-0.3}, name:"Darb Zubayda Boundary Matrix", loc:"Dhali' al-Nis, Hail", discoverer:"Saudi Heritage Survey", imageFile:"6.png", arabic:"آمن بالله وكتب يرجو رحمة الله وغفرانه", english:"Believed in God and wrote [this], seeking the mercy of God and His forgiveness.", source:"Saudi Gazette. Documented during 2021-2022 Darb Zubayda Heritage Survey.", substrate:"Fissured Basaltic Slab", method:"LiDAR / Petrography", elements:"SiO2 Quartz Veins", weathering:"Deep Micro-Fracturing", trenchId:"DZ-SAMIRA-W4", stratUnit:"SU-409 (Cistern Perimeter)", discoveryYear:"2021", archaeology:"Positioned directly alongside major stone-lined water storage cistern components serving trans-Arabian highway networks.", quranText:"Preserves key foundational supplicatory passages matching the closing verses of Surah Al-Baqarah (2:286).", quranExpl:"The architectural placement next to a vital trans-desert water reservoir showcases the early practice of embedded theological text.", bibleText:"Parallels the deep penitential liturgy structures found within old Deuteronomic grace and legal adjustments.", bibleExpl:"Shares direct thematic commonalities with the historical prayer configurations found in Deuteronomy 26 and Nehemiah 9.", pastGeo:"Anchored directly onto the built stone apron flanking an immense public imperial reservoir system.", presentGeo:"A primary focal asset under the Saudi Ministry of Culture's Darb Zubayda Heritage Corridor Revitalization Masterplan." }
+            { 
+                id:0, short:"Zuhayr", date:"24 AH", fullLabel:"[24 AH] Zuhayr", audioName:"Zuhayr Inscription", 
+                coord:{x:-2.5,z:-1.8}, name:"The Inscription of Zuhayr", loc:"AlUla, Saudi Arabia", 
+                discoverer:"Dr. Ali Ibrahim Al-Ghabban", 
+                imageFile:"1.png", viewerFile:"1.1.png",
+                arabic:"باسم الله أنا زُهير كتبت زمن توفي عُمر سنة أربع وعشرين", 
+                english:"In the name of God, I, Zuhayr, wrote [this] at the time Umar died, in the year twenty-four.", 
+                source:"UNESCO Memory of the World. Authenticated via Ali I. Ghabban, 'The Inscription of Zuhayr,' Arabian Archaeology and Epigraphy, 2008.", 
+                substrate:"Red Sandstone Formation", method:"Micro-Raman Profiling", elements:"Fe₂O₃ / SiO₂ Matrix", 
+                weathering:"High Quartz Patina", trenchId:"HC-ALULA-T4", stratUnit:"SU-102 (Surface Face)", discoveryYear:"2003", 
+                archaeology:"Engraved cleanly on an isolated sandstone face along the main Syrian-Hijaz commercial caravan highway pipeline.", 
+                quranText:"Features an exceptionally rare early dated layout highlighting functional dot/diacritical milestones.", 
+                quranExpl:"The phrase structural system displays early consonantal differentiation points, directly refuting historical minimalism claims.", 
+                bibleText:"Directly matches state structural administrative shifts confirming historical timelines for the transition of power under Caliph Umar.", 
+                bibleExpl:"Parallels the localized chronographic record keeping protocols seen across ancient Near Eastern administrative steles.", 
+                pastGeo:"Strategically carved at the vital throat bottleneck of the Al-Ula valley floor corridor.", 
+                presentGeo:"Located within the highly protected Madinah/Tabuk administrative frontier, logged as Saudi National Heritage Asset #41029." 
+            },
+            { 
+                id:1, short:"Ghar al-Khail", date:"24 AH", fullLabel:"[24 AH] Ghar al-Khail", audioName:"Ghar al-Khail Cave Inscription", 
+                coord:{x:-3.0,z:-0.7}, name:"Ghar al-Khail Cave Inscription", loc:"Mada'in Salih, Saudi Arabia", 
+                discoverer:"Saudi Heritage Commission", 
+                imageFile:"2.png", viewerFile:"2.1.png",
+                arabic:"أنا قيس بن عبد الملك ومسعود بن العاص ربّ موسى وهارون", 
+                english:"I am Qays ibn Abd al-Malik and Mas'ud ibn al-As — The Lord of Moses and Aaron.", 
+                source:"Saudi Heritage Commission Registry Log #2014-GK.", 
+                substrate:"Carbonate Sandstone Alcove", method:"Portable XRF (pXRF)", elements:"MgCO₃ / Fe Sintering", 
+                weathering:"Deep Eolian Abrasion", trenchId:"GHK-CAVE-B", stratUnit:"SU-04 (Shelter Alcove)", discoveryYear:"2014", 
+                archaeology:"Discovered inside a sheltered rock cave basin flanked by ancient domestic camel and livestock petroglyphs.", 
+                quranText:"Explicitly invokes 'Rabbi Musa wa Harun' (Lord of Moses and Aaron), directly echoing Surah Taha (20:70).", 
+                quranExpl:"This specific structural formula demonstrates that the textual sequence was already part of the theological vernacular.", 
+                bibleText:"Provides a direct physical link invocation to Exodus 6:26 and the closely unified prophetic leadership lineage.", 
+                bibleExpl:"The joint pairing of Moses and Aaron mirrors early Judeo-Christian liturgical refrains.", 
+                pastGeo:"Tucked deep inside a subterranean limestone wind-alcove.", 
+                presentGeo:"Situated within the expanding archaeological polygon of the Royal Commission for AlUla (RCU)." 
+            },
+            { 
+                id:2, short:"Mu'awiya Dam", date:"58 AH", fullLabel:"[58 AH] Mu'awiya Dam", audioName:"Mu'awiya Dam Inscription", 
+                coord:{x:-0.5,z:-0.1}, name:"Mu'awiya Dam Inscription", loc:"Wadi al-Khanaq, Ta'if", 
+                discoverer:"George C. Miles", 
+                imageFile:"3.png", viewerFile:"3.1.png",
+                arabic:"بدن الله الرحمن الرحيم هذا الشدع للعبد الله الذي يهدي الإنسان بأذى الله صنعتنا في سنين الله تعاىل اللهم ارتفع بعد الله ثبته على أن يوفق الله", 
+                english:"In the name of God, the Most Gracious, the Most Merciful. This dam is for the servant of God who guides humanity.", 
+                source:"Al Arabiya display plaque. Verified by Saad Al-Rashid, 'Inscriptions of Medina,' 1993.", 
+                substrate:"Volcanic Basalt Block", method:"EDX-Analysis Profile", elements:"Titanomagnetite Layers", 
+                weathering:"Heavy Hydrous Leaching", trenchId:"MDB-DAM-MAIN", stratUnit:"SU-01 (Primary Ashlar Block)", discoveryYear:"1974", 
+                archaeology:"Found embedded directly within structural, load-bearing stone ashlar blocks used to anchor an Umayyad hydraulic engineering water dam project.", 
+                quranText:"Incorporates formal public state basmala layouts, tracing the rapid expansion of early script conventions into centralized civil engineering.", 
+                quranExpl:"Demonstrates that public state architecture under the early Umayyad Caliphate used established scriptural baselines.", 
+                bibleText:"Reflects sovereign vocabulary frameworks and administrative structures that directly parallel old Near Eastern royal construction protocols.", 
+                bibleExpl:"Echoes the building narrative dedications found in Solomon's architectural records.", 
+                pastGeo:"Positioned directly within the high-energy hydrologic overflow zone of Wadi al-Khanaq.", 
+                presentGeo:"Maintained under a dedicated modern regional water conservation management framework." 
+            },
+            { 
+                id:3, short:"Throne Verse", date:"c. 60 AH", fullLabel:"[c. 60 AH] Throne Verse", audioName:"Throne Verse Graffito", 
+                coord:{x:-3.8,z:0.7}, name:"The Throne Verse Graffito", loc:"Al-Hawra Coastal Outpost", 
+                discoverer:"Red Sea Heritage Expedition", 
+                imageFile:"4.png", viewerFile:"4.1.png",
+                arabic:"الله لا إله إلا هو الحي القيوم لا تأخذه سنة ولا نوم", 
+                english:"Allah! There is no deity except Him, the Ever-Living, the Sustainer. Neither drowsiness overtakes Him nor sleep.", 
+                source:"Authenticated 1st-century Hijra Quranic/devotional stone inscription block.", 
+                substrate:"Crystalline White Granite", method:"Multi-Spectral Imaging", elements:"Feldspar / Mica Baselines", 
+                weathering:"Desert Varnish Coating", trenchId:"HWR-COAST-02", stratUnit:"SU-18 (Gateway Collapse Matrix)", discoveryYear:"2019", 
+                archaeology:"Carved neatly onto a structural gateway lintel stone block overlooking a historic Red Sea marine trading port hub.", 
+                quranText:"Contains early liturgical script lines matching Surah Al-Baqarah (2:255) 'Ayat al-Kursi'.", 
+                quranExpl:"The direct layout configuration provides critical proof that specific, high-theological passages were extracted.", 
+                bibleText:"Displays direct thematic and structural ties to cosmic sovereignty frameworks across the Judeo-Christian Sovereignty Psalms.", 
+                bibleExpl:"Shares deep structural links with Psalm 93:2 ('Your throne is established from of old').", 
+                pastGeo:"Located directly above the main access lintel of a fortified coastal custom house.", 
+                presentGeo:"Managed within the modern Red Sea development and preservation corridor." 
+            },
+            { 
+                id:4, short:"Usays Graffito", date:"93 AH", fullLabel:"[93 AH] Usays Graffito", audioName:"Jabal Usays Inscription", 
+                coord:{x:1.0,z:-3.2}, name:"Jabal Usays Inscription", loc:"Jabal Usays, Syria", 
+                discoverer:"A. Grohmann", 
+                imageFile:"5.png", viewerFile:"5.1.png",
+                arabic:"أنا سليمان بن عدي كتبت هذا المسند سنة ثلث وتسعين", 
+                english:"I am Sulayman, son of Adi, I wrote this inscription in the year ninety-three.", 
+                source:"History of Islam. Verified by A. Grohmann, 'Arabic Inscriptions from Jabal Usays,' Der Islam, 1965.", 
+                substrate:"Scoria/Basalt Rock Face", method:"High-Res Laser Profilometry", elements:"Silicate Minerals / Fe", 
+                weathering:"Extreme Thermal Spalling", trenchId:"USAYS-PEAK-3", stratUnit:"SU-B5 (Volcanic Incline)", discoveryYear:"1965", 
+                archaeology:"Located on a rugged volcanic peak cluster site structurally associated with an Umayyad frontier administrative desert palace.", 
+                quranText:"Features advanced signature scribal configurations, highlighting the systematic formalization of scriptural writing styles.", 
+                quranExpl:"Confirms that by the late Umayyad expansion period, administrative and military officials deployed at remote outposts were uniformly trained.", 
+                bibleText:"Blends military and theological record systems, closely mirroring operational tactical logs across Near Eastern garrisons.", 
+                bibleExpl:"Parallels the historical fortress correspondence frameworks seen across the Lachish Letters.", 
+                pastGeo:"Perched high on a prominent, defensive volcanic cone (Jabal) in the northern desert interior.", 
+                presentGeo:"Positioned within an internationally recognized conflict monitoring zone." 
+            },
+            { 
+                id:5, short:"Darb Zubayda", date:"c. 100 AH", fullLabel:"[c. 100 AH] Darb Zubayda", audioName:"Darb Zubayda Boundary Matrix", 
+                coord:{x:1.8,z:-0.3}, name:"Darb Zubayda Boundary Matrix", loc:"Dhali' al-Nis, Hail", 
+                discoverer:"Saudi Heritage Survey", 
+                imageFile:"6.png", viewerFile:"6.1.png",
+                arabic:"آمن بالله وكتب يرجو رحمة الله وغفرانه", 
+                english:"Believed in God and wrote [this], seeking the mercy of God and His forgiveness.", 
+                source:"Saudi Gazette. Documented during 2021-2022 Darb Zubayda Heritage Survey.", 
+                substrate:"Fissured Basaltic Slab", method:"LiDAR / Petrography", elements:"SiO2 Quartz Veins", 
+                weathering:"Deep Micro-Fracturing", trenchId:"DZ-SAMIRA-W4", stratUnit:"SU-409 (Cistern Perimeter)", discoveryYear:"2021", 
+                archaeology:"Positioned directly alongside major stone-lined water storage cistern components serving trans-Arabian highway networks.", 
+                quranText:"Preserves key foundational supplicatory passages matching the closing verses of Surah Al-Baqarah (2:286).", 
+                quranExpl:"The architectural placement next to a vital trans-desert water reservoir showcases the early practice of embedded theological text.", 
+                bibleText:"Parallels the deep penitential liturgy structures found within old Deuteronomic grace and legal adjustments.", 
+                bibleExpl:"Shares direct thematic commonalities with the historical prayer configurations found in Deuteronomy 26 and Nehemiah 9.", 
+                pastGeo:"Anchored directly onto the built stone apron flanking an immense public imperial reservoir system.", 
+                presentGeo:"A primary focal asset under the Saudi Ministry of Culture's Darb Zubayda Heritage Corridor Revitalization Masterplan." 
+            }
         ];
 
         // ===================== THREE.JS SETUP =====================
@@ -1071,7 +1176,7 @@
             setTimeout(() => toast.classList.remove('show'), 2500);
         }
 
-        // ===================== 3D VIEWER (FIXED) =====================
+        // ===================== 3D VIEWER (FIXED WITH viewerFile) =====================
         let viewerScene, viewerCamera, viewerRenderer, viewerControls, viewerTexture;
         let viewerInitialized = false, viewerAnimId = null;
         let currentViewerId = null;
@@ -1138,65 +1243,77 @@
             currentViewerId = id;
             initViewer();
             
+            // Use viewerFile for 3D, or fallback to imageFile
+            const viewerImage = data.viewerFile || data.imageFile;
+            
             document.getElementById('viewerName').textContent = data.name;
             document.getElementById('viewerDate').textContent = `— ${data.date}`;
-            document.getElementById('expectedFileName').textContent = data.imageFile;
+            document.getElementById('expectedFileName').textContent = viewerImage;
             
             const loading = document.getElementById('viewerLoading');
             loading.style.display = 'block';
-            loading.innerHTML = `◈<br><span class="sub">Loading ${data.imageFile}...</span>`;
+            loading.innerHTML = `◈<br><span class="sub">Loading ${viewerImage}...</span>`;
             document.getElementById('fileUploadFallback').classList.remove('active');
             
-            const container = document.getElementById('viewer3dContainer');
             // Clear any previous texture
             if(viewerTexture){ viewerScene.remove(viewerTexture); viewerTexture.geometry.dispose(); viewerTexture.material.dispose(); viewerTexture = null; }
             
             const loader = new THREE.TextureLoader();
-            // Use cross-origin for GitHub Pages
             loader.crossOrigin = 'anonymous';
             const texture = loader.load(
-                data.imageFile,
+                viewerImage,
                 (tex) => {
                     applyTextureToViewer(tex);
-                    console.log('✅ 3D Viewer: Loaded', data.imageFile);
+                    console.log('✅ 3D Viewer: Loaded', viewerImage);
                 },
                 undefined,
                 (err) => {
-                    console.warn('⚠️ Could not load', data.imageFile, 'showing fallback');
-                    loading.style.display = 'none';
-                    document.getElementById('fileUploadFallback').classList.add('active');
-                    
-                    // Setup file input
-                    const fileInput = document.getElementById('fileInput');
-                    const newInput = fileInput.cloneNode(true);
-                    fileInput.parentNode.replaceChild(newInput, fileInput);
-                    newInput.addEventListener('change', (e) => {
-                        if(e.target.files && e.target.files.length > 0) {
-                            const file = e.target.files[0];
-                            const reader = new FileReader();
-                            reader.onload = (ev) => {
-                                const img = new Image();
-                                img.onload = () => {
-                                    const canvas = document.createElement('canvas');
-                                    canvas.width = img.width;
-                                    canvas.height = img.height;
-                                    const ctx = canvas.getContext('2d');
-                                    ctx.drawImage(img, 0, 0);
-                                    const tex = new THREE.CanvasTexture(canvas);
-                                    tex.needsUpdate = true;
-                                    applyTextureToViewer(tex);
-                                    console.log('✅ Manual upload loaded:', file.name);
-                                    // Update marker image
-                                    const marker = markerMap.get(id);
-                                    if(marker) {
-                                        marker.element.style.backgroundImage = `url('${ev.target.result}')`;
-                                    }
-                                };
-                                img.src = ev.target.result;
-                            };
-                            reader.readAsDataURL(file);
+                    console.warn('⚠️ Could not load', viewerImage, 'trying fallback:', data.imageFile);
+                    // Try fallback to the marker image
+                    const fallbackLoader = new THREE.TextureLoader();
+                    fallbackLoader.load(
+                        data.imageFile,
+                        (tex) => {
+                            applyTextureToViewer(tex);
+                            console.log('✅ 3D Viewer: Loaded fallback', data.imageFile);
+                        },
+                        undefined,
+                        () => {
+                            // Both failed - show upload fallback
+                            loading.style.display = 'none';
+                            document.getElementById('fileUploadFallback').classList.add('active');
+                            
+                            const fileInput = document.getElementById('fileInput');
+                            const newInput = fileInput.cloneNode(true);
+                            fileInput.parentNode.replaceChild(newInput, fileInput);
+                            newInput.addEventListener('change', (e) => {
+                                if(e.target.files && e.target.files.length > 0) {
+                                    const file = e.target.files[0];
+                                    const reader = new FileReader();
+                                    reader.onload = (ev) => {
+                                        const img = new Image();
+                                        img.onload = () => {
+                                            const canvas = document.createElement('canvas');
+                                            canvas.width = img.width;
+                                            canvas.height = img.height;
+                                            const ctx = canvas.getContext('2d');
+                                            ctx.drawImage(img, 0, 0);
+                                            const tex = new THREE.CanvasTexture(canvas);
+                                            tex.needsUpdate = true;
+                                            applyTextureToViewer(tex);
+                                            console.log('✅ Manual upload loaded:', file.name);
+                                            const marker = markerMap.get(id);
+                                            if(marker) {
+                                                marker.element.style.backgroundImage = `url('${ev.target.result}')`;
+                                            }
+                                        };
+                                        img.src = ev.target.result;
+                                    };
+                                    reader.readAsDataURL(file);
+                                }
+                            });
                         }
-                    });
+                    );
                 }
             );
             
@@ -1268,8 +1385,11 @@
 
         // Auto welcome
         setTimeout(() => { if(!document.getElementById('welcomeOverlay').classList.contains('hidden')) playWelcomeAudio(); }, 1500);
-        console.log('◈ EPIGRAPHIC MATRIX · 6 INSCRIPTIONS · LARGE & BOLD ◈');
+        console.log('◈ EPIGRAPHIC MATRIX · 6 INSCRIPTIONS · USING viewerFile FOR 3D ◈');
+        console.log('📸 Try these files for 3D: 1.1.png, 2.1.png, 3.1.png, 4.1.png, 5.1.png, 6.1.png');
+        console.log('💡 If those fail, it will fallback to the marker image, then manual upload');
     </script>
 </body>
 </html>
+
 
