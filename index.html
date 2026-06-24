@@ -514,22 +514,22 @@
             box-shadow: 0 8px 24px rgba(0,0,0,0.5);
         }
         .timeline-title h1 { 
-            font-size: 0.8rem; 
+            font-size: 1.2rem; 
             font-weight: 700; 
             background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue), var(--accent-purple));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.5px;
         }
-        .timeline-title p { font-size: 0.5rem; color: var(--text-muted); margin-top: 1px; }
-        .timeline-tracker { display: flex; gap: 3px; flex-wrap: wrap; }
+        .timeline-title p { font-size: 0.6rem; color: var(--text-muted); margin-top: 2px; }
+        .timeline-tracker { display: flex; gap: 5px; flex-wrap: wrap; }
         .time-node {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.04);
-            padding: 2px 8px;
-            border-radius: 8px;
-            font-size: 7px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
+            padding: 4px 12px;
+            border-radius: 10px;
+            font-size: 9px;
             font-family: 'Segoe UI', sans-serif;
             font-weight: 600;
             color: var(--text-muted);
@@ -539,8 +539,8 @@
         .time-node:hover, .time-node.active {
             border-color: var(--accent-cyan);
             color: var(--accent-cyan);
-            background: rgba(45, 212, 191, 0.08);
-            box-shadow: 0 0 12px rgba(45,212,191,0.06);
+            background: rgba(45, 212, 191, 0.1);
+            box-shadow: 0 0 15px rgba(45,212,191,0.08);
         }
 
         /* ===== LARGER DASHBOARD PANEL ===== */
@@ -587,7 +587,7 @@
         }
         .meta-header h2 { 
             font-family: 'Georgia', serif; 
-            font-size: 1.4rem; 
+            font-size: 1.6rem; 
             color: #fff;
             background: linear-gradient(135deg, #fff, var(--accent-gold));
             -webkit-background-clip: text;
@@ -595,17 +595,17 @@
             color: transparent;
         }
         .meta-header .subtitle { 
-            font-size: 0.8rem; 
+            font-size: 0.9rem; 
             color: var(--text-muted); 
             margin-top: 2px; 
             font-weight: 400;
         }
-        .meta-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+        .meta-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
         .tag { 
             background: rgba(255,255,255,0.05); 
-            padding: 2px 10px; 
-            border-radius: 8px; 
-            font-size: 0.65rem;
+            padding: 3px 12px; 
+            border-radius: 10px; 
+            font-size: 0.75rem;
             font-family: 'Courier New', monospace;
         }
         .tag.date { color: var(--accent-gold); background: rgba(251, 191, 36, 0.08); border: 1px solid rgba(251,191,36,0.08); }
@@ -614,23 +614,23 @@
             color: var(--accent-purple); 
             background: rgba(167, 139, 250, 0.06); 
             border: 1px solid rgba(167, 139, 250, 0.08);
-            font-size: 0.55rem;
+            font-size: 0.65rem;
         }
         .tag.weather { 
             color: var(--accent-teal); 
             background: rgba(20,184,166,0.06); 
             border: 1px solid rgba(20,184,166,0.08);
-            font-size: 0.55rem;
+            font-size: 0.65rem;
         }
 
         .section-title { 
-            font-size: 0.6rem; 
+            font-size: 0.7rem; 
             text-transform: uppercase; 
             letter-spacing: 1.5px; 
-            margin: 10px 0 6px 0; 
+            margin: 12px 0 8px 0; 
             font-weight: 700;
             border-bottom: 1px solid rgba(255,255,255,0.04);
-            padding-bottom: 3px;
+            padding-bottom: 4px;
         }
         .section-spectrometry .section-title { color: var(--accent-cyan); }
         .section-field .section-title { color: var(--accent-gold); }
@@ -640,37 +640,37 @@
 
         .lab-report { 
             border-radius: 8px; 
-            padding: 8px 12px; 
+            padding: 10px 14px; 
             font-family: 'Courier New', monospace; 
-            font-size: 0.7rem;
-            line-height: 1.5;
+            font-size: 0.75rem;
+            line-height: 1.6;
         }
         .section-spectrometry .lab-report { border-left: 3px solid var(--accent-cyan); background: rgba(45,212,191,0.04); }
         .section-field .lab-report { border-left: 3px solid var(--accent-gold); background: rgba(251,191,36,0.04); }
-        .lab-row { display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.03); padding: 3px 0; }
+        .lab-row { display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.03); padding: 4px 0; }
         .section-spectrometry .lab-row span:last-child { color: var(--accent-cyan); }
         .section-field .lab-row span:last-child { color: var(--accent-gold); }
 
         .section-arabic .inscription-preview { 
             border-left: 3px solid var(--accent-pink);
             background: rgba(244,114,182,0.04);
-            padding: 10px 14px;
+            padding: 12px 16px;
             border-radius: 8px;
-            font-size: 0.9rem;
+            font-size: 1rem;
         }
         .section-arabic .arabic-text {
             direction: rtl;
             font-family: 'Amiri', 'Traditional Arabic', serif;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: #e8edf2;
-            line-height: 1.8;
-            margin-bottom: 6px;
+            line-height: 1.9;
+            margin-bottom: 8px;
         }
         .section-arabic .english-under {
             font-family: 'Georgia', serif;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             color: #cbd5e1;
-            line-height: 1.5;
+            line-height: 1.6;
             border-top: 1px solid rgba(244,114,182,0.15);
             padding-top: 8px;
             font-style: italic;
@@ -681,13 +681,13 @@
             border-left: 3px solid var(--accent-purple);
             background: rgba(167,139,250,0.04);
             border-radius: 8px;
-            padding: 10px 14px;
-            font-size: 0.75rem;
+            padding: 12px 16px;
+            font-size: 0.8rem;
         }
-        .concordance-box .col { margin-bottom: 8px; }
+        .concordance-box .col { margin-bottom: 10px; }
         .concordance-box .col:last-child { margin-bottom: 0; }
         .concordance-box .col-label {
-            font-size: 0.55rem;
+            font-size: 0.6rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -699,55 +699,55 @@
         .concordance-box blockquote {
             font-family: 'Georgia', serif;
             font-style: italic;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             color: #e2e8f0;
-            line-height: 1.4;
+            line-height: 1.5;
             padding-left: 10px;
             border-left: 2px solid rgba(167,139,250,0.15);
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
         .concordance-box .explanation {
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
-            line-height: 1.4;
+            line-height: 1.5;
         }
 
         .section-geo .geo-box { 
             border-left: 3px solid var(--accent-teal);
             background: rgba(20,184,166,0.04);
             border-radius: 8px;
-            padding: 10px 14px;
-            font-size: 0.75rem;
+            padding: 12px 16px;
+            font-size: 0.8rem;
         }
         .geo-box .geo-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 12px;
         }
         .geo-box .geo-col {
             background: rgba(0,0,0,0.15);
             border-radius: 6px;
-            padding: 8px 10px;
+            padding: 10px 12px;
             border-left: 3px solid var(--accent-teal);
         }
         .geo-box .geo-col.present { border-left-color: var(--accent-gold); }
         .geo-box .geo-col .label {
-            font-size: 0.5rem;
+            font-size: 0.55rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: var(--text-muted);
             font-weight: 700;
             display: block;
-            margin-bottom: 3px;
+            margin-bottom: 4px;
         }
-        .geo-box .geo-col p { font-size: 0.7rem; line-height: 1.4; color: #cbd5e1; }
+        .geo-box .geo-col p { font-size: 0.75rem; line-height: 1.5; color: #cbd5e1; }
 
         .weather-tag {
             display: inline-block;
             background: rgba(45,212,191,0.05);
-            padding: 2px 10px;
-            border-radius: 8px;
-            font-size: 0.55rem;
+            padding: 2px 12px;
+            border-radius: 10px;
+            font-size: 0.6rem;
             font-family: monospace;
             color: var(--accent-cyan);
             border: 1px solid rgba(45,212,191,0.08);
@@ -756,15 +756,15 @@
         /* ===== SOURCE BUTTONS ===== */
         .source-buttons {
             display: flex;
-            gap: 6px;
-            margin-top: 8px;
+            gap: 8px;
+            margin-top: 10px;
             flex-wrap: wrap;
         }
         .source-btn {
-            padding: 4px 12px;
-            border-radius: 8px;
+            padding: 5px 14px;
+            border-radius: 10px;
             border: none;
-            font-size: 0.55rem;
+            font-size: 0.6rem;
             font-weight: 700;
             font-family: 'Segoe UI', sans-serif;
             cursor: pointer;
@@ -797,7 +797,7 @@
             color: #0a1420;
             border: 1px solid rgba(255,255,255,0.2);
             box-shadow: 0 0 15px rgba(255,255,255,0.08);
-            font-size: 0.5rem;
+            font-size: 0.55rem;
         }
         .source-btn.white-apa:hover {
             transform: scale(1.05);
@@ -807,18 +807,18 @@
 
         .dashboard-actions {
             display: flex;
-            gap: 8px;
-            margin-top: 10px;
-            padding-top: 10px;
+            gap: 10px;
+            margin-top: 12px;
+            padding-top: 12px;
             border-top: 1px solid rgba(255,255,255,0.04);
             flex-wrap: wrap;
             justify-content: center;
         }
         .dashboard-actions .action-btn {
-            padding: 6px 16px;
-            border-radius: 10px;
+            padding: 8px 20px;
+            border-radius: 12px;
             border: none;
-            font-size: 0.65rem;
+            font-size: 0.75rem;
             font-weight: 700;
             font-family: 'Segoe UI', sans-serif;
             cursor: pointer;
@@ -854,7 +854,7 @@
             transform: scale(1.05);
         }
 
-        /* APA References Modal - Updated with corrected entries */
+        /* APA References Modal */
         .apa-modal {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -1049,7 +1049,7 @@
 </head>
 <body>
 
-    <!-- WELCOME OVERLAY WITH AUDIO - FIXED TO PLAY ONLY ONCE -->
+    <!-- WELCOME OVERLAY WITH AUDIO -->
     <div class="welcome-overlay" id="welcomeOverlay">
         <div class="welcome-content">
             <span class="icon">📜</span>
@@ -1062,7 +1062,7 @@
             <p style="font-size:0.85rem; color:var(--accent-purple); margin-top:12px;">
                 🎧 Audio narration will play for each inscription when you click on a marker.
             </p>
-            <div class="audio-wave">🔊 Welcome audio playing...</div>
+            <div class="audio-wave">🔊 Click "Begin Exploration" to start</div>
             <button class="welcome-btn" onclick="startExperience()">Begin Exploration</button>
         </div>
     </div>
@@ -1079,8 +1079,8 @@
 
     <div class="timeline-header">
         <div class="timeline-title">
-            <h1>◈ EPIGRAPHIC MATRIX</h1>
-            <p>6 Inscriptions · 3D Viewer</p>
+            <h1>◈ HOLOGRAPHIC EPIGRAPHIC MATRIX</h1>
+            <p>6 Critical Early Islamic Inscriptions · 3D PNG Viewer</p>
         </div>
         <div class="timeline-tracker" id="timelineTracker"></div>
     </div>
@@ -1216,11 +1216,10 @@
 
     <script>
         // ============================================================
-        // AUDIO SYSTEM - FIXED: Welcome plays ONCE, name plays separately
+        // AUDIO SYSTEM - FIXED for GitHub Pages
         // ============================================================
         let welcomeAudioPlayed = false;
         let isSpeaking = false;
-        let speechQueue = [];
 
         function speakText(text, callback) {
             try {
@@ -1290,7 +1289,7 @@
         }
 
         // ============================================================
-        // 6 INSCRIPTIONS DATA
+        // 6 INSCRIPTIONS DATA - REMOVED AL-JUHFAT NODE (ID 6)
         // ============================================================
         const timelineData = [
             {
@@ -1550,6 +1549,7 @@
             card.style.boxShadow = `0 0 20px ${borderColor}33`;
             
             const imagePath = node.imageFile;
+            // Use relative path for GitHub Pages
             card.style.backgroundImage = `url('${imagePath}')`;
             card.style.backgroundSize = 'cover';
             card.style.backgroundPosition = 'center';
@@ -2086,7 +2086,6 @@
         setTimeout(() => {
             const overlay = document.getElementById('welcomeOverlay');
             if (overlay && !overlay.classList.contains('hidden')) {
-                // Only play if not already played via button click
                 if (!welcomeAudioPlayed) {
                     playWelcomeAudio();
                 }
@@ -2095,3 +2094,4 @@
     </script>
 </body>
 </html>
+
