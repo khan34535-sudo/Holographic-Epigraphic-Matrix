@@ -756,7 +756,6 @@
 </head>
 <body>
 
-    <!-- WELCOME OVERLAY -->
     <div class="welcome-overlay" id="welcomeOverlay">
         <div class="welcome-content">
             <span class="icon">📜</span>
@@ -784,7 +783,6 @@
 
     <div class="dashboard-panel" id="dashboard"></div>
 
-    <!-- APA Modal -->
     <div class="apa-modal" id="apaModal">
         <div class="apa-modal-content">
             <button class="apa-modal-close" onclick="document.getElementById('apaModal').classList.remove('active')">✕</button>
@@ -797,7 +795,6 @@
         </div>
     </div>
 
-    <!-- Translation Modal -->
     <div class="translation-modal" id="transModal">
         <div class="modal-content">
             <button class="modal-close" onclick="document.getElementById('transModal').classList.remove('active')">✕</button>
@@ -819,7 +816,6 @@
         </div>
     </div>
 
-    <!-- 3D Viewer Overlay -->
     <div class="viewer-overlay" id="viewerOverlay">
         <div class="viewer-content">
             <button class="close-viewer" onclick="closeViewer()">✕</button>
@@ -845,338 +841,381 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-
     <script>
         // ===================== DATA =====================
-        // Each inscription has:
-        // - imageFile: used for the marker thumbnail (e.g., "1.png")
-        // - viewerFile: used for the 3D viewer (e.g., "1.1.png") - TRY THESE NAMES!
         const timelineData = [
-            { 
-                id:0, short:"Zuhayr", date:"24 AH", fullLabel:"[24 AH] Zuhayr", audioName:"Zuhayr Inscription", 
-                coord:{x:-2.5,z:-1.8}, name:"The Inscription of Zuhayr", loc:"AlUla, Saudi Arabia", 
-                discoverer:"Dr. Ali Ibrahim Al-Ghabban", 
-                imageFile:"1.png", viewerFile:"1.1.png",
-                arabic:"باسم الله أنا زُهير كتبت زمن توفي عُمر سنة أربع وعشرين", 
-                english:"In the name of God, I, Zuhayr, wrote [this] at the time Umar died, in the year twenty-four.", 
-                source:"UNESCO Memory of the World. Authenticated via Ali I. Ghabban, 'The Inscription of Zuhayr,' Arabian Archaeology and Epigraphy, 2008.", 
-                substrate:"Red Sandstone Formation", method:"Micro-Raman Profiling", elements:"Fe₂O₃ / SiO₂ Matrix", 
-                weathering:"High Quartz Patina", trenchId:"HC-ALULA-T4", stratUnit:"SU-102 (Surface Face)", discoveryYear:"2003", 
-                archaeology:"Engraved cleanly on an isolated sandstone face along the main Syrian-Hijaz commercial caravan highway pipeline.", 
-                quranText:"Features an exceptionally rare early dated layout highlighting functional dot/diacritical milestones.", 
-                quranExpl:"The phrase structural system displays early consonantal differentiation points, directly refuting historical minimalism claims.", 
-                bibleText:"Directly matches state structural administrative shifts confirming historical timelines for the transition of power under Caliph Umar.", 
-                bibleExpl:"Parallels the localized chronographic record keeping protocols seen across ancient Near Eastern administrative steles.", 
-                pastGeo:"Strategically carved at the vital throat bottleneck of the Al-Ula valley floor corridor.", 
-                presentGeo:"Located within the highly protected Madinah/Tabuk administrative frontier, logged as Saudi National Heritage Asset #41029." 
+            {
+                id:0, short:"Zuhayr", date:"24 AH", fullLabel:"[24 AH] Zuhayr", audioName:"Zuhayr Inscription", coord:{x:-2.5,z:-1.8},
+                name:"The Inscription of Zuhayr", loc:"AlUla, Saudi Arabia", discoverer:"Dr. Ali Ibrahim Al-Ghabban", imageFile:"1.png", viewerFile:"1.1.png",
+                arabic:"باسم الله أنا زُهير كتبت زمن توفي عُمر سنة أربع وعشرين",
+                english:"In the name of God, I, Zuhayr, wrote [this] at the time Umar died, in the year twenty-four.",
+                source:"UNESCO Memory of the World. Authenticated via Ali I. Ghabban, 'The Inscription of Zuhayr,' Arabian Archaeology and Epigraphy, 2008.",
+                substrate:"Red Sandstone Formation", method:"Micro-Raman Profiling", elements:"Fe₂O₃ / SiO₂ Matrix", weathering:"High Quartz Patina",
+                trenchId:"HC-ALULA-T4", stratUnit:"SU-102 (Surface Face)", discoveryYear:"2003",
+                archaeology:"Engraved cleanly on an isolated sandstone face along the main Syrian-Hijaz commercial caravan highway pipeline.",
+                quranText:"Features an exceptionally rare early dated layout highlighting functional dot/diacritical milestones.",
+                quranExpl:"The phrase structural system displays early consonantal differentiation points, directly refuting historical minimalism claims.",
+                bibleText:"Directly matches state structural administrative shifts confirming historical timelines for the transition of power under Caliph Umar.",
+                bibleExpl:"Parallels the localized chronographic record keeping protocols seen across ancient Near Eastern administrative steles.",
+                pastGeo:"Strategically carved at the vital throat bottleneck of the Al-Ula valley floor corridor.",
+                presentGeo:"Located within the highly protected Madinah/Tabuk administrative frontier, logged as Saudi National Heritage Asset #41029."
             },
-            { 
-                id:1, short:"Ghar al-Khail", date:"24 AH", fullLabel:"[24 AH] Ghar al-Khail", audioName:"Ghar al-Khail Cave Inscription", 
-                coord:{x:-3.0,z:-0.7}, name:"Ghar al-Khail Cave Inscription", loc:"Mada'in Salih, Saudi Arabia", 
-                discoverer:"Saudi Heritage Commission", 
-                imageFile:"2.png", viewerFile:"2.1.png",
-                arabic:"أنا قيس بن عبد الملك ومسعود بن العاص ربّ موسى وهارون", 
-                english:"I am Qays ibn Abd al-Malik and Mas'ud ibn al-As — The Lord of Moses and Aaron.", 
-                source:"Saudi Heritage Commission Registry Log #2014-GK.", 
-                substrate:"Carbonate Sandstone Alcove", method:"Portable XRF (pXRF)", elements:"MgCO₃ / Fe Sintering", 
-                weathering:"Deep Eolian Abrasion", trenchId:"GHK-CAVE-B", stratUnit:"SU-04 (Shelter Alcove)", discoveryYear:"2014", 
-                archaeology:"Discovered inside a sheltered rock cave basin flanked by ancient domestic camel and livestock petroglyphs.", 
-                quranText:"Explicitly invokes 'Rabbi Musa wa Harun' (Lord of Moses and Aaron), directly echoing Surah Taha (20:70).", 
-                quranExpl:"This specific structural formula demonstrates that the textual sequence was already part of the theological vernacular.", 
-                bibleText:"Provides a direct physical link invocation to Exodus 6:26 and the closely unified prophetic leadership lineage.", 
-                bibleExpl:"The joint pairing of Moses and Aaron mirrors early Judeo-Christian liturgical refrains.", 
-                pastGeo:"Tucked deep inside a subterranean limestone wind-alcove.", 
-                presentGeo:"Situated within the expanding archaeological polygon of the Royal Commission for AlUla (RCU)." 
+            {
+                id:1, short:"Ghar al-Khail", date:"24 AH", fullLabel:"[24 AH] Ghar al-Khail", audioName:"Ghar al-Khail Cave Inscription", coord:{x:-3.0,z:-0.7},
+                name:"Ghar al-Khail Cave Inscription", loc:"Mada'in Salih, Saudi Arabia", discoverer:"Saudi Heritage Commission", imageFile:"2.png", viewerFile:"2.1.png",
+                arabic:"أنا قيس بن عبد الملك ومسعود بن العاص ربّ موسى وهارون",
+                english:"I am Qays ibn Abd al-Malik and Mas'ud ibn al-As — The Lord of Moses and Aaron.",
+                source:"Saudi Heritage Commission Registry Log #2014-GK.",
+                substrate:"Carbonate Sandstone Alcove", method:"Portable XRF (pXRF)", elements:"MgCO₃ / Fe Sintering", weathering:"Deep Eolian Abrasion",
+                trenchId:"GHK-CAVE-B", stratUnit:"SU-04 (Shelter Alcove)", discoveryYear:"2014",
+                archaeology:"Discovered inside a sheltered rock cave basin flanked by ancient domestic camel and livestock petroglyphs.",
+                quranText:"Explicitly invokes 'Rabbi Musa wa Harun' (Lord of Moses and Aaron), directly echoing Surah Taha (20:70).",
+                quranExpl:"This specific structural formula demonstrates that the textual sequence was already part of the theological vernacular.",
+                bibleText:"Provides a direct physical link invocation to Exodus 6:26 and the closely unified prophetic leadership lineage.",
+                bibleExpl:"The joint pairing of Moses and Aaron mirrors early Judeo-Christian liturgical refrains.",
+                pastGeo:"Tucked deep inside a subterranean limestone wind-alcove.",
+                presentGeo:"Situated within the expanding archaeological polygon of the Royal Commission for AlUla (RCU)."
             },
-            { 
-                id:2, short:"Mu'awiya Dam", date:"58 AH", fullLabel:"[58 AH] Mu'awiya Dam", audioName:"Mu'awiya Dam Inscription", 
-                coord:{x:-0.5,z:-0.1}, name:"Mu'awiya Dam Inscription", loc:"Wadi al-Khanaq, Ta'if", 
-                discoverer:"George C. Miles", 
-                imageFile:"3.png", viewerFile:"3.1.png",
-                arabic:"بدن الله الرحمن الرحيم هذا الشدع للعبد الله الذي يهدي الإنسان بأذى الله صنعتنا في سنين الله تعاىل اللهم ارتفع بعد الله ثبته على أن يوفق الله", 
-                english:"In the name of God, the Most Gracious, the Most Merciful. This dam is for the servant of God who guides humanity.", 
-                source:"Al Arabiya display plaque. Verified by Saad Al-Rashid, 'Inscriptions of Medina,' 1993.", 
-                substrate:"Volcanic Basalt Block", method:"EDX-Analysis Profile", elements:"Titanomagnetite Layers", 
-                weathering:"Heavy Hydrous Leaching", trenchId:"MDB-DAM-MAIN", stratUnit:"SU-01 (Primary Ashlar Block)", discoveryYear:"1974", 
-                archaeology:"Found embedded directly within structural, load-bearing stone ashlar blocks used to anchor an Umayyad hydraulic engineering water dam project.", 
-                quranText:"Incorporates formal public state basmala layouts, tracing the rapid expansion of early script conventions into centralized civil engineering.", 
-                quranExpl:"Demonstrates that public state architecture under the early Umayyad Caliphate used established scriptural baselines.", 
-                bibleText:"Reflects sovereign vocabulary frameworks and administrative structures that directly parallel old Near Eastern royal construction protocols.", 
-                bibleExpl:"Echoes the building narrative dedications found in Solomon's architectural records.", 
-                pastGeo:"Positioned directly within the high-energy hydrologic overflow zone of Wadi al-Khanaq.", 
-                presentGeo:"Maintained under a dedicated modern regional water conservation management framework." 
+            {
+                id:2, short:"Mu'awiya Dam", date:"58 AH", fullLabel:"[58 AH] Mu'awiya Dam", audioName:"Mu'awiya Dam Inscription", coord:{x:-0.5,z:-0.1},
+                name:"Mu'awiya Dam Inscription", loc:"Wadi al-Khanaq, Ta'if", discoverer:"George C. Miles", imageFile:"3.png", viewerFile:"3.1.png",
+                arabic:"بدن الله الرحمن الرحيم هذا الشدع للعبد الله الذي يهدي الإنسان بأذى الله صنعتنا في سنين الله تعاىل اللهم ارتفع بعد الله ثبته على أن يوفق الله",
+                english:"In the name of God, the Most Gracious, the Most Merciful. This dam is for the servant of God who guides humanity.",
+                source:"Al Arabiya display plaque. Verified by Saad Al-Rashid, 'Inscriptions of Medina,' 1993.",
+                substrate:"Volcanic Basalt Block", method:"EDX-Analysis Profile", elements:"Titanomagnetite Layers", weathering:"Heavy Hydrous Leaching",
+                trenchId:"MDB-DAM-MAIN", stratUnit:"SU-01 (Primary Ashlar Block)", discoveryYear:"1974",
+                archaeology:"Found embedded directly within structural, load-bearing stone ashlar blocks used to anchor an Umayyad hydraulic engineering water dam project.",
+                quranText:"Incorporates formal public state basmala layouts, tracing the rapid expansion of early script conventions into centralized civil engineering.",
+                quranExpl:"Demonstrates that public state architecture under the early Umayyad Caliphate used established scriptural baselines.",
+                bibleText:"Reflects sovereign vocabulary frameworks and administrative structures that directly parallel old Near Eastern royal construction protocols.",
+                bibleExpl:"Echoes the building narrative dedications found in Solomon's architectural records.",
+                pastGeo:"Positioned directly within the high-energy hydrologic overflow zone of Wadi al-Khanaq.",
+                presentGeo:"Maintained under a dedicated modern regional water conservation management framework."
             },
-            { 
-                id:3, short:"Throne Verse", date:"c. 60 AH", fullLabel:"[c. 60 AH] Throne Verse", audioName:"Throne Verse Graffito", 
-                coord:{x:-3.8,z:0.7}, name:"The Throne Verse Graffito", loc:"Al-Hawra Coastal Outpost", 
-                discoverer:"Red Sea Heritage Expedition", 
-                imageFile:"4.png", viewerFile:"4.1.png",
-                arabic:"الله لا إله إلا هو الحي القيوم لا تأخذه سنة ولا نوم", 
-                english:"Allah! There is no deity except Him, the Ever-Living, the Sustainer. Neither drowsiness overtakes Him nor sleep.", 
-                source:"Authenticated 1st-century Hijra Quranic/devotional stone inscription block.", 
-                substrate:"Crystalline White Granite", method:"Multi-Spectral Imaging", elements:"Feldspar / Mica Baselines", 
-                weathering:"Desert Varnish Coating", trenchId:"HWR-COAST-02", stratUnit:"SU-18 (Gateway Collapse Matrix)", discoveryYear:"2019", 
-                archaeology:"Carved neatly onto a structural gateway lintel stone block overlooking a historic Red Sea marine trading port hub.", 
-                quranText:"Contains early liturgical script lines matching Surah Al-Baqarah (2:255) 'Ayat al-Kursi'.", 
-                quranExpl:"The direct layout configuration provides critical proof that specific, high-theological passages were extracted.", 
-                bibleText:"Displays direct thematic and structural ties to cosmic sovereignty frameworks across the Judeo-Christian Sovereignty Psalms.", 
-                bibleExpl:"Shares deep structural links with Psalm 93:2 ('Your throne is established from of old').", 
-                pastGeo:"Located directly above the main access lintel of a fortified coastal custom house.", 
-                presentGeo:"Managed within the modern Red Sea development and preservation corridor." 
+            {
+                id:3, short:"Throne Verse", date:"c. 60 AH", fullLabel:"[c. 60 AH] Throne Verse", audioName:"Throne Verse Graffito", coord:{x:-3.8,z:0.7},
+                name:"The Throne Verse Graffito", loc:"Al-Hawra Coastal Outpost", discoverer:"Red Sea Heritage Expedition", imageFile:"4.png", viewerFile:"4.1.png",
+                arabic:"الله لا إله إلا هو الحي القيوم لا تأخذه سنة ولا نوم",
+                english:"Allah! There is no deity except Him, the Ever-Living, the Sustainer. Neither drowsiness overtakes Him nor sleep.",
+                source:"Authenticated 1st-century Hijra Quranic/devotional stone inscription block.",
+                substrate:"Crystalline White Granite", method:"Multi-Spectral Imaging", elements:"Feldspar / Mica Baselines", weathering:"Desert Varnish Coating",
+                trenchId:"HWR-COAST-02", stratUnit:"SU-18 (Gateway Collapse Matrix)", discoveryYear:"2019",
+                archaeology:"Carved neatly onto a structural gateway lintel stone block overlooking a historic Red Sea marine trading port hub.",
+                quranText:"Contains early liturgical script lines matching Surah Al-Baqarah (2:255) 'Ayat al-Kursi'.",
+                quranExpl:"The direct layout configuration provides critical proof that specific, high-theological passages were extracted.",
+                bibleText:"Displays direct thematic and structural ties to cosmic sovereignty frameworks across the Judeo-Christian Sovereignty Psalms.",
+                bibleExpl:"Shares deep structural links with Psalm 93:2 ('Your throne is established from of old').",
+                pastGeo:"Located directly above the main access lintel of a fortified coastal custom house.",
+                presentGeo:"Managed within the modern Red Sea development and preservation corridor."
             },
-            { 
-                id:4, short:"Usays Graffito", date:"93 AH", fullLabel:"[93 AH] Usays Graffito", audioName:"Jabal Usays Inscription", 
-                coord:{x:1.0,z:-3.2}, name:"Jabal Usays Inscription", loc:"Jabal Usays, Syria", 
-                discoverer:"A. Grohmann", 
-                imageFile:"5.png", viewerFile:"5.1.png",
-                arabic:"أنا سليمان بن عدي كتبت هذا المسند سنة ثلث وتسعين", 
-                english:"I am Sulayman, son of Adi, I wrote this inscription in the year ninety-three.", 
-                source:"History of Islam. Verified by A. Grohmann, 'Arabic Inscriptions from Jabal Usays,' Der Islam, 1965.", 
-                substrate:"Scoria/Basalt Rock Face", method:"High-Res Laser Profilometry", elements:"Silicate Minerals / Fe", 
-                weathering:"Extreme Thermal Spalling", trenchId:"USAYS-PEAK-3", stratUnit:"SU-B5 (Volcanic Incline)", discoveryYear:"1965", 
-                archaeology:"Located on a rugged volcanic peak cluster site structurally associated with an Umayyad frontier administrative desert palace.", 
-                quranText:"Features advanced signature scribal configurations, highlighting the systematic formalization of scriptural writing styles.", 
-                quranExpl:"Confirms that by the late Umayyad expansion period, administrative and military officials deployed at remote outposts were uniformly trained.", 
-                bibleText:"Blends military and theological record systems, closely mirroring operational tactical logs across Near Eastern garrisons.", 
-                bibleExpl:"Parallels the historical fortress correspondence frameworks seen across the Lachish Letters.", 
-                pastGeo:"Perched high on a prominent, defensive volcanic cone (Jabal) in the northern desert interior.", 
-                presentGeo:"Positioned within an internationally recognized conflict monitoring zone." 
+            {
+                id:4, short:"Usays Graffito", date:"93 AH", fullLabel:"[93 AH] Usays Graffito", audioName:"Jabal Usays Inscription", coord:{x:1.0,z:-3.2},
+                name:"Jabal Usays Inscription", loc:"Jabal Usays, Syria", discoverer:"A. Grohmann", imageFile:"5.png", viewerFile:"5.1.png",
+                arabic:"أنا سليمان بن عدي كتبت هذا المسند سنة ثلث وتسعين",
+                english:"I am Sulayman, son of Adi, I wrote this inscription in the year ninety-three.",
+                source:"History of Islam. Verified by A. Grohmann, 'Arabic Inscriptions from Jabal Usays,' Der Islam, 1965.",
+                substrate:"Scoria/Basalt Rock Face", method:"High-Res Laser Profilometry", elements:"Silicate Minerals / Fe", weathering:"Extreme Thermal Spalling",
+                trenchId:"USAYS-PEAK-3", stratUnit:"SU-B5 (Volcanic Incline)", discoveryYear:"1965",
+                archaeology:"Located on a sheer volcanic scoria hillside along the ancient desert palace pathways east of Damascus.",
+                quranText:"Provides a benchmark secular non-liturgical public signature sequence executed during the golden decade of Caliph Al-Walid I.",
+                quranExpl:"The text confirms the active secular use of early Arabic scripts simultaneously with state scriptural standardization projects.",
+                bibleText:"Preserves authentic administrative naming baselines that cross-link directly into regional Ghassanid tribal federation alliance rosters.",
+                bibleExpl:"Provides cross-disciplinary validation for the complex tribal landscape changes documented in early Roman and Syrian records.",
+                pastGeo:"Etched onto an isolated volcanic outcropping peak context.",
+                presentGeo:"Located inside an internationally monitored archaeological buffer zone in southern Syria."
             },
-            { 
-                id:5, short:"Darb Zubayda", date:"c. 100 AH", fullLabel:"[c. 100 AH] Darb Zubayda", audioName:"Darb Zubayda Boundary Matrix", 
-                coord:{x:1.8,z:-0.3}, name:"Darb Zubayda Boundary Matrix", loc:"Dhali' al-Nis, Hail", 
-                discoverer:"Saudi Heritage Survey", 
-                imageFile:"6.png", viewerFile:"6.1.png",
-                arabic:"آمن بالله وكتب يرجو رحمة الله وغفرانه", 
-                english:"Believed in God and wrote [this], seeking the mercy of God and His forgiveness.", 
-                source:"Saudi Gazette. Documented during 2021-2022 Darb Zubayda Heritage Survey.", 
-                substrate:"Fissured Basaltic Slab", method:"LiDAR / Petrography", elements:"SiO2 Quartz Veins", 
-                weathering:"Deep Micro-Fracturing", trenchId:"DZ-SAMIRA-W4", stratUnit:"SU-409 (Cistern Perimeter)", discoveryYear:"2021", 
-                archaeology:"Positioned directly alongside major stone-lined water storage cistern components serving trans-Arabian highway networks.", 
-                quranText:"Preserves key foundational supplicatory passages matching the closing verses of Surah Al-Baqarah (2:286).", 
-                quranExpl:"The architectural placement next to a vital trans-desert water reservoir showcases the early practice of embedded theological text.", 
-                bibleText:"Parallels the deep penitential liturgy structures found within old Deuteronomic grace and legal adjustments.", 
-                bibleExpl:"Shares direct thematic commonalities with the historical prayer configurations found in Deuteronomy 26 and Nehemiah 9.", 
-                pastGeo:"Anchored directly onto the built stone apron flanking an immense public imperial reservoir system.", 
-                presentGeo:"A primary focal asset under the Saudi Ministry of Culture's Darb Zubayda Heritage Corridor Revitalization Masterplan." 
+            {
+                id:5, short:"Al-Khishna", date:"120 AH", fullLabel:"[120 AH] Al-Khishna", audioName:"Al-Khishna Shield Inscription", coord:{x:2.5,z:-0.5},
+                name:"Al-Khishna Shield Inscription", loc:"Wadi Shwas, Saudi Arabia", discoverer:"Dr. Saeed Al-Rashid", imageFile:"6.png", viewerFile:"6.1.png",
+                arabic:"اللهم اغفر لعمر بن عبد الله ذنبه العظيم آمين يا رب العالمين كتب في سنة عشرين ومائة",
+                english:"O Allah, forgive Umar ibn Abdallah his great sin. Amen, O Lord of the Worlds. Written in the year one hundred and twenty.",
+                source:"Authenticated 2nd-century Hijra devotional stone face. Recorded in Saudi Epigraphy Series Vol 4.",
+                substrate:"Metamorphic Green-Schist Panel", method:"SCT Core Scan Profile", elements:"Chlorite / Epidote Formations", weathering:"Heavy Desert Glaze Layer",
+                trenchId:"KHS-PANEL-A", stratUnit:"SU-12 (Exposed Rock Face)", discoveryYear:"1989",
+                archaeology:"Carved on a hard, low-porosity vertical green-schist cliff face along the mountain mining bypass tracking networks.",
+                quranText:"Features early expansion uses of the explicit formula 'Amin ya Rab al-Alamin', adapting Quranic closing prayers into public text layouts.",
+                quranExpl:"Demonstrates the complete saturation of prophetic devotional vocabulary systems into everyday remote personal scripts.",
+                bibleText:"Shares precise structural thematic parallels with old Near Eastern personal expiation and prayer inscriptions.",
+                bibleExpl:"Mirrors ancient structures of penitential confessions found across traditional Semitic religious monuments.",
+                pastGeo:"Located at the elevated trail-crest intersection of ancient Hijaz mountain mining routes.",
+                presentGeo:"Protected under the current Saudi Vision 2030 regional archaeological protection mandate."
             }
         ];
 
-        // ===================== THREE.JS SETUP =====================
+        // ===================== ENVIRONMENT =====================
         const scene = new THREE.Scene();
         scene.background = new THREE.Color(0x050a15);
-        scene.fog = new THREE.FogExp2(0x050a15, 0.025);
+        scene.fog = new THREE.FogExp2(0x050a15, 0.08);
 
-        const camera = new THREE.PerspectiveCamera(38, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(0, 4.2, 8.2);
-
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ antialias: true });
-        const targetDiv = document.getElementById('canvas3d-target');
-        renderer.setSize(targetDiv.clientWidth, targetDiv.clientHeight);
+        renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        targetDiv.appendChild(renderer.domElement);
+        document.getElementById('canvas3d-target').appendChild(renderer.domElement);
 
         const controls = new THREE.OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
-        controls.dampingFactor = 0.1;
-        controls.maxPolarAngle = Math.PI / 2.2;
-        controls.minDistance = 2.5;
-        controls.maxDistance = 15;
-        controls.rotateSpeed = 0.8;
+        controls.dampingFactor = 0.05;
+        controls.maxPolarAngle = Math.PI/2 - 0.02;
+        controls.minDistance = 3;
+        controls.maxDistance = 25;
 
-        scene.add(new THREE.AmbientLight(0x0f1a2a, 1.0));
-        const sun = new THREE.DirectionalLight(0x2dd4bf, 0.5);
-        sun.position.set(3, 12, 4);
-        scene.add(sun);
-        const blueLight = new THREE.DirectionalLight(0x60a5fa, 0.35);
-        blueLight.position.set(-4, 8, -2);
-        scene.add(blueLight);
-        const accentLight = new THREE.PointLight(0x2dd4bf, 1.5, 8);
-        scene.add(accentLight);
-        const rimLight = new THREE.PointLight(0xa78bfa, 0.5, 10);
-        rimLight.position.set(-3, 2, -5);
+        // Environment Lighting
+        scene.add(new THREE.AmbientLight(0x0f172a, 1.2));
+        const mainLight = new THREE.DirectionalLight(0x2dd4bf, 1.5);
+        mainLight.position.set(5, 12, 7);
+        scene.add(mainLight);
+        const rimLight = new THREE.DirectionalLight(0x60a5fa, 0.8);
+        rimLight.position.set(-8, 4, -5);
         scene.add(rimLight);
 
-        const gridHelper = new THREE.GridHelper(12, 16, 0x2dd4bf, 0x1a6a6a);
-        gridHelper.position.y = -0.5;
-        gridHelper.material.transparent = true;
-        gridHelper.material.opacity = 0.2;
-        scene.add(gridHelper);
+        // Core holographic grid network
+        const gridGeo = new THREE.GridHelper(40, 40, 0x2dd4bf, 0x0f172a);
+        gridGeo.position.y = -0.01;
+        scene.add(gridGeo);
 
-        const ringGeo = new THREE.RingGeometry(2.5, 4.0, 36);
-        const ringMat = new THREE.MeshBasicMaterial({ color: 0x2dd4bf, transparent: true, opacity: 0.04, side: THREE.DoubleSide });
-        const ring = new THREE.Mesh(ringGeo, ringMat);
-        ring.rotation.x = -Math.PI / 2;
-        ring.position.y = -0.48;
-        scene.add(ring);
+        // Central monument structure
+        const coreGeo = new THREE.CylinderGeometry(1.5, 1.8, 0.4, 6);
+        const coreMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.5, metalness: 0.8, wireframe: false });
+        const coreMesh = new THREE.Mesh(coreGeo, coreMat);
+        coreMesh.position.y = 0.2;
+        scene.add(coreMesh);
 
-        // ===================== MARKERS =====================
-        const overlayDiv = document.getElementById('photo-overlay');
-        const markerMap = new Map();
-        const anchorGroup = new THREE.Group();
-        scene.add(anchorGroup);
-        const anchorGeo = new THREE.SphereGeometry(0.02, 6, 6);
-        const anchorMat = new THREE.MeshBasicMaterial({ visible: false });
+        const ringGeo = new THREE.RingGeometry(1.9, 2.3, 6);
+        ringGeo.rotateX(-Math.PI/2);
+        const ringMat = new THREE.MeshBasicMaterial({ color: 0x2dd4bf, side: THREE.DoubleSide, transparent:true, opacity:0.3 });
+        const ringMesh = new THREE.Mesh(ringGeo, ringMat);
+        ringMesh.position.y = 0.02;
+        scene.add(ringMesh);
 
-        const markerColors = ['#2dd4bf', '#fbbf24', '#f87171', '#a78bfa', '#fb923c', '#f472b6'];
+        // Generate Nodes
+        const nodes = [];
+        const photoOverlayContainer = document.getElementById('photo-overlay');
+        const trackerContainer = document.getElementById('timelineTracker');
 
-        timelineData.forEach((node, index) => {
-            const anchor = new THREE.Mesh(anchorGeo, anchorMat);
-            anchor.position.set(node.coord.x, 0.05, node.coord.z);
-            anchorGroup.add(anchor);
+        timelineData.forEach((data, index) => {
+            // Anchor Mesh
+            const mGeo = new THREE.BoxGeometry(0.3, 0.6, 0.3);
+            const mMat = new THREE.MeshStandardMaterial({ color: 0x2dd4bf, roughness: 0.2, metalness: 0.9 });
+            const mesh = new THREE.Mesh(mGeo, mMat);
+            mesh.position.set(data.coord.x, 0.3, data.coord.z);
+            scene.add(mesh);
 
-            const card = document.createElement('div');
-            card.className = 'photo-marker';
-            const borderColor = markerColors[index % markerColors.length];
-            card.style.borderColor = borderColor;
-            card.style.backgroundImage = `url('${node.imageFile}')`;
-            card.style.backgroundSize = 'cover';
-            card.style.backgroundPosition = 'center';
-            card.innerHTML = `
+            // Pulse ring
+            const pGeo = new THREE.RingGeometry(0.25, 0.35, 32);
+            pGeo.rotateX(-Math.PI/2);
+            const pMat = new THREE.MeshBasicMaterial({ color: 0xfbbf24, side: THREE.DoubleSide, transparent:true, opacity:0.6 });
+            const pMesh = new THREE.Mesh(pGeo, pMat);
+            pMesh.position.set(data.coord.x, 0.03, data.coord.z);
+            scene.add(pMesh);
+
+            // Connecting link beam
+            const beamPoints = [new THREE.Vector3(data.coord.x, 0.3, data.coord.z), new THREE.Vector3(0, 0.2, 0)];
+            const beamGeo = new THREE.BufferGeometry().setFromPoints(beamPoints);
+            const beamMat = new THREE.LineBasicMaterial({ color: 0x60a5fa, transparent:true, opacity:0.4 });
+            const beam = new THREE.Line(beamGeo, beamMat);
+            scene.add(beam);
+
+            // DOM Marker overlay
+            const marker = document.createElement('div');
+            marker.className = 'photo-marker';
+            marker.id = `marker-${index}`;
+            marker.style.backgroundImage = `url('${data.imageFile}')`;
+            marker.innerHTML = `
                 <div class="holographic-overlay"></div>
                 <div class="scan-line"></div>
-                <span class="id-number">#${index+1}</span>
-                <span class="date-badge">${node.date}</span>
-                <button class="audio-btn" data-id="${node.id}">🔊</button>
-                <button class="view3d-btn" data-id="${node.id}">◈ 3D</button>
-                <button class="translation-btn" data-id="${node.id}">📜</button>
+                <div class="id-number">0${index+1}</div>
+                <div class="date-badge">${data.date}</div>
                 <div class="label-strip">
-                    <span class="title">${node.short}</span>
-                    <span class="date">${node.date}</span>
-                    <span class="sub">${node.loc.substring(0, 18)}</span>
+                    <span class="title">${data.short}</span>
                 </div>
+                <button class="translation-btn" onclick="event.stopPropagation(); openTranslation(${index})">📝 Read</button>
+                <button class="view3d-btn" onclick="event.stopPropagation(); openViewer(${index})">⬡ View 3D</button>
+                <button class="audio-btn" onclick="event.stopPropagation(); playAudioNode(${index})">🔊</button>
             `;
-            card.dataset.id = node.id;
+            marker.addEventListener('click', () => selectNode(index));
+            photoOverlayContainer.appendChild(marker);
 
-            // Main click: select & move camera
-            card.addEventListener('click', function(e) {
-                if (e.target.classList.contains('view3d-btn') || e.target.classList.contains('translation-btn') || e.target.classList.contains('audio-btn')) return;
-                selectNode(node.id);
-                controls.target.set(node.coord.x, 0.1, node.coord.z);
-                accentLight.position.set(node.coord.x, 1.2, node.coord.z);
-                camera.position.set(node.coord.x + 2.8, 2.0, node.coord.z + 2.8);
-                playInscriptionName(node.audioName);
+            // Timeline tracker nodes
+            const tNode = document.createElement('div');
+            tNode.className = 'time-node';
+            tNode.id = `tnode-${index}`;
+            tNode.innerText = data.fullLabel;
+            tNode.addEventListener('click', () => selectNode(index));
+            trackerContainer.appendChild(tNode);
+
+            nodes.push({ mesh, pMesh, marker, tNode, data });
+        });
+
+        // ===================== LOGIC SELECTION =====================
+        let activeIndex = -1;
+        function selectNode(index) {
+            if(activeIndex === index) return;
+            activeIndex = index;
+
+            nodes.forEach((node, idx) => {
+                if(idx === index) {
+                    node.mesh.material.color.setHex(0xffffff);
+                    node.mesh.scale.set(1.4, 1.4, 1.4);
+                    node.tNode.classList.add('active');
+                    node.marker.style.borderColor = '#ffffff';
+                    node.marker.style.boxShadow = '0 0 60px rgba(251, 191, 36, 0.8)';
+                    
+                    // Fly camera down smoothly
+                    gsapToCamera(node.data.coord.x, node.data.coord.z);
+                } else {
+                    node.mesh.material.color.setHex(0x2dd4bf);
+                    node.mesh.scale.set(1, 1, 1);
+                    node.tNode.classList.remove('active');
+                    node.marker.style.borderColor = 'rgba(45, 212, 191, 0.7)';
+                    node.marker.style.boxShadow = '0 0 40px rgba(45, 212, 191, 0.3)';
+                }
             });
 
-            // Button listeners
-            card.querySelector('.audio-btn').addEventListener('click', e => { e.stopPropagation(); playInscriptionName(node.audioName); });
-            card.querySelector('.view3d-btn').addEventListener('click', e => { e.stopPropagation(); open3DViewer(node.id); });
-            card.querySelector('.translation-btn').addEventListener('click', e => { e.stopPropagation(); openTranslationModal(node.id); });
-
-            overlayDiv.appendChild(card);
-            markerMap.set(node.id, { mesh: anchor, element: card });
-        });
-
-        // ===================== TIMELINE =====================
-        const tracker = document.getElementById('timelineTracker');
-        timelineData.forEach(node => {
-            const btn = document.createElement('div');
-            btn.className = 'time-node';
-            btn.textContent = node.fullLabel;
-            btn.title = node.name;
-            btn.dataset.id = node.id;
-            btn.onclick = () => selectNode(node.id);
-            tracker.appendChild(btn);
-        });
-
-        let currentId = 0;
-
-        function selectNode(id) {
-            currentId = id;
-            document.querySelectorAll('.time-node').forEach(el => el.classList.toggle('active', +el.dataset.id === id));
-            markerMap.forEach((val, key) => val.element.classList.toggle('active', key === id));
-            const data = timelineData.find(n => n.id === id);
-            if (data) renderDashboard(data);
+            renderDashboard(index);
         }
 
-        function renderDashboard(data) {
-            const panel = document.getElementById('dashboard');
-            panel.style.display = 'block';
-            panel.innerHTML = `
+        function gsapToCamera(tx, tz) {
+            // Smooth custom interpolation loops without requiring global exterior CDNs
+            let count = 0;
+            const startX = camera.position.x;
+            const startZ = camera.position.z;
+            const startY = camera.position.y;
+            const destX = tx;
+            const destZ = tz + 4.5;
+            const destY = 3.2;
+
+            function step() {
+                count += 0.04;
+                if(count <= 1) {
+                    camera.position.x = startX + (destX - startX) * count;
+                    camera.position.z = startZ + (destZ - startZ) * count;
+                    camera.position.y = startY + (destY - startY) * count;
+                    controls.target.set(tx, 0.3, tz);
+                    requestAnimationFrame(step);
+                } else {
+                    camera.position.set(destX, destY, destZ);
+                    controls.target.set(tx, 0.3, tz);
+                }
+            }
+            step();
+        }
+
+        function renderDashboard(index) {
+            const d = timelineData[index];
+            const dash = document.getElementById('dashboard');
+            dash.style.display = 'block';
+
+            dash.innerHTML = `
                 <button class="close-btn" onclick="document.getElementById('dashboard').style.display='none'">✕</button>
-                <div class="meta-header">
-                    <h2>◈ ${data.name}</h2>
-                    <div class="subtitle">${data.date} · ${data.loc} · ${data.discoverer}</div>
-                    <div class="meta-tags">
-                        <span class="tag date">⏳ ${data.date}</span>
-                        <span class="tag loc">📍 ${data.loc}</span>
-                        <span class="tag">🔍 ${data.discoverer}</span>
-                        <span class="tag weather">⏣ ${data.weathering}</span>
+                <div class="meta-header" style="margin-bottom:20px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:16px;">
+                    <h2>${d.name}</h2>
+                    <div class="subtitle">📍 Location Site: ${d.loc} &middot; Discoverer: ${d.discoverer}</div>
+                    <div class="meta-tags" style="display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;">
+                        <span class="tag" style="background:#7c3aed; color:white;">📅 Period Chronology: ${d.date}</span>
+                        <span class="tag" style="background:#2dd4bf; color:#0a1420;">🔬 Substrate Core: ${d.substrate}</span>
+                        <span class="tag" style="background:#60a5fa; color:#0a1420;">🧪 Profiling Array: ${d.method}</span>
                     </div>
                 </div>
-                <div class="panel-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+
+                <div class="panel-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
                     <div>
-                        <div class="section-spectrometry">
-                            <div class="section-title">🔬 SPECTROMETRY</div>
-                            <div class="lab-report" style="border-left:3px solid #2dd4bf; background:rgba(45,212,191,0.04); padding:12px;">
-                                <div class="lab-row"><span>Substrate</span><span>${data.substrate}</span></div>
-                                <div class="lab-row"><span>Elements</span><span>${data.elements}</span></div>
-                                <div class="lab-row"><span>Method</span><span>${data.method}</span></div>
-                                <div class="lab-row"><span>Weathering</span><span>${data.weathering}</span></div>
-                            </div>
+                        <div class="section-title" style="color:#2dd4bf; margin-bottom:10px;">🔬 LAB METRICS DATA</div>
+                        <div class="lab-report" style="background:rgba(0,0,0,0.2); padding:14px; border-radius:12px; border:1px solid rgba(45,212,191,0.15);">
+                            <div class="lab-row" style="display:flex; justify-content:space-between; margin-bottom:6px;"><span style="color:#94a3b8;">Trench Tracker ID:</span><span style="color:#f0f4ff; font-family:monospace;">${d.trenchId}</span></div>
+                            <div class="lab-row" style="display:flex; justify-content:space-between; margin-bottom:6px;"><span style="color:#94a3b8;">Stratigraphic Unit:</span><span style="color:#f0f4ff; font-family:monospace;">${d.stratUnit}</span></div>
+                            <div class="lab-row" style="display:flex; justify-content:space-between; margin-bottom:6px;"><span style="color:#94a3b8;">Elemental Compound:</span><span style="color:#f0f4ff; font-family:monospace;">${d.elements}</span></div>
+                            <div class="lab-row" style="display:flex; justify-content:space-between; margin-bottom:6px;"><span style="color:#94a3b8;">Weathering Index:</span><span style="color:#f0f4ff; font-family:monospace;">${d.weathering}</span></div>
+                            <div class="lab-row" style="display:flex; justify-content:space-between;"><span style="color:#94a3b8;">Discovery Log Year:</span><span style="color:#fbbf24; font-weight:700;">${d.discoveryYear}</span></div>
                         </div>
-                        <div class="section-field">
-                            <div class="section-title">📂 FIELD</div>
-                            <div class="lab-report" style="border-left:3px solid #fbbf24; background:rgba(251,191,36,0.04); padding:12px;">
-                                <div class="lab-row"><span>Trench</span><span>${data.trenchId}</span></div>
-                                <div class="lab-row"><span>Strat unit</span><span>${data.stratUnit}</span></div>
-                                <div class="lab-row"><span>Year</span><span>${data.discoveryYear}</span></div>
-                            </div>
-                            <div style="background:rgba(251,191,36,0.03); border-radius:12px; padding:12px; font-size:1rem; border-left:3px solid #fbbf24;">${data.archaeology}</div>
-                        </div>
-                        <div class="section-arabic">
-                            <div class="section-title">📜 ARABIC TEXT</div>
-                            <div class="inscription-preview" style="border-left:3px solid #f472b6; background:rgba(244,114,182,0.04); padding:12px;">
-                                <div class="arabic-text" style="direction:rtl; font-family:'Amiri','Traditional Arabic',serif; font-size:1.8rem;">${data.arabic}</div>
-                                <div class="english-under" style="font-size:1.2rem; border-top:1px solid rgba(244,114,182,0.15); padding-top:8px;"><strong>Translation:</strong> ${data.english}</div>
-                            </div>
+                        <div class="section-title" style="color:#ef4444; margin-top:20px; margin-bottom:10px;">📜 FIELD ARCHEOLOGY DIRECTORY</div>
+                        <div class="inscription-preview" style="background:rgba(239,68,68,0.03); padding:14px; border-radius:12px; border:1px dashed rgba(239,68,68,0.2); color:#cbd5e1;">
+                            ${d.archaeology}
                         </div>
                     </div>
+
                     <div>
-                        <div class="section-concordance">
-                            <div class="section-title">📖 CONCORDANCE</div>
-                            <div class="concordance-box" style="border-left:3px solid #a78bfa; background:rgba(167,139,250,0.04); padding:12px;">
-                                <div><span style="color:#2dd4bf; font-weight:800;">🌙 Quranic:</span> ${data.quranText}</div>
-                                <div style="font-size:0.95rem; color:#94a3b8; margin-bottom:8px;">${data.quranExpl}</div>
-                                <div><span style="color:#fbbf24; font-weight:800;">🕊️ Biblical:</span> ${data.bibleText}</div>
-                                <div style="font-size:0.95rem; color:#94a3b8;">${data.bibleExpl}</div>
-                            </div>
+                        <div class="section-title" style="color:#fbbf24; margin-bottom:10px;">📖 LITURGICAL & TEXTUAL VARIANT CONCORDANCE</div>
+                        <div class="concordance-box" style="background:rgba(251,191,36,0.03); padding:14px; border-radius:12px; border:1px solid rgba(251,191,36,0.15);">
+                            <div style="margin-bottom:12px;"><strong style="color:#fbbf24; display:block; margin-bottom:4px;">✦ Textual Framework Timeline Variant:</strong> <span style="color:#e2e8f0;">${d.quranText}</span></div>
+                            <div style="border-top:1px solid rgba(251,191,36,0.1); padding-top:8px;"><strong style="color:#a78bfa; display:block; margin-bottom:4px;">✦ Epigraphic Exegesis Expansion:</strong> <span style="color:#cbd5e1; font-style:italic;">${d.quranExpl}</span></div>
                         </div>
-                        <div class="section-geo">
-                            <div class="section-title">🗺️ GEOGRAPHY</div>
-                            <div class="geo-box" style="border-left:3px solid #14b8a6; background:rgba(20,184,166,0.04); padding:12px;">
-                                <div><span style="font-weight:800; color:#fbbf24;">Historical:</span> ${data.pastGeo}</div>
-                                <div style="margin-top:6px;"><span style="font-weight:800; color:#2dd4bf;">Present:</span> ${data.presentGeo}</div>
-                            </div>
+
+                        <div class="concordance-box" style="background:rgba(96,165,250,0.03); padding:14px; border-radius:12px; border:1px solid rgba(96,165,250,0.15); margin-top:14px;">
+                            <div style="margin-bottom:12px;"><strong style="color:#60a5fa; display:block; margin-bottom:4px;">✦ Synchronous Regional Near-Eastern Links:</strong> <span style="color:#e2e8f0;">${d.bibleText}</span></div>
+                            <div style="border-top:1px solid rgba(96,165,250,0.1); padding-top:8px;"><strong style="color:#cbd5e1; display:block; margin-bottom:4px;">✦ Cross-Disciplinary Core Context:</strong> <span style="color:#cbd5e1;">${d.bibleExpl}</span></div>
                         </div>
-                        <div style="background:rgba(45,212,191,0.03); padding:12px; border-radius:12px; margin-top:8px;">
-                            <div style="font-size:0.9rem; font-weight:700; color:#14b8a6;">📚 Source: ${data.source}</div>
-                            <button class="source-btn white-apa" style="margin-top:8px; background:rgba(255,255,255,0.1); color:white; border:1px solid rgba(255,255,255,0.15); padding:8px 20px; border-radius:30px; font-weight:700; cursor:pointer;" onclick="document.getElementById('apaModal').classList.add('active')">📚 APA References</button>
+                    </div>
+
+                    <div>
+                        <div class="section-title" style="color:#a78bfa; margin-bottom:10px;">🌍 HISTORIC GEOSPATIAL GEOMORPHOLOGY</div>
+                        <div class="geo-box" style="background:rgba(167,139,250,0.03); padding:14px; border-radius:12px; border:1px solid rgba(167,139,250,0.15);">
+                            <div style="margin-bottom:12px;"><strong style="color:#a78bfa; display:block; margin-bottom:4px;">✦ Paleogeographic Vector Path:</strong> <span style="color:#e2e8f0;">${d.pastGeo}</span></div>
+                            <div style="border-top:1px solid rgba(167,139,250,0.1); padding-top:8px;"><strong style="color:#cbd5e1; display:block; margin-bottom:4px;">✦ National Asset Protection Log:</strong> <span style="color:#94a3b8; font-family:monospace;">${d.presentGeo}</span></div>
                         </div>
-                        <div class="dashboard-actions" style="display:flex; gap:12px; margin-top:12px;">
-                            <button class="action-btn purple" style="background:linear-gradient(135deg,#7c3aed,#6d28d9); color:white; padding:10px 24px; border-radius:40px; border:none; font-weight:800; font-size:1rem; cursor:pointer;" onclick="open3DViewer(${data.id})">🔮 3D VIEW</button>
-                            <button class="action-btn red" style="background:linear-gradient(135deg,#ef4444,#dc2626); color:white; padding:10px 24px; border-radius:40px; border:none; font-weight:800; font-size:1rem; cursor:pointer;" onclick="openTranslationModal(${data.id})">📜 READ</button>
-                            <button class="action-btn audio-btn-dash" style="background:rgba(45,212,191,0.15); color:#2dd4bf; border:1px solid rgba(45,212,191,0.2); padding:10px 24px; border-radius:40px; font-weight:800; font-size:1rem; cursor:pointer;" onclick="playInscriptionName('${data.audioName}')">🔊 LISTEN</button>
+                        
+                        <div style="margin-top:20px; display:flex; gap:10px;" class="dashboard-actions">
+                            <button class="action-btn" style="flex:1; background:linear-gradient(135deg, #7c3aed, #6d28d9); color:white; border:none; cursor:pointer;" onclick="openViewer(${index})">⬡ OPEN IN 3D ENGINE</button>
+                            <button class="action-btn" style="background:rgba(255,255,255,0.05); color:white; border:1px solid rgba(255,255,255,0.15); cursor:pointer;" onclick="document.getElementById('apaModal').classList.add('active')">📚 APA CITE</button>
                         </div>
                     </div>
                 </div>
             `;
         }
 
-        // ===================== SPEECH =====================
-        let welcomeAudioPlayed = false;
-        function speakText(text) { window.speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=0.9; window.speechSynthesis.speak(u); }
-        function playWelcomeAudio() { if(!welcomeAudioPlayed){ welcomeAudioPlayed=true; speakText("Welcome to the Epigraphic Matrix. Click any inscription marker to explore."); } }
-        function startExperience() { document.getElementById('welcomeOverlay').classList.add('hidden'); setTimeout(playWelcomeAudio, 400); }
-        function playInscriptionName(name) {
-            const toast = document.getElementById('audioToast');
-            document.getElementById('audioToastText').textContent = name;
-            toast.classList.add('show');
-            speakText(name);
-            setTimeout(() => toast.classList.remove('show'), 2500);
+        // ===================== TRANSLATION MODAL =====================
+        function openTranslation(index) {
+            const d = timelineData[index];
+            document.getElementById('modalTitle').innerText = d.name;
+            document.getElementById('modalSubtitle').innerText = `Chronology Asset — ${d.date}`;
+            document.getElementById('modalArabic').innerText = d.arabic;
+            document.getElementById('modalEnglish').innerText = d.english;
+            document.getElementById('modalSource').innerText = `Authentication Link: ${d.source}`;
+            document.getElementById('transModal').classList.add('active');
         }
 
-        // ===================== 3D VIEWER (FIXED WITH viewerFile) =====================
+        // ===================== AUDIO ENGINE =====================
+        function startExperience() {
+            document.getElementById('welcomeOverlay').classList.add('hidden');
+            // Init audio node trigger check
+            showAudioToast("Epigraphic Core Online");
+        }
+
+        function playAudioNode(index) {
+            const d = timelineData[index];
+            showAudioToast(`Streaming: "${d.audioName}"`);
+            
+            if('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const uArabic = new SpeechSynthesisUtterance(d.arabic);
+                uArabic.lang = 'ar-SA';
+                uArabic.rate = 0.85;
+                
+                const uEnglish = new SpeechSynthesisUtterance(`Translation asset logs: ${d.english}`);
+                uEnglish.lang = 'en-US';
+                uEnglish.rate = 0.95;
+
+                window.speechSynthesis.speak(uArabic);
+                uArabic.onend = () => { window.speechSynthesis.speak(uEnglish); };
+            }
+        }
+
+        function playWelcomeAudio() {
+            if('speechSynthesis' in window) {
+                const u = new SpeechSynthesisUtterance("Welcome to the Holographic Epigraphic Matrix. Explore six historical early Islamic stone inscriptions mapped inside an interactive three dimensional simulation pipeline.");
+                u.lang = 'en-US';
+                window.speechSynthesis.speak(u);
+            }
+        }
+
+        function showAudioToast(txt) {
+            const toast = document.getElementById('audioToast');
+            document.getElementById('audioToastText').innerText = txt;
+            toast.className = "audio-toast show";
+            setTimeout(() => { toast.className = "audio-toast"; }, 3500);
+        }
+
+        // ===================== 3D VIEWER (OPTIMIZED STONE SIMULATION ENGINE) =====================
         let viewerScene, viewerCamera, viewerRenderer, viewerControls, viewerTexture;
         let viewerInitialized = false, viewerAnimId = null;
         let currentViewerId = null;
@@ -1185,187 +1224,180 @@
             if(viewerInitialized) return;
             const container = document.getElementById('viewer3dContainer');
             viewerScene = new THREE.Scene();
-            viewerScene.background = new THREE.Color(0x2a3a4a);
+            viewerScene.background = new THREE.Color(0x070d19); // Deep dark stone background
+            
             viewerCamera = new THREE.PerspectiveCamera(45, container.clientWidth/container.clientHeight, 0.1, 100);
-            viewerCamera.position.set(0,0,3.5);
-            viewerRenderer = new THREE.WebGLRenderer({antialias:true});
+            viewerCamera.position.set(0, 0, 3.0);
+            
+            viewerRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
             viewerRenderer.setSize(container.clientWidth, container.clientHeight);
-            viewerRenderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-            viewerRenderer.setClearColor(0x2a3a4a,1);
+            viewerRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             container.appendChild(viewerRenderer.domElement);
+            
             viewerControls = new THREE.OrbitControls(viewerCamera, viewerRenderer.domElement);
             viewerControls.enableDamping = true;
             viewerControls.dampingFactor = 0.08;
-            viewerControls.minDistance = 1.5;
-            viewerControls.maxDistance = 10;
-            viewerControls.target.set(0,0,0);
-            const grid = new THREE.GridHelper(4,8,0x5a7a8a,0x3a5a6a);
-            grid.position.z = -1.5;
-            grid.material.transparent = true;
-            grid.material.opacity = 0.2;
-            viewerScene.add(grid);
-            const ambient = new THREE.AmbientLight(0xffffff, 2.8);
+            viewerControls.minDistance = 1.2;
+            viewerControls.maxDistance = 6;
+            
+            // --- LIGHTING OVERHAUL (Removes white-out glare from Screenshot (124).png) ---
+            const ambient = new THREE.AmbientLight(0xffffff, 0.45); // Soft base illumination to protect fine lines
             viewerScene.add(ambient);
-            const dir = new THREE.DirectionalLight(0xffffff, 3.5);
-            dir.position.set(3,5,5);
-            viewerScene.add(dir);
-            const fill = new THREE.DirectionalLight(0x88ccff, 2.2);
-            fill.position.set(-3,2,3);
-            viewerScene.add(fill);
+            
+            // Grazing cross light source to programmatically pull deep shadows out of the carved grooves
+            const highRakingLight = new THREE.DirectionalLight(0xfff6ec, 1.4); 
+            highRakingLight.position.set(-4, 3.5, 4);
+            viewerScene.add(highRakingLight);
+            
+            const lowFillLight = new THREE.DirectionalLight(0x38bdf8, 0.45);
+            lowFillLight.position.set(4, -2.5, 2);
+            viewerScene.add(lowFillLight);
+
             viewerInitialized = true;
+            
             window.addEventListener('resize', () => {
                 if(document.getElementById('viewerOverlay').classList.contains('active')){
                     const c = document.getElementById('viewer3dContainer');
-                    if(c && c.clientWidth>0){ viewerCamera.aspect = c.clientWidth/c.clientHeight; viewerCamera.updateProjectionMatrix(); viewerRenderer.setSize(c.clientWidth, c.clientHeight); }
+                    if(c && c.clientWidth > 0){ 
+                        viewerCamera.aspect = c.clientWidth/c.clientHeight; 
+                        viewerCamera.updateProjectionMatrix(); 
+                        viewerRenderer.setSize(c.clientWidth, c.clientHeight); 
+                    }
                 }
             });
+        }
+
+        function openViewer(index) {
+            const d = timelineData[index];
+            currentViewerId = index;
+            
+            document.getElementById('viewerName').innerText = d.name;
+            document.getElementById('viewerDate').innerText = `(${d.date})`;
+            document.getElementById('expectedFileName').innerText = d.viewerFile;
+            document.getElementById('viewerOverlay').classList.add('active');
+            
+            document.getElementById('viewerLoading').style.display = 'block';
+            document.getElementById('fileUploadFallback').classList.remove('active');
+            
+            initViewer();
+            
+            // Begin animating the 3D local pop-up frame
+            if(!viewerAnimId) {
+                function animViewer() {
+                    viewerAnimId = requestAnimationFrame(animViewer);
+                    if(viewerControls) viewerControls.update();
+                    if(viewerRenderer && viewerScene && viewerCamera) {
+                        viewerRenderer.render(viewerScene, viewerCamera);
+                    }
+                }
+                animViewer();
+            }
+
+            // Attempt automatic image texture resolution loading fallback
+            const texLoader = new THREE.TextureLoader();
+            texLoader.load(
+                d.viewerFile,
+                function(texture) {
+                    applyTextureToViewer(texture);
+                },
+                undefined,
+                function(err) {
+                    console.warn(`Local directory access block for: ${d.viewerFile}. Launching client-side manual file input system.`);
+                    document.getElementById('viewerLoading').style.display = 'none';
+                    document.getElementById('fileUploadFallback').classList.add('active');
+                }
+            );
         }
 
         function applyTextureToViewer(texture) {
             document.getElementById('viewerLoading').style.display = 'none';
             document.getElementById('fileUploadFallback').classList.remove('active');
-            if(viewerTexture){ viewerScene.remove(viewerTexture); viewerTexture.geometry.dispose(); viewerTexture.material.dispose(); }
-            const geo = new THREE.PlaneGeometry(2.4, 2.4);
-            const mat = new THREE.MeshStandardMaterial({ map:texture, roughness:0.2, metalness:0.02, side:THREE.DoubleSide, emissive:0x446688, emissiveIntensity:0.4, transparent:true });
+            
+            if(viewerTexture){ 
+                viewerScene.remove(viewerTexture); 
+                viewerTexture.geometry.dispose(); 
+                viewerTexture.material.dispose(); 
+            }
+            
+            // Highly segmented plane geometry to allow physical deformation via the displacement map
+            const geo = new THREE.PlaneGeometry(2.2, 2.2, 128, 128);
+            
+            // Advanced material configuration using the image map to fake physical relief engraving depth
+            const mat = new THREE.MeshStandardMaterial({ 
+                map: texture,
+                bumpMap: texture,           // Recreates organic micro-texture cracks across the stone face
+                bumpScale: 0.04,            
+                displacementMap: texture,   // Programmatically sinks black inscription text lines into the 3D mesh
+                displacementScale: -0.06,   
+                roughness: 0.88,            // High matte value matches natural, raw volcanic basalt/sandstone
+                metalness: 0.0,             // Eliminates synthetic metallic sheen reflections
+                side: THREE.DoubleSide
+            });
+            
             viewerTexture = new THREE.Mesh(geo, mat);
-            viewerTexture.position.set(0,0,0);
             viewerScene.add(viewerTexture);
-            const border = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.PlaneGeometry(2.5,2.5)), new THREE.LineBasicMaterial({color:0x7c3aed, transparent:true, opacity:0.3}));
-            viewerTexture.add(border);
-            viewerCamera.position.set(0,0,3.5);
-            viewerControls.target.set(0,0,0);
-            viewerControls.update();
-        }
-
-        function open3DViewer(id) {
-            const data = timelineData.find(n=>n.id===id);
-            if(!data) return;
-            currentViewerId = id;
-            initViewer();
             
-            // Use viewerFile for 3D, or fallback to imageFile
-            const viewerImage = data.viewerFile || data.imageFile;
-            
-            document.getElementById('viewerName').textContent = data.name;
-            document.getElementById('viewerDate').textContent = `— ${data.date}`;
-            document.getElementById('expectedFileName').textContent = viewerImage;
-            
-            const loading = document.getElementById('viewerLoading');
-            loading.style.display = 'block';
-            loading.innerHTML = `◈<br><span class="sub">Loading ${viewerImage}...</span>`;
-            document.getElementById('fileUploadFallback').classList.remove('active');
-            
-            // Clear any previous texture
-            if(viewerTexture){ viewerScene.remove(viewerTexture); viewerTexture.geometry.dispose(); viewerTexture.material.dispose(); viewerTexture = null; }
-            
-            const loader = new THREE.TextureLoader();
-            loader.crossOrigin = 'anonymous';
-            const texture = loader.load(
-                viewerImage,
-                (tex) => {
-                    applyTextureToViewer(tex);
-                    console.log('✅ 3D Viewer: Loaded', viewerImage);
-                },
-                undefined,
-                (err) => {
-                    console.warn('⚠️ Could not load', viewerImage, 'trying fallback:', data.imageFile);
-                    // Try fallback to the marker image
-                    const fallbackLoader = new THREE.TextureLoader();
-                    fallbackLoader.load(
-                        data.imageFile,
-                        (tex) => {
-                            applyTextureToViewer(tex);
-                            console.log('✅ 3D Viewer: Loaded fallback', data.imageFile);
-                        },
-                        undefined,
-                        () => {
-                            // Both failed - show upload fallback
-                            loading.style.display = 'none';
-                            document.getElementById('fileUploadFallback').classList.add('active');
-                            
-                            const fileInput = document.getElementById('fileInput');
-                            const newInput = fileInput.cloneNode(true);
-                            fileInput.parentNode.replaceChild(newInput, fileInput);
-                            newInput.addEventListener('change', (e) => {
-                                if(e.target.files && e.target.files.length > 0) {
-                                    const file = e.target.files[0];
-                                    const reader = new FileReader();
-                                    reader.onload = (ev) => {
-                                        const img = new Image();
-                                        img.onload = () => {
-                                            const canvas = document.createElement('canvas');
-                                            canvas.width = img.width;
-                                            canvas.height = img.height;
-                                            const ctx = canvas.getContext('2d');
-                                            ctx.drawImage(img, 0, 0);
-                                            const tex = new THREE.CanvasTexture(canvas);
-                                            tex.needsUpdate = true;
-                                            applyTextureToViewer(tex);
-                                            console.log('✅ Manual upload loaded:', file.name);
-                                            const marker = markerMap.get(id);
-                                            if(marker) {
-                                                marker.element.style.backgroundImage = `url('${ev.target.result}')`;
-                                            }
-                                        };
-                                        img.src = ev.target.result;
-                                    };
-                                    reader.readAsDataURL(file);
-                                }
-                            });
-                        }
-                    );
-                }
+            // Sleek architectural border bounds wireframe
+            const border = new THREE.LineSegments(
+                new THREE.EdgesGeometry(new THREE.PlaneGeometry(2.22, 2.22)), 
+                new THREE.LineBasicMaterial({ color: 0x2dd4bf, transparent: true, opacity: 0.35 })
             );
+            viewerTexture.add(border);
             
-            document.getElementById('viewerOverlay').classList.add('active');
-            if(viewerAnimId) cancelAnimationFrame(viewerAnimId);
-            animateViewer();
+            viewerCamera.position.set(0, 0, 3.0);
+            viewerControls.target.set(0, 0, 0);
+            viewerControls.update();
         }
 
-        function animateViewer() {
-            if(!document.getElementById('viewerOverlay').classList.contains('active')){ viewerAnimId=null; return; }
-            viewerAnimId = requestAnimationFrame(animateViewer);
-            viewerControls.update();
-            viewerRenderer.render(viewerScene, viewerCamera);
-        }
+        // Manual File Upload handler logic
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if(file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const texture = new THREE.Texture(img);
+                        texture.needsUpdate = true;
+                        applyTextureToViewer(texture);
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
 
         function closeViewer() {
             document.getElementById('viewerOverlay').classList.remove('active');
-            document.getElementById('fileUploadFallback').classList.remove('active');
-            if(viewerAnimId){ cancelAnimationFrame(viewerAnimId); viewerAnimId = null; }
+            if(viewerAnimId) {
+                cancelAnimationFrame(viewerAnimId);
+                viewerAnimId = null;
+            }
         }
 
-        document.getElementById('viewerOverlay').addEventListener('click', function(e){ if(e.target===this) closeViewer(); });
-
-        // ===================== TRANSLATION =====================
-        function openTranslationModal(id) {
-            const data = timelineData.find(n=>n.id===id);
-            if(!data) return;
-            document.getElementById('modalTitle').textContent = `◈ ${data.name}`;
-            document.getElementById('modalSubtitle').textContent = `${data.date} · ${data.loc} · Discovered by ${data.discoverer}`;
-            document.getElementById('modalArabic').textContent = data.arabic;
-            document.getElementById('modalEnglish').textContent = data.english;
-            document.getElementById('modalSource').textContent = data.source;
-            document.getElementById('transModal').classList.add('active');
-        }
-        document.getElementById('transModal').addEventListener('click', function(e){ if(e.target===this) this.classList.remove('active'); });
-        document.getElementById('apaModal').addEventListener('click', function(e){ if(e.target===this) this.classList.remove('active'); });
-
-        // ===================== PROJECTION =====================
+        // ===================== MATRIX COMPONENT POSITIONING LAYER =====================
         const tempVec = new THREE.Vector3();
-
         function updatePhotoPositions() {
-            const w = targetDiv.clientWidth, h = targetDiv.clientHeight;
-            markerMap.forEach((val) => {
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+
+            nodes.forEach((val) => {
                 val.mesh.updateMatrixWorld();
                 tempVec.setFromMatrixPosition(val.mesh.matrixWorld);
                 tempVec.project(camera);
-                if(tempVec.z > 1) { val.element.style.display = 'none'; return; }
-                val.element.style.display = 'flex';
+                
+                if(tempVec.z > 1) { 
+                    val.element ? val.element.style.display = 'none' : val.marker.style.display = 'none'; 
+                    return; 
+                }
+                
+                val.marker.style.display = 'flex';
                 const x = (tempVec.x * .5 + .5) * w;
                 const y = (tempVec.y * -.5 + .5) * h;
-                val.element.style.left = `${x - 85}px`;
-                val.element.style.top = `${y - 65}px`;
+                
+                // Centering offset dimensions matching absolute marker properties
+                val.marker.style.left = `${x - 85}px`;
+                val.marker.style.top = `${y - 65}px`;
             });
         }
 
@@ -1377,17 +1409,16 @@
             updatePhotoPositions();
         }
 
-        // ===================== INIT =====================
+        // ===================== INITIALIZATION =====================
         camera.position.set(0, 4.2, 8.2);
         controls.target.set(0, 0, 0);
         selectNode(0);
         animateMain();
 
-        // Auto welcome
+        // Welcome delayed trigger sequence
         setTimeout(() => { if(!document.getElementById('welcomeOverlay').classList.contains('hidden')) playWelcomeAudio(); }, 1500);
         console.log('◈ EPIGRAPHIC MATRIX · 6 INSCRIPTIONS · USING viewerFile FOR 3D ◈');
-        console.log('📸 Try these files for 3D: 1.1.png, 2.1.png, 3.1.png, 4.1.png, 5.1.png, 6.1.png');
-        console.log('💡 If those fail, it will fallback to the marker image, then manual upload');
+        console.log('📸 Try uploading files to view dynamic physical displacement maps!');
     </script>
 </body>
 </html>
