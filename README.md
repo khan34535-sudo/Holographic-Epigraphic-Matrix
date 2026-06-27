@@ -12,7 +12,7 @@
 
 The **Holographic Epigraphic Matrix** is an immersive 3D web application that visualizes six of the most critical early Islamic inscriptions. Each inscription is represented as a holographic marker on an interactive map, allowing users to explore epigraphic data, Arabic/English translations, spectrometry metrics, geographical significance, and credible APA references in a futuristic academic interface.
 
-🔗 **Live Demo:** [https://yourusername.github.io/Holographic-Epigraphic-Matrix/](https://yourusername.github.io/Holographic-Epigraphic-Matrix/)
+🔗 **Live Demo:** https://khan34535-sudo.github.io/Holographic-Epigraphic-Matrix/
 
 ---
 
@@ -40,5 +40,16 @@ The **Holographic Epigraphic Matrix** is an immersive 3D web application that vi
 | 5 | **Usays Graffito** | 93 AH | Jabal Usays, Syria | Umayyad military frontier |
 | 6 | **Darb Zubayda Boundary** | c. 100 AH | Dhali' al-Nis, Hail | Pilgrim route inscription |
 
----
+# Copyright and License
+
+Copyright © 2026. All rights reserved.
+
+This repository and its entire contents—including but not limited to all source code, system architecture designs, user interface layouts, conceptual frameworks, text, graphics, and data structures—are the sole intellectual property of the author.
+
+### Terms of Use:
+* **No Replication:** No part of this project may be copied, reproduced, redistributed, or modified, in whole or in part, without explicit, prior written permission from the copyright holder.
+* **No Commercial Use:** Commercial use of this software, framework, or architecture is strictly prohibited.
+* **Review Only:** Permission is granted solely to view the materials in this public repository for personal evaluation or academic review purposes.
+
+For inquiries or permission requests, please contact the repository owner directly through GitHub.
 
